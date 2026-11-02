@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark"><head><meta charset="utf-8"><title>Lintel Loader v1.0</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{--neon2:#0891b2;--neon3:#c026d3;--amb:#d97706;--ok:#059669;--bad:#e11d48;--glow:rgba(138,43,226,.30);--r:10px;--bg:#f0eafc;--panel:#fcfaff;--ink:#1a1033;--mut:#68589a;--line:#d5c4f6;--mem:#2a1b52;--acc:#8a2be2;--grid:#dfd2fa;--sh:0 12px 30px -14px rgba(90,20,160,.5),0 0 0 1px rgba(138,43,226,.10);--sh-s:0 1px 2px rgba(60,20,120,.12);--brick:#b98a7e;--block:#a9a3b8;color-scheme:light}
+:root[data-theme="dark"]{color-scheme:dark;--neon2:#19f0ff;--neon3:#ff2bd6;--amb:#ffb020;--ok:#12d98a;--bad:#ff3d5a;--glow:rgba(180,76,255,.5);--bg:#09050f;--panel:#110a20;--ink:#ece6ff;--mut:#9d90c9;--line:#2c1e52;--mem:#e9e0ff;--acc:#b44cff;--grid:#180f2c;--sh:0 16px 44px -14px rgba(0,0,0,.85),0 0 0 1px rgba(180,76,255,.24),0 0 30px -8px rgba(180,76,255,.5);--sh-s:none;--brick:#5a2f3e;--block:#3a3150}
+[hidden]{display:none!important}*{box-sizing:border-box}html,body{height:100%;margin:0}html{-webkit-font-smoothing:antialiased}
+body{background:radial-gradient(900px 500px at 12% -8%,color-mix(in srgb,var(--acc) 14%,transparent),transparent),var(--bg);color:var(--ink);font:13px/1.45 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);letter-spacing:.005em}
+*{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--acc) 60%,transparent) transparent}
+::selection{background:color-mix(in srgb,var(--neon3) 45%,transparent)}
+input[type=checkbox],input[type=radio]{accent-color:var(--acc)}input[type=range]{accent-color:var(--neon3)}
+button{display:inline-flex;align-items:center;gap:5px;font:inherit;font-weight:500;color:var(--ink);background:color-mix(in srgb,var(--acc) 5%,var(--panel));border:1px solid var(--line);border-radius:8px;padding:5px 11px;cursor:pointer;letter-spacing:.015em;transition:background .12s,border-color .12s,box-shadow .12s}
+button:hover{border-color:var(--neon2);background:color-mix(in srgb,var(--neon2) 9%,var(--panel));box-shadow:0 0 0 1px color-mix(in srgb,var(--neon2) 55%,transparent),0 0 16px -3px color-mix(in srgb,var(--neon2) 60%,transparent)}
+button:focus-visible{outline:2px solid var(--neon2);outline-offset:1px}
+button.on,button.on:hover{background:linear-gradient(135deg,var(--acc),var(--neon3));border-color:transparent;color:#fff;box-shadow:0 0 18px -2px color-mix(in srgb,var(--neon3) 70%,transparent)}
+select,input[type=text],input[type=number]{font:inherit;color:var(--ink);background:color-mix(in srgb,var(--acc) 5%,var(--bg));border:1px solid color-mix(in srgb,var(--acc) 30%,var(--line));border-radius:8px;padding:4px 7px;min-width:0;transition:border-color .12s,box-shadow .12s}
+select:focus,input:focus{outline:none;border-color:var(--neon2);box-shadow:0 0 0 3px color-mix(in srgb,var(--neon2) 22%,transparent),0 0 14px -2px color-mix(in srgb,var(--neon2) 50%,transparent)}
+label{display:inline-flex;gap:6px;align-items:center;white-space:nowrap}
+a{color:var(--neon2)}
+/* top bar */
+#top{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:3px;padding:6px 12px;background:linear-gradient(90deg,color-mix(in srgb,var(--acc) 30%,var(--panel)) 0%,var(--panel) 48%,color-mix(in srgb,var(--neon3) 18%,var(--panel)) 100%);border-bottom:1px solid color-mix(in srgb,var(--acc) 65%,var(--line));box-shadow:0 1px 22px -6px var(--glow)}
+#top .tt{background:linear-gradient(90deg,var(--acc),var(--neon3) 55%,var(--neon2));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;text-transform:uppercase;letter-spacing:.12em;font-weight:800;font-size:12.5px;white-space:nowrap;margin-right:12px}
+#top button{background:transparent;border:1px solid transparent;color:var(--mut);font-weight:600;box-shadow:none;padding:5px 8px;white-space:nowrap}
+#top button:hover{background:color-mix(in srgb,var(--neon2) 10%,transparent);border-color:color-mix(in srgb,var(--neon2) 70%,transparent);color:var(--ink);box-shadow:0 0 14px -3px color-mix(in srgb,var(--neon2) 65%,transparent)}
+#top i{width:1px;height:20px;background:linear-gradient(var(--acc),var(--neon3));opacity:.6;margin:0 6px}
+#top select{width:auto;padding:4px 6px;font-weight:600}
+#stat{margin-left:auto;display:flex;gap:8px;align-items:center;font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.chip{padding:3px 11px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.chip.ok{color:var(--ok);box-shadow:0 0 14px -4px var(--ok)}.chip.bad{color:var(--bad);box-shadow:0 0 14px -4px var(--bad)}.chip.warn{color:var(--amb)}
+/* tool panel */
+#tools{width:clamp(290px,25vw,350px);overflow-y:auto;padding:10px;background:linear-gradient(180deg,color-mix(in srgb,var(--acc) 8%,var(--panel)),var(--panel) 40%);border-right:1px solid color-mix(in srgb,var(--acc) 40%,var(--line));box-shadow:1px 0 22px -10px var(--glow)}
+.brand{color:var(--neon3);text-shadow:0 0 12px var(--glow);text-transform:uppercase;letter-spacing:.12em;font-weight:800;font-size:12.5px;padding:2px 4px 4px}
+.brand small{color:var(--mut);letter-spacing:.04em;text-transform:none;font-weight:500;text-shadow:none;display:block;font-size:11px}
+details.sec{border:1px solid color-mix(in srgb,var(--acc) 28%,var(--line));border-radius:10px;margin:8px 0;background:color-mix(in srgb,var(--panel) 70%,transparent)}
+details.sec>summary{list-style:none;cursor:pointer;padding:7px 10px;display:flex;align-items:center;gap:8px;color:color-mix(in srgb,var(--neon2) 80%,var(--ink));text-transform:uppercase;letter-spacing:.17em;font-size:10px;font-weight:700;user-select:none}
+details.sec>summary::-webkit-details-marker{display:none}
+details.sec>summary::before{content:"";flex:none;width:14px;height:2px;background:linear-gradient(90deg,var(--neon3),var(--neon2));box-shadow:0 0 8px var(--neon2)}
+details.sec>summary::after{content:"▾";margin-left:auto;color:var(--mut);transition:transform .15s}details.sec:not([open])>summary::after{transform:rotate(-90deg)}
+details.sec>summary .cnt{letter-spacing:.04em;color:var(--mut);font-weight:600}
+.sb{padding:2px 10px 10px}
+.sl{display:grid;grid-template-columns:minmax(0,1fr) 124px;gap:6px;align-items:center;margin:4px 0}
+.sl>span{color:var(--ink);font-size:12.5px;line-height:1.25}.sl>span small{display:block;color:var(--mut);font-size:10.5px}
+.sl .iu{display:flex;align-items:center;gap:4px}.sl .iu input{width:100%;text-align:right}.sl .iu i{font-style:normal;color:var(--mut);font-size:10.5px;width:34px;flex:none}
+.sl select{width:100%}.full{width:100%}
+.sl.w{grid-template-columns:1fr}
+.hint{color:var(--mut);font-size:11px;line-height:1.4;margin:6px 0 0}
+.prop{margin:6px 0;padding:6px 8px;border:1px dashed color-mix(in srgb,var(--acc) 35%,var(--line));border-radius:8px;font-size:11.5px;color:var(--mut);line-height:1.5}.prop b{color:var(--ink);font-weight:600}
+.pside{border-top:1px solid var(--line);margin-top:8px;padding-top:6px}.pside h5{margin:2px 0 4px;font-size:11.5px;color:var(--ink);letter-spacing:.04em}
+.card{border:1px solid color-mix(in srgb,var(--acc) 30%,var(--line));border-radius:9px;padding:6px 8px;margin:6px 0;background:color-mix(in srgb,var(--acc) 4%,var(--bg))}
+.card.hi{border-color:var(--neon2);box-shadow:0 0 12px -4px var(--neon2)}
+.card .ch{display:flex;gap:6px;align-items:center;margin-bottom:4px}.card .ch input{flex:1;font-weight:600}.card .ch button{padding:2px 8px;color:var(--mut)}
+.card .cg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px 6px}
+.card .cg label{display:flex;flex-direction:column;align-items:stretch;gap:1px;font-size:10px;color:var(--mut);white-space:normal}.card .cg input{width:100%;text-align:right;padding:3px 5px;font-size:12px}
+.addb{width:100%;justify-content:center;margin-top:2px}
+.seg{display:flex;border:1px solid color-mix(in srgb,var(--acc) 30%,var(--line));border-radius:8px;overflow:hidden;margin:4px 0 6px}
+.seg button{flex:1 1 0;justify-content:center;border:0;border-radius:0;box-shadow:none;padding:5px 4px;font-size:12px;background:transparent}
+.seg button+button{border-left:1px solid var(--line)}
+/* main */
+main{min-width:0;min-height:0;display:flex;flex-direction:column}
+#mid{flex:1;min-height:0;display:flex}
+#wrap{flex:1;min-width:0;min-height:0;position:relative}
+canvas{display:block;width:100%;height:100%}#cv{touch-action:none;cursor:grab}
+#ctb{position:absolute;top:12px;left:50%;transform:translateX(-50%);z-index:5;display:flex;align-items:center;gap:2px;padding:3px;border-radius:999px;background:var(--panel);border:1px solid color-mix(in srgb,var(--acc) 45%,var(--line));box-shadow:var(--sh-s);max-width:calc(100% - 20px);flex-wrap:wrap;justify-content:center}
+#ctb button{background:transparent;border:1px solid transparent;box-shadow:none;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:600}
+#ctb button:hover{background:color-mix(in srgb,var(--acc) 22%,transparent);border-color:color-mix(in srgb,var(--acc) 60%,transparent)}
+#ctb label{padding:2px 8px;font-size:12px;font-weight:600;border-left:1px solid var(--line);cursor:pointer}
+#tchip{position:absolute;z-index:6;pointer-events:none;padding:4px 10px;border-radius:12px;background:var(--panel);border:1px solid color-mix(in srgb,var(--acc) 60%,var(--line));font-size:12px;max-width:280px;box-shadow:var(--sh);line-height:1.35}
+#tchip b{color:var(--acc)}#tchip[hidden]{display:none}
+#dgw{height:clamp(170px,27vh,270px);flex:none;border-top:1px solid color-mix(in srgb,var(--acc) 45%,var(--line));background:color-mix(in srgb,var(--panel) 70%,var(--bg));position:relative}
+#dgw[hidden]{display:none}
+.bar.b{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:7px 14px;background:linear-gradient(0deg,color-mix(in srgb,var(--acc) 10%,var(--panel)),var(--panel));border-top:1px solid color-mix(in srgb,var(--acc) 45%,var(--line));box-shadow:0 -1px 20px -8px var(--glow)}
+.bar.b label{font-size:12.5px}.bar.b .g{color:var(--mut);font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase}
+.sw{display:inline-block;width:22px;height:3px;border-radius:2px;background:repeating-linear-gradient(90deg,var(--c) 0 var(--a),transparent var(--a) var(--b))}
+/* side results */
+#side{width:clamp(320px,27vw,400px);flex:none;display:flex;flex-direction:column;min-height:0;background:var(--panel);border-left:1px solid color-mix(in srgb,var(--acc) 55%,var(--line));box-shadow:var(--sh)}
+#sideH{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:linear-gradient(90deg,color-mix(in srgb,var(--acc) 22%,var(--panel)),var(--panel) 70%);border-bottom:1px solid color-mix(in srgb,var(--acc) 40%,var(--line))}
+#sideH b{text-transform:uppercase;letter-spacing:.13em;font-size:11.5px}#sideH button{background:transparent;border-color:transparent;box-shadow:none;padding:2px 8px;color:var(--mut)}
+#side.col{width:44px}#side.col #sideB,#side.col #sideH b{display:none}#side.col #sideH{justify-content:center;padding:8px 2px}
+#sideB{overflow-y:auto;padding:10px 12px 16px}
+.sum{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:10px;background:color-mix(in srgb,var(--acc) 5%,var(--bg))}
+.sum.ok{border-color:color-mix(in srgb,var(--ok) 60%,var(--line));box-shadow:0 0 20px -10px var(--ok)}.sum.bad{border-color:color-mix(in srgb,var(--bad) 60%,var(--line));box-shadow:0 0 20px -10px var(--bad)}
+.sum h3{margin:0;font-size:15px;letter-spacing:.05em}.sum.ok h3{color:var(--ok)}.sum.bad h3{color:var(--bad)}.sum p{margin:3px 0 0;color:var(--mut);font-size:12px}
+.kv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:8px 0 10px}
+.kv div{border:1px solid var(--line);border-radius:9px;padding:5px 8px;background:var(--bg)}.kv small{display:block;color:var(--mut);font-size:10px;letter-spacing:.06em;text-transform:uppercase}.kv b{font-variant-numeric:tabular-nums;font-size:13.5px}
+.rh{display:flex;align-items:center;gap:8px;margin:14px 0 6px;color:color-mix(in srgb,var(--neon2) 80%,var(--ink));text-transform:uppercase;letter-spacing:.15em;font-size:10px;font-weight:700}
+.rh::before{content:"";width:14px;height:2px;background:linear-gradient(90deg,var(--neon3),var(--neon2));box-shadow:0 0 8px var(--neon2)}
+.ck{padding:6px 0;border-bottom:1px solid var(--line)}
+.ck .t{display:flex;justify-content:space-between;gap:8px;font-size:12.5px}.ck .t span:last-child{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}
+.ck .v{display:flex;justify-content:space-between;gap:8px;color:var(--mut);font-size:11px;font-variant-numeric:tabular-nums}
+.ck .n{color:var(--mut);font-size:10.5px;line-height:1.35;margin-top:2px}
+.ub{height:5px;border-radius:3px;background:color-mix(in srgb,var(--mut) 18%,transparent);margin:4px 0 2px;overflow:hidden}
+.ub i{display:block;height:100%;border-radius:3px}
+.ck.ok .t span:last-child{color:var(--ok)}.ck.fail .t span:last-child{color:var(--bad)}.ck.warn .t span:last-child{color:var(--amb)}
+.ck.ok .ub i{background:var(--ok);box-shadow:0 0 8px var(--ok)}.ck.fail .ub i{background:var(--bad);box-shadow:0 0 8px var(--bad)}.ck.warn .ub i{background:var(--amb)}
+table.lt{width:100%;border-collapse:collapse;font-size:11.5px}table.lt td,table.lt th{padding:4px 4px;border-bottom:1px solid var(--line);vertical-align:top}table.lt th{color:var(--mut);font-weight:600;text-align:left;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase}
+table.lt td.r,table.lt th.r{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}table.lt td small{display:block;color:var(--mut);font-size:10.5px}
+table.lt tr.tot td{font-weight:700;border-bottom:0}
+.ac{list-style:none;padding:0;margin:0}.ac li{display:flex;gap:7px;align-items:flex-start;font-size:12px;margin:3px 0}.ac li b{flex:none;width:16px;text-align:center}
+.ac li.y b{color:var(--ok)}.ac li.n b{color:var(--bad)}
+.wn{border:1px solid color-mix(in srgb,var(--amb) 50%,var(--line));color:var(--ink);background:color-mix(in srgb,var(--amb) 8%,transparent);border-radius:8px;padding:6px 8px;font-size:11.5px;margin:6px 0}
+details.nt{margin-top:12px;font-size:11.5px;color:var(--mut);line-height:1.5}details.nt summary{cursor:pointer;color:var(--ink);font-weight:600}details.nt li{margin:3px 0}
+/* modal */
+#vmodal{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;padding:16px;background:color-mix(in srgb,#05020d 55%,transparent);backdrop-filter:blur(4px)}#vmodal[hidden]{display:none}
+.vc{background:var(--panel);border:1px solid color-mix(in srgb,var(--acc) 55%,var(--line));border-radius:14px;box-shadow:var(--sh);padding:18px 22px;max-width:820px;width:100%;max-height:88vh;overflow:auto;line-height:1.55}
+.vc h3{text-transform:uppercase;letter-spacing:.13em;font-size:12px;margin:14px 0 4px;color:color-mix(in srgb,var(--neon2) 75%,var(--ink))}.vc h2{margin:0 0 4px;font-size:19px}.vc h2 span{color:var(--acc)}.vc p,.vc li{color:var(--mut);font-size:12.5px}.vc b{color:var(--ink)}
+.vc .x{float:right}
+@media(max-width:900px){body{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr)}#tools{width:auto;max-height:38vh;border-right:0;border-bottom:1px solid var(--line)}#mid{flex-direction:column}#side{width:auto;max-height:44vh;border-left:0;border-top:1px solid var(--line)}#side.col{width:auto}#wrap{min-height:300px}}
+/* print report */
+@media print{
+ @page{size:A4;margin:12mm}
+ html,body{height:auto;display:block;background:#fff!important;color:#000}
+ #top,#tools,.bar.b,#ctb,#tchip,#sideH,#vmodal{display:none!important}
+ main{display:flex!important;flex-direction:column;height:auto!important}#mid{display:contents!important}#wrap{order:1;height:95mm;flex:none!important;border:1px solid #ccc}#dgw{order:2;height:70mm;flex:none!important;display:block!important;border:1px solid #ccc}#side{order:3;height:auto!important;max-height:none!important}
+ #side,#side.col{width:auto;border:0;box-shadow:none;display:block}#side.col #sideB{display:block}#sideB{overflow:visible;padding:4mm 0}
+ #ptitle{display:block!important}
+ .ck,.sum,table.lt tr{break-inside:avoid}
+}
+#ptitle{display:none;font:600 14px system-ui;margin:0 0 3mm}
+</style></head><body>
+<div id="top">
+ <span class="tt">Lintel Loader</span>
+ <select id="exSel" title="Load an example"><option value="">Examples…</option></select>
+ <i></i>
+ <button id="bMethod" title="Method, assumptions and references">Method</button>
+ <button id="bPrint" title="Copy a plain-text calculation summary to the clipboard">Copy report</button>
+ <button id="bExport" title="Copy this design as JSON (paste into a .json file to keep it)">Copy design</button>
+ <button id="bImport" title="Open a saved .json design">Import</button>
+ <button id="bReset" title="Start again from the default design">Reset</button>
+ <i></i>
+ <button id="bTheme" title="Toggle light / dark">Theme</button>
+ <div id="stat"></div>
+ <input type="file" id="fImp" accept=".json,application/json" hidden>
+</div>
+<aside id="tools">
+ <div class="brand">Lintel Loader <small>v1.0 · masonry lintel &amp; pier design (EC6 / EC3 / EC2, UK NA)</small></div>
+
+ <details class="sec" open><summary>Opening</summary><div class="sb">
+  <div class="sl"><span>Clear span <small>width of opening</small></span><div class="iu"><input type="number" data-k="L0" step="25" min="150"><i>mm</i></div></div>
+  <div class="sl"><span>Bearing length <small>each end</small></span><div class="iu"><input type="number" data-k="lb" step="25" min="50"><i>mm</i></div></div>
+  <div class="sl"><span>Head height <small>floor to underside of lintel</small></span><div class="iu"><input type="number" data-k="hHead" step="25"><i>mm</i></div></div>
+  <div class="sl"><span>Storey height <small>floor to floor (pier slenderness)</small></span><div class="iu"><input type="number" data-k="hStorey" step="25"><i>mm</i></div></div>
+  <div class="sl"><span>Masonry above lintel <small>to wall head or next opening</small></span><div class="iu"><input type="number" data-k="Hm" step="25"><i>mm</i></div></div>
+ </div></details>
+
+ <details class="sec" open><summary>Masonry</summary><div class="sb">
+  <div class="sl w"><select id="masType" class="full"></select></div>
+  <div class="sl"><span>Leaf thickness</span><div class="iu"><input type="number" data-k="mas.t" step="0.5" list="tList"><i>mm</i></div></div>
+  <datalist id="tList"><option value="90"><option value="100"><option value="102.5"><option value="140"><option value="190"><option value="215"><option value="327.5"></datalist>
+  <div class="sl"><span>Unit weight γ</span><div class="iu"><input type="number" data-k="mas.gamma" step="0.5"><i>kN/m³</i></div></div>
+  <div class="sl"><span>Normalised strength f<sub>b</sub></span><div class="iu"><input type="number" data-k="mas.fb" step="0.1"><i>N/mm²</i></div></div>
+  <div class="sl"><span>Constant K <small>UK NA Table NA.4</small></span><div class="iu"><input type="number" data-k="mas.K" step="0.05"><i></i></div></div>
+  <div class="sl"><span>Unit group</span><select data-k="mas.grp" data-num="1"><option value="1">Group 1</option><option value="2">Group 2</option><option value="3">Group 3</option></select></div>
+  <div class="sl"><span>Mortar class</span><select data-k="mas.mort"></select></div>
+  <div class="sl"><span>Partial factor γ<sub>M</sub> <small>UK NA Table NA.1</small></span><select data-k="mas.gM" data-num="1">
+   <option value="2.3">2.3 · Cat I units, Class 1 exec.</option><option value="2.7">2.7 · Cat I units, Class 2 exec.</option>
+   <option value="2.6">2.6 · Cat II units, Class 1 exec.</option><option value="3">3.0 · Cat II units, Class 2 exec.</option></select></div>
+  <div class="prop" id="masProp"></div>
+ </div></details>
+
+ <details class="sec" open><summary>Walls either side</summary><div class="sb">
+  <div class="pside" style="border:0;margin:0;padding:0"><h5>Left pier</h5>
+   <div class="sl"><span>Width</span><div class="iu"><input type="number" data-k="pL.b" step="25"><i>mm</i></div></div>
+   <div class="sl"><span>Beyond the pier</span><select data-k="pL.kind"><option value="return">Return / corner wall</option><option value="opening">Another opening</option><option value="end">Free end of wall</option></select></div>
+   <div class="sl" data-show="pL.kind=opening"><span>Adjacent opening width</span><div class="iu"><input type="number" data-k="pL.adj" step="25"><i>mm</i></div></div>
+  </div>
+  <div class="pside"><h5>Right pier</h5>
+   <div class="sl"><span>Width</span><div class="iu"><input type="number" data-k="pR.b" step="25"><i>mm</i></div></div>
+   <div class="sl"><span>Beyond the pier</span><select data-k="pR.kind"><option value="return">Return / corner wall</option><option value="opening">Another opening</option><option value="end">Free end of wall</option></select></div>
+   <div class="sl" data-show="pR.kind=opening"><span>Adjacent opening width</span><div class="iu"><input type="number" data-k="pR.adj" step="25"><i>mm</i></div></div>
+  </div>
+  <div class="pside"><h5>Whole wall (Approved Document A)</h5>
+   <div class="sl"><span>Wall length between returns <small>0 = piers + openings shown</small></span><div class="iu"><input type="number" data-k="wallLen" step="25" min="0"><i>mm</i></div></div>
+   <div class="sl"><span>Other openings in wall <small>not shown either side</small></span><div class="iu"><input type="number" data-k="otherW" step="25" min="0"><i>mm</i></div></div>
+   <div class="sl"><span>Factor X <small>ADA Diagram 14 / Table</small></span><div class="iu"><input type="number" data-k="X" step="1" min="1" max="6"><i></i></div></div>
+   <div class="sl"><span>Effective height factor ρ<sub>n</sub></span><select data-k="rho" data-num="1"><option value="0.75">0.75 · floors restrain top &amp; bottom</option><option value="1">1.0 · no rotational restraint</option></select></div>
+   <div class="sl"><span>Load eccentricity at top <small>e.g. floor bearing</small></span><div class="iu"><input type="number" data-k="etop" step="1" min="0"><i>mm</i></div></div>
+  </div>
+ </div></details>
+
+ <details class="sec" open id="secF"><summary>Floors &amp; roofs <span class="cnt" id="fCnt"></span></summary><div class="sb">
+  <div id="fList"></div><button class="addb" id="addF">+ Add floor / roof</button>
+  <p class="hint">Height is measured from the top of the lintel to the floor bearing. Line load = load × tributary width (half the floor span for a simply supported floor bearing on this wall).</p>
+ </div></details>
+
+ <details class="sec" open id="secP"><summary>Point loads <span class="cnt" id="pCnt"></span></summary><div class="sb">
+  <div id="pList"></div><button class="addb" id="addP">+ Add point load</button>
+  <p class="hint">x is measured from the left jamb (negative = over the left pier). Drag point loads and floors on the drawing.</p>
+ </div></details>
+
+ <details class="sec" open><summary>Lintel</summary><div class="sb">
+  <div class="seg" id="lType"><button data-v="steel">Steel</button><button data-v="rc">Concrete</button><button data-v="prop">Proprietary</button></div>
+  <div data-show="lintel.type=steel">
+   <div class="sl"><span>Section</span><select data-k="lintel.sec" id="secSel"></select></div>
+   <div class="sl"><span>Grade</span><select data-k="lintel.grade"><option>S275</option><option>S355</option></select></div>
+   <label style="margin:4px 0;white-space:normal"><input type="checkbox" data-k="lintel.restr"> Compression flange restrained by masonry</label>
+   <button class="addb" id="bLight" title="Choose the lightest section in the library that passes the lintel checks">Pick lightest passing section</button><div class="prop" id="stProp"></div>
+  </div>
+  <div data-show="lintel.type=rc">
+   <div class="sl"><span>Width × depth</span><div class="iu"><input type="number" data-k="lintel.rc.b" step="5"><input type="number" data-k="lintel.rc.h" step="5"><i>mm</i></div></div>
+   <div class="sl"><span>Bottom bars</span><div class="iu"><input type="number" data-k="lintel.rc.n" step="1" min="1"><select data-k="lintel.rc.dia" data-num="1"><option>8</option><option>10</option><option>12</option><option>16</option><option>20</option></select><i>H</i></div></div>
+   <div class="sl"><span>Cover to bars</span><div class="iu"><input type="number" data-k="lintel.rc.cover" step="5"><i>mm</i></div></div>
+   <div class="sl"><span>Concrete f<sub>ck</sub></span><select data-k="lintel.rc.fck" data-num="1"><option value="25">C25/30</option><option value="30">C30/37</option><option value="35">C35/45</option><option value="40">C40/50</option><option value="50">C50/60</option></select></div>
+   <div class="sl"><span>Steel f<sub>yk</sub></span><div class="iu"><input type="number" data-k="lintel.rc.fyk" step="10"><i>N/mm²</i></div></div>
+  </div>
+  <div data-show="lintel.type=prop">
+   <div class="sl"><span>Safe working load <small>total UDL, from the maker's table</small></span><div class="iu"><input type="number" data-k="lintel.prop.swl" step="0.5"><i>kN</i></div></div>
+   <div class="sl"><span>Bearing width on this leaf</span><div class="iu"><input type="number" data-k="lintel.prop.bw" step="5"><i>mm</i></div></div>
+   <div class="sl"><span>Depth (drawing)</span><div class="iu"><input type="number" data-k="lintel.prop.d" step="5"><i>mm</i></div></div>
+   <div class="sl"><span>Self-weight</span><div class="iu"><input type="number" data-k="lintel.prop.sw" step="0.01"><i>kN/m</i></div></div>
+  </div>
+ </div></details>
+
+ <details class="sec" open><summary>Load model</summary><div class="sb">
+  <div class="sl"><span>Arching action</span><select data-k="arch"><option value="auto">Auto — check conditions</option><option value="force">Assume arching</option><option value="none">No arching (full load)</option></select></div>
+  <div class="sl"><span>Load triangle angle</span><select data-k="theta" data-num="1"><option value="60">60° (BS 5977-1)</option><option value="45">45°</option></select></div>
+  <div class="sl"><span>Floors inside triangle</span><select data-k="flMode"><option value="full">Full span (conservative)</option><option value="chord">Over triangle chord</option></select></div>
+  <label style="margin:4px 0;white-space:normal"><input type="checkbox" data-k="zoneJoints"> Openings or movement joints in the loading zone</label>
+  <div class="sl"><span>ULS combination</span><select data-k="combo"><option value="6.10">EN 1990 Eq 6.10 · 1.35G + 1.5Q</option><option value="6.10ab">Eq 6.10a/b (UK NA) · worse of</option></select></div>
+  <div class="sl"><span>Deflection limit</span><select data-k="dlim" data-num="1"><option value="250">L / 250</option><option value="325">L / 325</option><option value="360">L / 360</option><option value="500">L / 500</option></select></div>
+ </div></details>
+</aside>
+<main>
+ <div id="mid">
+  <div id="wrap"><canvas id="cv"></canvas>
+   <div id="ctb"><button id="bFit" title="Fit drawing (F)">Fit</button><button id="bZi" title="Zoom in">+</button><button id="bZo" title="Zoom out">−</button>
+    <label><input type="checkbox" data-v="tri" checked> Load triangle</label><label><input type="checkbox" data-v="zone" checked> Zone 1.1L</label><label><input type="checkbox" data-v="disp" checked> Dispersal</label><label><input type="checkbox" data-v="dims" checked> Dims</label><label><input type="checkbox" data-v="courses" checked> Courses</label></div>
+   <div id="tchip" hidden></div>
+  </div>
+  <aside id="side"><div id="sideH"><b>Results</b><button id="bSide" title="Collapse / expand">⟩</button></div><div id="sideB"><div id="ptitle"></div><div id="res"></div></div></aside>
+ </div>
+ <div id="dgw"><canvas id="dg"></canvas></div>
+ <div class="bar b">
+  <span class="g">Diagrams</span>
+  <label><input type="checkbox" data-d="q" checked><span class="sw" style="--c:var(--neon3);--a:22px;--b:22px"></span>Load (ULS)</label>
+  <label><input type="checkbox" data-d="V" checked><span class="sw" style="--c:var(--neon2);--a:7px;--b:10px"></span>Shear</label>
+  <label><input type="checkbox" data-d="M" checked><span class="sw" style="--c:var(--acc);--a:22px;--b:22px"></span>Moment</label>
+  <label><input type="checkbox" data-d="d" checked><span class="sw" style="--c:var(--amb);--a:3px;--b:6px"></span>Deflection (SLS)</label>
+  <label style="margin-left:auto"><input type="checkbox" id="dgOn" checked> Show diagram strip</label>
+ </div>
+</main>
+<div id="vmodal" hidden><div class="vc"><button class="x" id="mX">✕</button>
+ <h2>Lintel Loader <span>· method</span></h2>
+ <p>A design aid for a lintel over an opening in a single leaf of loadbearing masonry, and for the masonry piers either side. Units: kN, m (inputs in mm). Run each leaf of a cavity wall separately with the loads that leaf carries.</p>
+ <h3>Loads on the lintel</h3>
+ <ul>
+  <li><b>Arching.</b> Where the masonry above can arch, the lintel carries only the masonry inside a load triangle (60° to the horizontal by default, as BS 5977-1) plus loads applied within a loading zone of height 1.1 × clear span. Loads above the zone are carried by the arch to the piers. In <b>Auto</b> mode arching is taken only when: the masonry above is at least the triangle height + 150 mm, there are no openings or movement joints in the zone, neither side is a free wall end, and both piers resist the arch thrust.</li>
+  <li><b>No arching.</b> All masonry up to the height entered and every floor are carried over the full clear span.</li>
+  <li><b>Floors</b> are line loads (kN/m² × tributary width). Within the zone they act over the full span; optionally, those inside the triangle can act only over the triangle chord at floor level.</li>
+  <li><b>Point loads</b> spread at 60° to the horizontal through the masonry (EC6 6.1.3) onto the lintel. The part of the spread that falls beyond a jamb goes into that pier.</li>
+  <li>Lintel span = clear span + one bearing length (centre to centre of bearings). Self-weight is included.</li>
+ </ul>
+ <h3>Lintel checks</h3>
+ <ul>
+  <li><b>Steel</b> (EN 1993-1-1): section classification, M<sub>c,Rd</sub> (W<sub>pl</sub> or W<sub>el</sub>), V<sub>pl,Rd</sub>, and SLS deflection under G + Q. If the flange is not restrained, LTB uses M<sub>cr</sub> with C<sub>1</sub> = 1.13 and rolled-section curves b/c. Properties come from the nominal dimensions with root radii ignored, which is slightly conservative.</li>
+  <li><b>Reinforced concrete</b> (EN 1992-1-1): rectangular stress block bending, V<sub>Rd,c</sub> without links, span/effective-depth (7.4.2) and minimum steel. The deflection diagram uses a rough long-term cracked stiffness (E<sub>cm</sub>/3, 0.5 I<sub>g</sub>) and is indicative only.</li>
+  <li><b>Proprietary lintels</b>: the equivalent UDL, max(8M/L, 2R<sub>max</sub>) under unfactored loads, is compared with the maker's safe working load. Use the maker's table for the actual length, leaf ratio and load case.</li>
+ </ul>
+ <h3>Walls either side (piers)</h3>
+ <ul>
+  <li><b>Bearing</b> (EC6 6.1.3): N<sub>Ed</sub> ≤ β A<sub>b</sub> f<sub>d</sub>, with a<sub>1</sub> = 0 at the jamb. The effective length l<sub>efm</sub> spreads at 60° into the pier only, so it is capped by the pier width. A<sub>b</sub>/A<sub>ef</sub> ≤ 0.45, and β = 1 for units that are not Group 1.</li>
+  <li><b>Axial</b> (EC6 6.1.2 / Annex G): the pier is a column b × t with h<sub>ef</sub> = ρ<sub>n</sub> h. It carries the lintel reaction, the masonry and floors over the pier, the share of arched loads, and any point-load spread beyond the jamb. The check is made at bearing level (Φ<sub>i</sub>) and at mid-height (Φ<sub>m</sub>, with e<sub>m</sub> ≈ e<sub>init</sub> + 0.6 e<sub>top</sub>). The small-area factor (0.7 + 3A) applies when A &lt; 0.1 m².</li>
+  <li><b>Arch thrust</b>: T = W<sub>arch</sub>L/(8z), with z = 0.8 × min(triangle height, masonry height). It is resisted by bed-joint shear in the pier, f<sub>vk</sub> = f<sub>vk0</sub> + 0.4σ<sub>d</sub> ≤ 0.065f<sub>b</sub>, with σ<sub>d</sub> from permanent load only.</li>
+  <li><b>Approved Document A</b> (England, Diagram 14, advisory): no opening wider than 3 m, total openings ≤ 2L/3, a return pier of at least max(665 mm, W/X), and a pier between openings of at least the larger opening / X. A free wall end falls outside the guidance.</li>
+ </ul>
+ <h3>Masonry properties</h3>
+ <p>f<sub>k</sub> = K f<sub>b</sub><sup>0.7</sup> f<sub>m</sub><sup>0.3</sup>, with f<sub>m</sub> ≤ min(20, 2f<sub>b</sub>). f<sub>vk0</sub> comes from EC6 Table 3.4. The library values are typical and indicative; replace them with the manufacturer's declared normalised strength and density.</p>
+ <h3>Limits</h3>
+ <p>This is a design aid, not a substitute for engineering judgement. It does not check lateral (wind) loading on the piers, concentrated loads on the lintel's bottom flange or toe, cavity-tray or thermal details, or construction-stage (green masonry) loading, except through the LTB option. All results should be verified by a competent engineer.</p>
+</div></div>
+<script>
+// ===================== ENGINE (pure; no DOM) =====================
+const DEG=Math.PI/180;
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const MORT={M2:2,M4:4,M6:6,M12:12};
+const MORTN={M2:'M2 (iv) 1:1:8–9',M4:'M4 (iii) 1:1:5–6',M6:'M6 (ii) 1:½:4–4½',M12:'M12 (i) 1:¼:3'};
+// Typical masonry. fb = normalised mean compressive strength (N/mm²) — indicative; confirm with the manufacturer's declared value.
+const MAS={
+ clay:{n:'Clay facing brick — solid / frogged',grp:1,cat:'clay',gamma:20,fb:21,K:0.50,uh:65,ul:215,note:'25 N/mm² brick × δ 0.85'},
+ claye:{n:'Clay engineering brick — Class B',grp:1,cat:'clay',gamma:22,fb:64,K:0.50,uh:65,ul:215,note:'75 N/mm² brick × δ 0.85'},
+ clayp:{n:'Clay brick — perforated (Group 2)',grp:2,cat:'clay',gamma:17,fb:21,K:0.40,uh:65,ul:215,note:'25 N/mm² brick × δ 0.85'},
+ cs:{n:'Calcium silicate brick',grp:1,cat:'cs',gamma:20,fb:17,K:0.80,uh:65,ul:215,note:'20 N/mm² brick × δ 0.85'},
+ dense:{n:'Dense aggregate concrete block (7.3)',grp:1,cat:'conc',gamma:20,fb:10.1,K:0.75,uh:215,ul:440,note:'7.3 N/mm² block × δ 1.38'},
+ med:{n:'Medium-density concrete block (7.3)',grp:1,cat:'conc',gamma:14,fb:10.1,K:0.75,uh:215,ul:440,note:'7.3 N/mm² block × δ 1.38'},
+ light:{n:'Lightweight aggregate block (3.6)',grp:1,cat:'conc',gamma:10,fb:5.0,K:0.75,uh:215,ul:440,note:'3.6 N/mm² block × δ 1.38'},
+ aac:{n:'Aircrete / AAC block (3.6)',grp:1,cat:'aac',gamma:7,fb:5.0,K:0.75,uh:215,ul:440,note:'3.6 N/mm² block × δ 1.38'},
+ stone:{n:'Natural stone — coursed / dressed',grp:1,cat:'stone',gamma:23,fb:40,K:0.45,uh:140,ul:440,note:'sandstone/limestone, indicative'},
+ custom:{n:'Custom (enter properties)',grp:1,cat:'conc',gamma:20,fb:10,K:0.6,uh:65,ul:215,note:'user defined'}
+};
+function fvk0Of(cat,mort){const f=MORT[mort]||4;if(cat==='clay')return f>=10?.30:f>=4?.20:.10;return f>=10?.20:f>=4?.15:.10;}
+function fkOf(m){const fm=Math.min(MORT[m.mort]||4,20,2*m.fb);return m.K*Math.pow(m.fb,0.7)*Math.pow(fm,0.3);}
+// Steel sections: [family, designation, h, b, tw, tf] (mm, nominal; root radii ignored)
+const LIB=[
+ ['UB','127×76×13',127,76,4.0,7.6],['UB','152×89×16',152.4,88.7,4.5,7.7],['UB','178×102×19',177.8,101.2,4.8,7.9],
+ ['UB','203×102×23',203.2,101.8,5.4,9.3],['UB','203×133×25',203.2,133.2,5.7,7.8],['UB','254×102×22',254,101.6,5.7,6.8],
+ ['UB','254×146×31',251.4,146.1,6.0,8.6],['UB','305×102×25',305.1,101.6,5.8,7.0],['UB','305×165×40',303.4,165,6.0,10.2],
+ ['UB','356×171×45',351.4,171.1,7.0,9.7],
+ ['UC','152×152×23',152.4,152.2,5.8,6.8],['UC','152×152×30',157.6,152.9,6.5,9.4],['UC','203×203×46',203.2,203.6,7.2,11.0],
+ ['PFC','100×50×10',100,50,5.0,8.5],['PFC','125×65×15',125,65,5.5,9.5],['PFC','150×75×18',150,75,5.5,10],
+ ['PFC','180×75×20',180,75,6.0,10.5],['PFC','200×90×30',200,90,7.0,14],['PFC','230×90×32',230,90,7.5,14]
+];
+function steelProps(key,grade){
+ const r=LIB.find(q=>q[0]+' '+q[1]===key)||LIB[1];const [k,n,h,b,tw,tf]=r;const hw=h-2*tf;
+ const A=2*b*tf+hw*tw, Iy=(b*h**3-(b-tw)*hw**3)/12, Wel=2*Iy/h, Wpl=b*tf*(h-tf)+tw*hw*hw/4;
+ const Iz=k==='PFC'?(()=>{const xc=(2*b*b*tf/2+hw*tw*tw/2)/A;return 2*(tf*b**3/12+b*tf*(b/2-xc)**2)+hw*tw**3/12+hw*tw*(tw/2-xc)**2})():2*tf*b**3/12+hw*tw**3/12;
+ const It=(2*b*tf**3+hw*tw**3)/3, Iw=Iz*(h-tf)**2/4;
+ const tmax=Math.max(tf,tw);const fy=grade==='S355'?(tmax<=16?355:345):(tmax<=16?275:265);const e=Math.sqrt(235/fy);
+ const cf=(k==='PFC'?(b-tw):(b-tw)/2)/tf, cw=hw/tw;
+ const clF=cf<=9*e?1:cf<=10*e?2:cf<=14*e?3:4, clW=cw<=72*e?1:cw<=83*e?2:cw<=124*e?3:4;
+ const Av=Math.max(A-2*b*tf+tw*tf,hw*tw);
+ return {k,n,key:k+' '+n,h,b,tw,tf,A,Iy,Wel,Wpl,Iz,It,Iw,fy,cls:Math.max(clF,clW),Av,sw:A*78.5e-6};
+}
+function lintelOf(S){
+ const L=S.lintel;
+ if(L.type==='steel'){const s=steelProps(L.sec,L.grade);return {kind:'steel',name:s.key+' '+L.grade,d:s.h/1000,bw:s.b/1000,sw:s.sw,EI:210e6*s.Iy*1e-12,s};}
+ if(L.type==='rc'){const r=L.rc;const Ecm=22*Math.pow((r.fck+8)/10,0.3);const Ig=r.b*r.h**3/12;
+  return {kind:'rc',name:`RC ${r.b}×${r.h} · ${r.n}H${r.dia} · C${r.fck}`,d:r.h/1000,bw:r.b/1000,sw:25*r.b*r.h*1e-6,EI:Ecm*1e6/3*0.5*Ig*1e-12,Ecm,r};}
+ const p=L.prop;return {kind:'prop',name:`Proprietary (SWL ${p.swl} kN)`,d:p.d/1000,bw:p.bw/1000,sw:p.sw,EI:null,p};
+}
+function beam(patches,Le,N=800){
+ const dx=Le/N,F=new Float64Array(N);
+ for(const p of patches){const a=Math.max(p.a,0),b=Math.min(p.b,Le);if(b<=a)continue;
+  const j0=Math.floor(a/dx),j1=Math.min(N-1,Math.floor((b-1e-12)/dx));
+  for(let j=j0;j<=j1;j++){const x1=Math.max(a,j*dx),x2=Math.min(b,(j+1)*dx);if(x2<=x1)continue;
+   const xm=(x1+x2)/2,w=p.w1+(p.w2-p.w1)*(xm-p.a)/((p.b-p.a)||1);F[j]+=w*(x2-x1);}}
+ let W=0,Wx=0;for(let j=0;j<N;j++){W+=F[j];Wx+=F[j]*(j+.5)*dx;}
+ const RR=Le>0?Wx/Le:0,RL=W-RR;const x=[],M=[],V=[];let cF=0,cFX=0;
+ for(let i=0;i<=N;i++){const xi=i*dx;x.push(xi);M.push(RL*xi-(cF*xi-cFX));V.push(RL-cF);if(i<N){cF+=F[i];cFX+=F[i]*(i+.5)*dx;}}
+ return {x,M,V,RL,RR,W,dx};
+}
+function deflect(M,dx,EI){
+ const n=M.length;if(!EI)return null;const u=new Float64Array(n);let ph=0;
+ for(let i=1;i<n;i++){const phn=ph+(M[i-1]+M[i])/2/EI*dx;u[i]=u[i-1]+(ph+phn)/2*dx;ph=phn;}
+ const L=(n-1)*dx,uN=u[n-1];const d=[];for(let i=0;i<n;i++)d.push(-(u[i]-uN*(i*dx)/L));return d;
+}
+function compute(S){
+ const out={warn:[]};
+ const m=S.mas,t=m.t/1000,gw=m.gamma*t;
+ const L0=S.L0/1000,lb=S.lb/1000,Le=L0+lb,sL=lb/2,sR=sL+L0;
+ const lin=lintelOf(S),dL=lin.d,Hm=S.Hm/1000,hHead=S.hHead/1000,hSt=S.hStorey/1000;
+ const th=S.theta*DEG,htri=L0/2*Math.tan(th),zone=1.1*L0;
+ const fk=fkOf(m),fd=fk/m.gM,fvk0=fvk0Of(m.cat,m.mort);
+ const combos=S.combo==='6.10ab'?[[1.35,1.05],[1.25,1.5]]:[[1.35,1.5]];
+ const U=(g,q)=>Math.max(...combos.map(c=>c[0]*g+c[1]*q));
+ const side={L:{b:S.pL.b/1000,kind:S.pL.kind,adj:S.pL.adj/1000},R:{b:S.pR.b/1000,kind:S.pR.kind,adj:S.pR.adj/1000}};
+ Object.assign(out,{L0,lb,Le,sL,sR,htri,zone,lin,dL,Hm,hHead,hSt,t,gw,fk,fd,fvk0,side,combos});
+ function build(arch){
+  const P={G:[],Q:[]},items=[],ex={L:{G:0,Q:0},R:{G:0,Q:0}},aw={G:0,Q:0},disp=[];
+  P.G.push({a:0,b:Le,w1:lin.sw,w2:lin.sw});items.push({n:'Lintel self-weight',how:`${lin.sw.toFixed(2)} kN/m over ${(Le*1000).toFixed(0)} mm`,G:lin.sw*Le,Q:0});
+  const masTot=gw*L0*Hm;let onL,how;
+  if(arch){const u=Hm/Math.tan(th);
+   if(u>=L0/2){const pk=gw*htri;P.G.push({a:sL,b:sL+L0/2,w1:0,w2:pk},{a:sL+L0/2,b:sR,w1:pk,w2:0});onL=pk*L0/2;how=`${S.theta}° triangle, ${(htri*1000).toFixed(0)} mm high`;}
+   else{const pk=gw*Hm;P.G.push({a:sL,b:sL+u,w1:0,w2:pk},{a:sL+u,b:sR-u,w1:pk,w2:pk},{a:sR-u,b:sR,w1:pk,w2:0});onL=pk*(L0-u);how='triangle, truncated at top of masonry';}
+   const rest=masTot-onL;ex.L.G+=rest/2;ex.R.G+=rest/2;aw.G+=rest;
+  }else{const w=gw*Hm;P.G.push({a:sL,b:sR,w1:w,w2:w});onL=masTot;how=`full rectangle, ${(Hm*1000).toFixed(0)} mm high`;}
+  items.push({n:'Masonry above',how,G:onL,Q:0});
+  S.floors.forEach((f,i)=>{const y=f.y/1000,wg=f.gk*f.trib,wq=f.qk*f.trib;let a=sL,b=sR,h,on=true;
+   if(arch){if(y>zone){on=false;h='above loading zone → carried by arching';}
+    else if(y<htri&&S.flMode==='chord'){const c=L0*(1-y/htri);a=sL+(L0-c)/2;b=a+c;h=`triangle chord ${(c*1000).toFixed(0)} mm at floor level`;}
+    else h='within loading zone → full span';}
+   else h='full span (no arching)';
+   const len=on?Math.max(0,b-a):0;if(len>0){P.G.push({a,b,w1:wg,w2:wg});P.Q.push({a,b,w1:wq,w2:wq});}
+   const rG=wg*(L0-len),rQ=wq*(L0-len);ex.L.G+=rG/2;ex.R.G+=rG/2;ex.L.Q+=rQ/2;ex.R.Q+=rQ/2;aw.G+=rG;aw.Q+=rQ;
+   items.push({n:f.n||('Floor '+(i+1)),how:h,G:wg*len,Q:wq*len,ref:'f'+i,a,b,on});});
+  S.pts.forEach((p,i)=>{const x=p.x/1000,y=Math.max(0,p.y/1000),a=Math.max(0,p.a/1000);
+   if(arch&&y>zone){const xc=clamp(x,0,L0),fl=L0>0?1-xc/L0:.5;ex.L.G+=p.gk*fl;ex.L.Q+=p.qk*fl;ex.R.G+=p.gk*(1-fl);ex.R.Q+=p.qk*(1-fl);
+    if(x>=0&&x<=L0){aw.G+=p.gk;aw.Q+=p.qk;}items.push({n:p.n||('P'+(i+1)),how:'above loading zone → carried by arching',G:0,Q:0,ref:'p'+i});disp.push(null);return;}
+   const e=y/Math.tan(60*DEG),wd=Math.max(a+2*e,0.02),x1=x-wd/2,x2=x+wd/2;
+   const o1=Math.max(x1,0),o2=Math.min(x2,L0),ov=Math.max(0,o2-o1);
+   const fL=Math.max(0,Math.min(x2,0)-x1)/wd,fR=Math.max(0,x2-Math.max(x1,L0))/wd,fO=ov/wd;
+   if(ov>0){P.G.push({a:sL+o1,b:sL+o2,w1:p.gk/wd,w2:p.gk/wd});P.Q.push({a:sL+o1,b:sL+o2,w1:p.qk/wd,w2:p.qk/wd});}
+   ex.L.G+=p.gk*fL;ex.L.Q+=p.qk*fL;ex.R.G+=p.gk*fR;ex.R.Q+=p.qk*fR;
+   let h=`60° spread → ${(wd*1000).toFixed(0)} mm at lintel`;if(fO<0.999)h+=fO>0?`; ${(fO*100).toFixed(0)}% on lintel, rest to pier`:'; all onto pier';
+   items.push({n:p.n||('P'+(i+1)),how:h,G:p.gk*fO,Q:p.qk*fO,ref:'p'+i});disp.push({x1,x2,e});});
+  return {P,items,ex,aw,disp};
+ }
+ function run(arch){
+  const B=build(arch),aG=beam(B.P.G,Le),aQ=beam(B.P.Q,Le);
+  let gov=combos[0],Mbest=-1e9;for(const c of combos){const mx=Math.max(...aG.M.map((v,i)=>c[0]*v+c[1]*aQ.M[i]));if(mx>Mbest){Mbest=mx;gov=c;}}
+  const Mu=aG.M.map((v,i)=>gov[0]*v+gov[1]*aQ.M[i]),Vu=aG.V.map((v,i)=>gov[0]*v+gov[1]*aQ.V[i]);
+  const Ms=aG.M.map((v,i)=>v+aQ.M[i]);const dfl=deflect(Ms,aG.dx,lin.EI);
+  const qU=[];{const n=aG.x.length;for(let i=0;i<n;i++){const xi=aG.x[i];let g=0,q=0;for(const p of B.P.G)if(xi>=p.a&&xi<=p.b)g+=p.w1+(p.w2-p.w1)*(xi-p.a)/((p.b-p.a)||1);for(const p of B.P.Q)if(xi>=p.a&&xi<=p.b)q+=p.w1+(p.w2-p.w1)*(xi-p.a)/((p.b-p.a)||1);qU.push(gov[0]*g+gov[1]*q);}}
+  const R={L:{G:aG.RL,Q:aQ.RL,U:U(aG.RL,aQ.RL)},R:{G:aG.RR,Q:aQ.RR,U:U(aG.RR,aQ.RR)}};
+  const Med=Mbest,Ved=Math.max(R.L.U,R.R.U);
+  const dmax=dfl?Math.max(...dfl):null;
+  // pier actions
+  const pier={};for(const s of ['L','R']){const b=side[s].b;let G=R[s].G+gw*b*(Hm+dL)+B.ex[s].G,Q=R[s].Q+B.ex[s].Q;
+   for(const f of S.floors){G+=f.gk*f.trib*b;Q+=f.qk*f.trib*b;}
+   const Gm=G+gw*b*Math.max(0,hHead-hSt/2);pier[s]={Gt:G,Qt:Q,Nt:U(G,Q),Gm,Nm:U(Gm,Q)};}
+  // arch thrust
+  const z=0.8*Math.min(htri,Hm),Wa=U(B.aw.G,B.aw.Q),T=arch&&z>0?Wa*L0/(8*z):0;const thr={T,Wa,z};
+  for(const s of ['L','R']){const b=side[s].b,A=b*t;const sig=A>0?pier[s].Gt/A/1000:0;const fvk=Math.min(fvk0+0.4*sig,0.065*m.fb);const VRd=fvk/m.gM*A*1000;thr[s]={sig,fvk,VRd,u:VRd>0?T/VRd:(T>0?99:0)};}
+  return {arch,B,aG,aQ,gov,Mu,Vu,Ms,dfl,qU,R,Med,Ved,dmax,pier,thr,Wtot:{G:aG.W,Q:aQ.W}};
+ }
+ const geomOK=Hm>=htri+0.15-1e-9,jOK=!S.zoneJoints;const rA=run(true);const thrOK=rA.thr.L.u<=1&&rA.thr.R.u<=1;
+ const endOK=side.L.kind!=='end'&&side.R.kind!=='end';
+ let arch;if(S.arch==='none')arch=false;else if(S.arch==='force')arch=true;else arch=geomOK&&jOK&&thrOK&&endOK;
+ const res=arch?rA:run(false);
+ out.archCond=[{n:`Masonry above ≥ triangle + 150 mm (${(htri*1000+150).toFixed(0)} mm)`,ok:geomOK},{n:'No openings / movement joints in loading zone',ok:jOK},
+  {n:'Arch thrust resisted by both piers',ok:thrOK},{n:'Neither side is a free wall end',ok:endOK}];
+ out.archMode=S.arch;Object.assign(out,res);
+ if(S.arch==='force'&&!(geomOK&&jOK&&thrOK&&endOK))out.warn.push('Arching is forced on although its conditions are not all met.');
+ // ---------- checks ----------
+ const C=[];const add=(g,n,ed,rd,unit,note,adv)=>{const u=rd>0?ed/rd:(ed>0?99:0);C.push({g,n,ed,rd,unit,note,u,adv:!!adv,st:u<=1+1e-9?'ok':adv?'warn':'fail'});};
+ const Le_mm=Le*1000;
+ if(lin.kind==='steel'){const s=lin.s,W=s.cls<=2?s.Wpl:s.Wel,Mc=W*s.fy/1e6;let Mrd=Mc,nt=`Class ${s.cls}, ${s.cls<=2?'W_pl':'W_el'}, f_y ${s.fy}`;
+  if(s.cls>=4){C.push({g:'Lintel',n:'Section class',ed:4,rd:3,unit:'',note:'Class 4 section — not covered',u:9,st:'fail'});}
+  if(!S.lintel.restr){const L=Le_mm,E=210000,G=81000,C1=1.13;const Mcr=C1*Math.PI**2*E*s.Iz/L**2*Math.sqrt(s.Iw/s.Iz+L*L*G*s.It/(Math.PI**2*E*s.Iz));
+   const lam=Math.sqrt(W*s.fy/Mcr),al=s.h/s.b<=2?0.34:0.49;let chi=1;if(lam>0.4){const Ph=0.5*(1+al*(lam-0.4)+0.75*lam*lam);chi=Math.min(1,1/(lam*lam),1/(Ph+Math.sqrt(Ph*Ph-0.75*lam*lam)));}
+   Mrd=chi*Mc;nt+=` · LTB: M_cr ${(Mcr/1e6).toFixed(1)} kNm, λ̄_LT ${lam.toFixed(2)}, χ_LT ${chi.toFixed(2)}${s.k==='PFC'?' (approx. for channel)':''}`;}
+  else nt+=' · laterally restrained';
+  add('Lintel','Bending resistance',res.Med,Mrd,'kNm',nt);
+  const Vrd=s.Av*s.fy/Math.sqrt(3)/1000;add('Lintel','Shear resistance',res.Ved,Vrd,'kN',`A_v ${s.Av.toFixed(0)} mm²`);
+  add('Lintel','Deflection (SLS, G+Q)',res.dmax*1000,Le_mm/S.dlim,'mm',`limit L/${S.dlim}`);
+  if(s.b>m.t+1)out.warn.push(`Flange (${s.b} mm) is wider than the leaf (${m.t} mm); bearing width taken as leaf thickness.`);
+ }else if(lin.kind==='rc'){const r=lin.r,d=r.h-r.cover-r.dia/2,As=r.n*Math.PI*r.dia**2/4,b=r.b;
+  const x=0.87*r.fyk*As/(0.4536*r.fck*b);let Mrd=0.87*r.fyk*As*Math.min(d-0.4*x,0.95*d)/1e6;const Mlim=0.167*r.fck*b*d*d/1e6;if(x/d>0.45)Mrd=Math.min(Mrd,Mlim);
+  add('Lintel','Bending resistance',res.Med,Mrd,'kNm',`d ${d.toFixed(0)} mm, A_s ${As.toFixed(0)} mm², x/d ${(x/d).toFixed(2)}`);
+  const k=Math.min(1+Math.sqrt(200/d),2),rho=Math.min(As/(b*d),0.02),v=Math.max(0.12*k*Math.cbrt(100*rho*r.fck),0.035*k**1.5*Math.sqrt(r.fck));
+  add('Lintel','Shear resistance V_Rd,c (no links)',res.Ved,v*b*d/1000,'kN',`k ${k.toFixed(2)}, ρ_l ${(rho*100).toFixed(2)}%`);
+  const K=res.Med*1e6/(b*d*d*r.fck);if(K>0.167)C.push({g:'Lintel',n:'K ≤ 0.167 (no compression steel)',ed:K,rd:0.167,unit:'',note:'section too shallow',u:K/0.167,st:'fail'});
+  const zz=Math.min(0.95*d,d*(0.5+Math.sqrt(Math.max(0,0.25-K/1.134))));const Asr=res.Med*1e6/(0.87*r.fyk*zz);
+  const r0=Math.sqrt(r.fck)/1000,rq=Math.max(Asr/(b*d),1e-5);const ld=rq<=r0?11+1.5*Math.sqrt(r.fck)*r0/rq+3.2*Math.sqrt(r.fck)*Math.pow(r0/rq-1,1.5):11+1.5*Math.sqrt(r.fck)*r0/rq;
+  const mod=Math.min(1.5,500*As/(r.fyk*Math.max(Asr,1)));
+  add('Lintel','Span / effective depth',Le_mm/d,Math.min(ld,40)*mod,'',`basic ${Math.min(ld,40).toFixed(1)} × ${mod.toFixed(2)} (EC2 7.4.2)`);
+  const fctm=0.3*Math.pow(r.fck,2/3),Amin=Math.max(0.26*fctm/r.fyk,0.0013)*b*d;add('Lintel','Minimum tension steel',Amin,As,'mm²','EC2 9.2.1.1');
+ }else{const p=lin.p;const Ms=Math.max(...res.Ms),Weq=8*Ms/Le,Wr=2*Math.max(res.R.L.G+res.R.L.Q,res.R.R.G+res.R.R.Q);
+  add('Lintel','Equivalent UDL (SLS) vs safe working load',Math.max(Weq,Wr),p.swl,'kN',`8M/L ${Weq.toFixed(1)} kN; 2·R_max ${Wr.toFixed(1)} kN — compare with the manufacturer's table for this length`);}
+ // ---------- piers ----------
+ const hc=hHead,tbw=Math.min(lin.bw,t),Ab=lb*tbw;
+ const h_ef=S.rho*hSt,lam=h_ef/t,einit=h_ef/450,etop=(S.etop||0)/1000;
+ out.slender={h_ef,lam};
+ for(const s of ['L','R']){const P=side[s],b=P.b,lab=s==='L'?'Left pier':'Right pier';
+  if(b<lb-1e-9){C.push({g:lab,n:'Pier wide enough for bearing',ed:lb*1000,rd:b*1000,unit:'mm',note:'pier narrower than bearing length',u:b>0?lb/b:99,st:'fail'});}
+  const lefm=lb+Math.min(hc/2/Math.tan(60*DEG),Math.max(0,b-lb)),Aef=lefm*t,ratio=Math.min(Ab/Aef,0.45);
+  const beta=m.grp===1?clamp(1.5-1.1*ratio,1,1.25):1;
+  add(lab,'Bearing under lintel (EC6 6.1.3)',res.R[s].U,beta*Ab*fd*1000,'kN',`A_b ${(lb*1000).toFixed(0)}×${(tbw*1000).toFixed(0)} mm, l_efm ${(lefm*1000).toFixed(0)} mm, β ${beta.toFixed(2)}${m.grp!==1?' (Group '+m.grp+': β = 1)':''}`);
+  const A=b*t,fdA=A<0.1?fd*(0.7+3*A):fd;
+  const ei=Math.max(etop+einit,0.05*t),Phi_i=Math.max(0,1-2*ei/t);
+  const em=0.6*etop+einit,ek=lam<=15?0:0.002*1.5*lam*Math.sqrt(t*em),emk=Math.max(em+ek,0.05*t);
+  const lb_=lam/Math.sqrt(1000),uu=(lb_-0.063)/(0.73-1.17*emk/t),Phi_m=Math.max(0,(1-2*emk/t)*Math.exp(-uu*uu/2));
+  add(lab,'Axial at lintel bearing level',res.pier[s].Nt,Phi_i*fdA*A*1000,'kN',`Φ_i ${Phi_i.toFixed(2)}, ${(b*1000).toFixed(0)}×${(t*1000).toFixed(0)} mm${A<0.1?`, small-area ×${(0.7+3*A).toFixed(2)}`:''}`);
+  add(lab,'Axial at mid-height (EC6 Annex G)',res.pier[s].Nm,Phi_m*fdA*A*1000,'kN',`Φ_m ${Phi_m.toFixed(2)}, e_mk ${(emk*1000).toFixed(1)} mm`);
+  if(res.arch)add(lab,'Arch thrust — bed-joint shear',res.thr.T,res.thr[s].VRd,'kN',`f_vk ${res.thr[s].fvk.toFixed(3)} N/mm² (σ_d ${res.thr[s].sig.toFixed(3)} under G only)`);
+  const X=S.X||6;
+  if(P.kind==='return'){const req=Math.max(0.665,L0/X);add(lab,'ADA Diagram 14: return pier width',req*1000,b*1000,'mm',`≥ max(665, W/${X})`,true);}
+  else if(P.kind==='opening'){const req=Math.max(L0,P.adj)/X;add(lab,'ADA Diagram 14: pier between openings',req*1000,b*1000,'mm',`≥ larger opening / ${X}`,true);}
+  else C.push({g:lab,n:'ADA Diagram 14: free wall end',ed:0,rd:0,unit:'',note:'outside the prescriptive guidance — needs design',u:0,adv:true,st:'warn'});
+ }
+ add('Geometry','Slenderness h_ef / t_ef ≤ 27',lam,27,'',`h_ef = ${S.rho} × ${(hSt*1000).toFixed(0)} mm`);
+ C.push({g:'Geometry',n:'Bearing length ≥ 150 mm (100 mm absolute minimum)',ed:lb*1000,rd:150,unit:'mm',note:lb<0.1?'below 100 mm — not acceptable':lb<0.15?'between 100 and 150 mm — check the lintel maker’s minimum':'',u:lb>0?0.15/lb:99,adv:true,st:lb>=0.15-1e-9?'ok':lb>=0.1-1e-9?'warn':'fail'});
+ add('Geometry','ADA: opening width ≤ 3 m',L0*1000,3000,'mm','',true);
+ {const Lw=S.wallLen>0?S.wallLen/1000:side.L.b+L0+side.R.b+(side.L.kind==='opening'?side.L.adj:0)+(side.R.kind==='opening'?side.R.adj:0);
+  const sw=L0+(side.L.kind==='opening'?side.L.adj:0)+(side.R.kind==='opening'?side.R.adj:0)+(S.otherW||0)/1000;
+  add('Geometry','ADA: total openings ≤ 2L/3',sw*1000,2*Lw/3*1000,'mm',`wall length ${(Lw*1000).toFixed(0)} mm`,true);}
+ if(S.floors.some(f=>f.y>S.Hm))out.warn.push('A floor sits above the top of the masonry entered — check the masonry height.');
+ out.checks=C;out.fail=C.some(c=>c.st==='fail');out.warnN=C.filter(c=>c.st==='warn').length;
+ out.umax=Math.max(0,...C.filter(c=>!c.adv).map(c=>c.u));
+ return out;
+}
+// ===================== /ENGINE =====================
+if(typeof module!=='undefined')module.exports={compute,steelProps,beam,deflect,MAS,LIB,fkOf,fvk0Of};
+
+// ===================== UI =====================
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const KEY='lintelLoader.v1';
+function defS(){return {v:1,L0:1800,lb:150,hHead:2100,hStorey:2550,Hm:2400,
+ mas:{type:'clay',t:102.5,gamma:20,fb:21,K:0.5,grp:1,cat:'clay',mort:'M4',gM:2.7},
+ pL:{b:900,kind:'return',adj:900},pR:{b:600,kind:'opening',adj:1200},wallLen:0,otherW:0,X:6,rho:0.75,etop:0,
+ floors:[{n:'First floor',y:375,trib:2.0,gk:1.2,qk:1.5}],
+ pts:[{n:'Beam end',x:1300,y:900,a:100,gk:6,qk:4}],
+ lintel:{type:'steel',sec:'UB 152×89×16',grade:'S275',restr:true,rc:{b:100,h:215,n:2,dia:12,cover:30,fck:40,fyk:500},prop:{swl:15,bw:100,sw:0.15,d:150}},
+ combo:'6.10',arch:'auto',zoneJoints:false,theta:60,flMode:'full',dlim:325};}
+const EX={
+ door:['Door in brick outer leaf — no arching',s=>{s.L0=900;s.Hm=450;s.floors=[];s.pts=[];s.pL={b:665,kind:'return',adj:0};s.pR={b:1200,kind:'opening',adj:1200};s.lintel.type='steel';s.lintel.sec='UB 127×76×13';s.arch='auto';}],
+ window:['Window, arching masonry with first floor',s=>{}],
+ garage:['2.4 m opening, beam point load, blockwork',s=>{s.L0=2400;s.lb=150;s.Hm=1800;Object.assign(s.mas,{type:'dense',t:100,...pick('dense')});s.pL={b:450,kind:'return',adj:0};s.pR={b:900,kind:'end',adj:0};s.floors=[{n:'Bedroom floor',y:300,trib:2.4,gk:1.5,qk:1.5}];s.pts=[{n:'Steel beam',x:1600,y:250,a:150,gk:18,qk:10}];s.lintel.sec='UB 203×133×25';}],
+ inner:['Inner leaf blockwork, RC lintel, joists',s=>{s.L0=1200;s.Hm=600;Object.assign(s.mas,{type:'med',t:100,...pick('med')});s.floors=[{n:'Joists (bearing on lintel line)',y:225,trib:2.1,gk:0.75,qk:1.5},{n:'Roof',y:2400,trib:1.8,gk:1.0,qk:0.75}];s.pts=[];s.lintel.type='rc';s.lintel.rc={b:100,h:215,n:2,dia:12,cover:30,fck:40,fyk:500};s.pL={b:600,kind:'return',adj:0};s.pR={b:450,kind:'opening',adj:900};}],
+ narrow:['Narrow pier between two openings',s=>{s.L0=1500;s.pR={b:250,kind:'opening',adj:1800};s.pts=[{n:'Padstone load',x:1600,y:400,a:215,gk:12,qk:6}];}],
+ stone:['Stone wall, wide opening, forced no-arching',s=>{s.L0=2700;s.Hm=1200;Object.assign(s.mas,{type:'stone',t:300,...pick('stone')});s.arch='none';s.lintel.sec='UB 254×146×31';s.pL={b:1000,kind:'return',adj:0};s.pR={b:1000,kind:'return',adj:0};s.floors=[{n:'Floor',y:450,trib:2.5,gk:1.5,qk:1.5}];s.pts=[];}]
+};
+function pick(k){const m=MAS[k];return {gamma:m.gamma,fb:m.fb,K:m.K,grp:m.grp,cat:m.cat};}
+let S;try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+if(!S||S.v!==1)S=defS();
+const V={sc:120,ox:0,oy:0,tri:true,zone:true,disp:true,dims:true,courses:true,dg:{q:true,V:true,M:true,d:true},fitted:false};
+let R=null,hov=null,drag=null;
+const getP=(o,p)=>p.split('.').reduce((a,k)=>a==null?a:a[k],o);
+const setP=(o,p,v)=>{const ks=p.split('.');let a=o;for(let i=0;i<ks.length-1;i++)a=a[ks[i]];a[ks[ks.length-1]]=v;};
+const f0=v=>(+v).toFixed(0),f1=v=>(+v).toFixed(1),f2=v=>(+v).toFixed(2);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+// ---------- build form ----------
+$('#masType').innerHTML=Object.entries(MAS).map(([k,m])=>`<option value="${k}">${m.n}</option>`).join('');
+$('[data-k="mas.mort"]').innerHTML=Object.entries(MORTN).map(([k,n])=>`<option value="${k}">${n}</option>`).join('');
+$('#secSel').innerHTML=['UB','UC','PFC'].map(f=>`<optgroup label="${f}">`+LIB.filter(r=>r[0]===f).map(r=>`<option>${r[0]} ${r[1]}</option>`).join('')+'</optgroup>').join('');
+$('#exSel').innerHTML+=Object.entries(EX).map(([k,[n]])=>`<option value="${k}">${n}</option>`).join('');
+function syncForm(){
+ for(const el of $$('[data-k]')){const v=getP(S,el.dataset.k);if(el.type==='checkbox')el.checked=!!v;else if(document.activeElement!==el)el.value=v;}
+ $('#masType').value=S.mas.type;
+ for(const b of $$('#lType button'))b.classList.toggle('on',b.dataset.v===S.lintel.type);
+ for(const el of $$('[data-show]')){const [p,v]=el.dataset.show.split('=');el.hidden=String(getP(S,p))!==v;}
+ listForms();
+}
+function listForms(){
+ const fl=$('#fList');fl.innerHTML=S.floors.map((f,i)=>`<div class="card${hov&&hov.t==='f'&&hov.i===i?' hi':''}" data-fi="${i}"><div class="ch"><input type="text" value="${esc(f.n)}" data-l="floors.${i}.n"><button data-del="floors.${i}" title="Remove">✕</button></div>
+  <div class="cg"><label>Height above lintel mm<input type="number" step="25" value="${f.y}" data-l="floors.${i}.y"></label><label>Tributary width m<input type="number" step="0.05" value="${f.trib}" data-l="floors.${i}.trib"></label><label>g<sub>k</sub> / q<sub>k</sub> kN/m²<span style="display:flex;gap:3px"><input type="number" step="0.05" value="${f.gk}" data-l="floors.${i}.gk"><input type="number" step="0.05" value="${f.qk}" data-l="floors.${i}.qk"></span></label></div></div>`).join('');
+ const pl=$('#pList');pl.innerHTML=S.pts.map((p,i)=>`<div class="card${hov&&hov.t==='p'&&hov.i===i?' hi':''}" data-pi="${i}"><div class="ch"><input type="text" value="${esc(p.n)}" data-l="pts.${i}.n"><button data-del="pts.${i}" title="Remove">✕</button></div>
+  <div class="cg"><label>x from left jamb mm<input type="number" step="25" value="${p.x}" data-l="pts.${i}.x"></label><label>Height above lintel mm<input type="number" step="25" value="${p.y}" data-l="pts.${i}.y"></label><label>Bearing length mm<input type="number" step="5" value="${p.a}" data-l="pts.${i}.a"></label>
+  <label>G<sub>k</sub> kN<input type="number" step="0.5" value="${p.gk}" data-l="pts.${i}.gk"></label><label>Q<sub>k</sub> kN<input type="number" step="0.5" value="${p.qk}" data-l="pts.${i}.qk"></label></div></div>`).join('');
+ $('#fCnt').textContent=S.floors.length?`· ${S.floors.length}`:'';$('#pCnt').textContent=S.pts.length?`· ${S.pts.length}`:'';
+}
+document.addEventListener('input',e=>{const el=e.target;
+ if(el.dataset.k){let v;if(el.type==='checkbox')v=el.checked;else if(el.type==='number'||el.dataset.num){v=parseFloat(el.value);if(!isFinite(v))return;}else v=el.value;setP(S,el.dataset.k,v);
+  if(el.dataset.k.startsWith('mas.')&&['mas.gamma','mas.fb','mas.K','mas.grp'].includes(el.dataset.k)){S.mas.type='custom';$('#masType').value='custom';}
+  if(el.tagName==='SELECT')syncForm();changed();}
+ else if(el.dataset.l){const p=el.dataset.l;const v=el.type==='number'?parseFloat(el.value):el.value;if(el.type==='number'&&!isFinite(v))return;setP(S,p,v);changed();}
+});
+document.addEventListener('change',e=>{if(e.target.dataset.k&&e.target.tagName==='SELECT'){syncForm();}});
+$('#masType').onchange=e=>{const k=e.target.value;S.mas.type=k;if(k!=='custom')Object.assign(S.mas,pick(k));syncForm();changed();};
+$('#lType').onclick=e=>{const b=e.target.closest('button');if(!b)return;S.lintel.type=b.dataset.v;syncForm();changed();};
+document.addEventListener('click',e=>{const d=e.target.closest('[data-del]');if(!d)return;const [a,i]=d.dataset.del.split('.');S[a].splice(+i,1);hov=null;listForms();changed();});
+$('#addF').onclick=()=>{const top=S.floors.reduce((m,f)=>Math.max(m,f.y),0);S.floors.push({n:'Floor '+(S.floors.length+1),y:S.floors.length?top+2600:375,trib:2,gk:1.2,qk:1.5});listForms();changed();};
+$('#addP').onclick=()=>{S.pts.push({n:'P'+(S.pts.length+1),x:Math.round(S.L0/2/25)*25,y:600,a:100,gk:5,qk:3});listForms();changed();};
+$('#exSel').onchange=e=>{const k=e.target.value;if(!k)return;S=defS();EX[k][1](S);e.target.value='';V.fitted=false;syncForm();changed();};
+$('#bReset').onclick=()=>{S=defS();V.fitted=false;syncForm();changed();};
+$('#bTheme').onclick=()=>{const r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem(KEY+'.theme',r.dataset.theme)}catch(e){}draw();drawDg();};
+try{const th=localStorage.getItem(KEY+'.theme');if(th)document.documentElement.dataset.theme=th;}catch(e){}
+$('#bMethod').onclick=()=>$('#vmodal').hidden=false;$('#mX').onclick=()=>$('#vmodal').hidden=true;$('#vmodal').onclick=e=>{if(e.target.id==='vmodal')e.target.hidden=true;};
+$('#bSide').onclick=()=>{const s=$('#side');s.classList.toggle('col');$('#bSide').textContent=s.classList.contains('col')?'⟨':'⟩';setTimeout(resize,0);};
+$('#bExport').onclick=()=>copyT(JSON.stringify(S,null,1),'Design JSON copied');
+$('#bImport').onclick=()=>$('#fImp').click();
+$('#fImp').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const o=JSON.parse(t);if(o&&o.v===1){S=Object.assign(defS(),o);V.fitted=false;syncForm();changed();}}catch(err){alert('Could not read that file.');}});e.target.value='';};
+let thPrev=null;
+$('#bPrint').onclick=()=>copyT(reportText(),'Calculation summary copied');
+function copyT(t,msg){try{navigator.clipboard.writeText(t).then(()=>flash(msg),()=>flash('Clipboard not available here'));}catch(e){flash('Clipboard not available here');}}
+function reportText(){if(!R)return '';const m=S.mas,L=[];const p=(...a)=>L.push(a.join(''));
+ p('LINTEL LOADER v1.0 — calculation summary  ',new Date().toLocaleString());
+ p('Lintel: ',R.lin.name,'   clear span ',S.L0,' mm, bearing ',S.lb,' mm, span c/c ',f0(R.Le*1000),' mm');
+ p('Masonry: ',(MAS[m.type]||MAS.custom).n,', t ',m.t,' mm, γ ',m.gamma,' kN/m³, fb ',m.fb,', K ',m.K,', ',m.mort,', γM ',m.gM,' → fk ',f2(R.fk),', fd ',f2(R.fd),' N/mm²');
+ p('Piers: left ',S.pL.b,' mm (',S.pL.kind,'), right ',S.pR.b,' mm (',S.pR.kind,')');
+ p('Arching: ',R.arch?'assumed':'not assumed',' (',R.archCond.map(c=>(c.ok?'✓ ':'✕ ')+c.n).join('; '),')');
+ p('');p('LOADS ON LINTEL (characteristic)');for(const i of R.B.items)p('  ',i.n.padEnd(26),' G ',f2(i.G).padStart(7),'  Q ',f2(i.Q).padStart(7),' kN   ',i.how);
+ p('  M_Ed ',f2(R.Med),' kNm   V_Ed ',f2(R.Ved),' kN   R_L ',f2(R.R.L.U),' kN   R_R ',f2(R.R.R.U),' kN (ULS ',R.gov[0],'G + ',R.gov[1],'Q)');
+ let g='';for(const c of R.checks){if(c.g!==g){g=c.g;p('');p(g.toUpperCase());}p('  ',(c.st==='ok'?'OK  ':c.st==='warn'?'ADV ':'FAIL'),' ',c.n.padEnd(46),(c.ed===0&&c.rd===0?'':fmtV(c.ed)+' / '+fmtV(c.rd)+' '+c.unit+'  u = '+f2(c.u)),c.note?'   ['+c.note+']':'');}
+ p('');p('RESULT: ',R.fail?'FAILS':'PASSES',' — max utilisation ',f2(R.umax));for(const w of R.warn)p('Note: ',w);
+ p('Design aid only; verify with a competent engineer.');return L.join('\n');}
+addEventListener('beforeprint',()=>{thPrev=document.documentElement.dataset.theme;document.documentElement.dataset.theme='light';$('#ptitle').textContent=`Lintel Loader — ${R?R.lin.name:''} over ${S.L0} mm opening · ${new Date().toLocaleDateString()}`;resize();});
+addEventListener('afterprint',()=>{if(thPrev)document.documentElement.dataset.theme=thPrev;resize();});
+for(const c of $$('#ctb input'))c.onchange=()=>{V[c.dataset.v]=c.checked;draw();};
+for(const c of $$('[data-d]'))c.onchange=()=>{V.dg[c.dataset.d]=c.checked;drawDg();};
+$('#dgOn').onchange=e=>{$('#dgw').hidden=!e.target.checked;resize();};
+$('#bFit').onclick=()=>{fit();draw();};$('#bZi').onclick=()=>zoomAt(1.25);$('#bZo').onclick=()=>zoomAt(0.8);
+$('#bLight').onclick=()=>{const keep=S.lintel.sec;const cand=LIB.map(r=>r[0]+' '+r[1]).filter(k=>S.lintel.restr||!k.startsWith('PFC')).map(k=>({k,sw:steelProps(k,S.lintel.grade).sw})).sort((a,b)=>a.sw-b.sw);
+ for(const c of cand){S.lintel.sec=c.k;const r=compute(S);if(!r.checks.some(q=>q.g==='Lintel'&&q.st==='fail')){syncForm();changed();flash(`Lightest passing: ${c.k}`);return;}}
+ S.lintel.sec=keep;flash('No section in the library passes — try S355 or a different lintel');};
+function flash(t){const c=$('#tchip');c.innerHTML=t;c.hidden=false;c.style.left='14px';c.style.top='86px';clearTimeout(flash.t);flash.t=setTimeout(()=>c.hidden=true,2600);}
+// ---------- compute & results ----------
+let raf=0;function changed(){if(!raf)raf=requestAnimationFrame(()=>{raf=0;recalc();});}
+function recalc(){
+ try{R=compute(S);}catch(err){console.error(err);R=null;}
+ try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}
+ renderRes();if(!V.fitted)fit();draw();drawDg();
+}
+function renderRes(){
+ if(!R){$('#res').innerHTML='<div class="wn">Could not compute this case — check the inputs.</div>';return;}
+ const fail=R.fail,um=R.umax;
+ $('#stat').innerHTML=`<span class="chip ${fail?'bad':'ok'}">${fail?'Fails':'Passes'} · max ${f2(um)}</span>${R.warnN?`<span class="chip warn">${R.warnN} advisory</span>`:''}`;
+ const m=S.mas;let h=`<div class="sum ${fail?'bad':'ok'}"><h3>${fail?'✕ Design fails':'✓ Design passes'}</h3><p>${esc(R.lin.name)} · span ${f0(R.Le*1000)} mm c/c bearings · ${R.arch?'arching assumed':'no arching'} · max utilisation ${f2(um)}</p></div>`;
+ h+=`<div class="kv"><div><small>M<sub>Ed</sub></small><b>${f2(R.Med)} kNm</b></div><div><small>V<sub>Ed</sub></small><b>${f2(R.Ved)} kN</b></div><div><small>δ (SLS)</small><b>${R.dmax!=null?f2(R.dmax*1000)+' mm':'—'}</b></div>
+  <div><small>R<sub>L</sub> ULS</small><b>${f2(R.R.L.U)} kN</b></div><div><small>R<sub>R</sub> ULS</small><b>${f2(R.R.R.U)} kN</b></div><div><small>f<sub>k</sub> / f<sub>d</sub></small><b>${f2(R.fk)} / ${f2(R.fd)}</b></div></div>`;
+ for(const w of R.warn)h+=`<div class="wn">⚠ ${esc(w)}</div>`;
+ h+=`<div class="rh">Arching</div><ul class="ac">${R.archCond.map(c=>`<li class="${c.ok?'y':'n'}"><b>${c.ok?'✓':'✕'}</b><span>${esc(c.n)}</span></li>`).join('')}</ul>
+  <p class="hint">${S.arch==='auto'?(R.arch?'All conditions met: the lintel carries the load triangle and loads in the 1.1L zone.':'A condition is not met, so the full load over the opening is applied.'):S.arch==='force'?'Arching assumed by user.':'Arching switched off by user.'}${R.arch?` Arch thrust T = ${f2(R.thr.T)} kN from ${f2(R.thr.Wa)} kN arched load.`:''}</p>`;
+ const it=R.B.items;let tg=0,tq=0;
+ h+=`<div class="rh">Loads on lintel (characteristic)</div><table class="lt"><tr><th>Load</th><th class="r">G<sub>k</sub> kN</th><th class="r">Q<sub>k</sub> kN</th></tr>`+
+  it.map(i=>{tg+=i.G;tq+=i.Q;return `<tr><td>${esc(i.n)}<small>${esc(i.how)}</small></td><td class="r">${f2(i.G)}</td><td class="r">${f2(i.Q)}</td></tr>`;}).join('')+
+  `<tr class="tot"><td>Total on lintel</td><td class="r">${f2(tg)}</td><td class="r">${f2(tq)}</td></tr></table>
+  <p class="hint">ULS combination ${R.gov[0]}G + ${R.gov[1]}Q governs the moment.</p>`;
+ const groups=[...new Set(R.checks.map(c=>c.g))];
+ for(const g of groups){h+=`<div class="rh">${g==='Geometry'?'Geometry &amp; guidance':esc(g)}${g.includes('pier')?` · ${f0(R.side[g[0]].b*1000)} mm`:''}</div>`;
+  if(g.includes('pier')){const P=R.pier[g[0]];h+=`<p class="hint" style="margin:0 0 4px">N at bearing: G ${f1(P.Gt)} + Q ${f1(P.Qt)} kN → ULS ${f1(P.Nt)} kN; at mid-height ${f1(P.Nm)} kN</p>`;}
+  for(const c of R.checks.filter(c=>c.g===g)){const pc=Math.min(100,c.u*100);
+   const val=c.unit===''&&c.ed===0&&c.rd===0?'':`${fmtV(c.ed)} / ${fmtV(c.rd)} ${c.unit}`;
+   h+=`<div class="ck ${c.st}"><div class="t"><span>${esc(c.n)}</span><span>${c.ed===0&&c.rd===0?'⚠':f2(c.u)}</span></div>${val?`<div class="ub"><i style="width:${pc}%"></i></div><div class="v"><span>E<sub>d</sub> / R<sub>d</sub></span><span>${val}</span></div>`:''}${c.note?`<div class="n">${esc(c.note)}</div>`:''}</div>`;}}
+ h+=`<details class="nt"><summary>Inputs &amp; assumptions</summary><ul>
+  <li>${esc(MAS[m.type]?MAS[m.type].n:'Custom')} · t ${m.t} mm · γ ${m.gamma} kN/m³ · f<sub>b</sub> ${m.fb} · K ${m.K} · ${m.mort} · Group ${m.grp} · γ<sub>M</sub> ${m.gM}</li>
+  <li>f<sub>vk0</sub> ${R.fvk0} N/mm² · h<sub>ef</sub> ${f0(R.slender.h_ef*1000)} mm · λ ${f1(R.slender.lam)}</li>
+  <li>Load triangle ${S.theta}°: height ${f0(R.htri*1000)} mm; loading zone ${f0(R.zone*1000)} mm</li>
+  <li>Bearing width on leaf ${f0(Math.min(R.lin.bw,R.t)*1000)} mm × ${S.lb} mm</li>
+  <li>${MAS[m.type]?esc(MAS[m.type].note):''}. Library values are indicative; use declared values.</li></ul></details>`;
+ $('#res').innerHTML=h;
+ props();
+}
+function props(){const m=S.mas;$('#masProp').innerHTML=`f<sub>k</sub> = ${f2(R.fk)} N/mm² · f<sub>d</sub> = ${f2(R.fd)} N/mm²<br>f<sub>vk0</sub> = ${R.fvk0} N/mm² · self-weight ${f2(R.gw)} kN/m²<br><span>${esc((MAS[m.type]||MAS.custom).note)}</span>`;
+ if(R.lin.kind==='steel'){const s=R.lin.s;$('#stProp').innerHTML=`<b>${s.key}</b> · ${f1(s.sw/9.81*1000)} kg/m · Class ${s.cls}<br>I<sub>y</sub> ${f0(s.Iy/1e4)} cm⁴ · W<sub>pl</sub> ${f0(s.Wpl/1e3)} cm³ · W<sub>el</sub> ${f0(s.Wel/1e3)} cm³<br>h ${s.h} · b ${s.b} · t<sub>w</sub> ${s.tw} · t<sub>f</sub> ${s.tf} mm`;}}
+function fmtV(v){const a=Math.abs(v);return a>=100?f0(v):a>=10?f1(v):f2(v);}
+// ---------- drawing ----------
+const cv=$('#cv'),cx=cv.getContext('2d'),dg=$('#dg'),dx=dg.getContext('2d');let DPR=1;
+function css(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
+function resize(){DPR=Math.min(2,devicePixelRatio||1);for(const c of [cv,dg]){const r=c.getBoundingClientRect();c.width=Math.max(1,r.width*DPR);c.height=Math.max(1,r.height*DPR);}draw();drawDg();}
+new ResizeObserver(()=>resize()).observe($('#wrap'));new ResizeObserver(()=>resize()).observe($('#dgw'));
+function geo(){if(!R)return null;const bL=R.side.L.b,bR=R.side.R.b,L0=R.L0,yT=R.hHead+R.dL,top=yT+R.Hm;
+ const maxF=Math.max(0,...S.floors.map(f=>f.y/1000),...S.pts.map(p=>p.y/1000+0.45));
+ const xl=-(S.pL.kind==='opening'?Math.min(R.side.L.adj,1.2)+0.15:0.35),xr=bL+L0+bR+(S.pR.kind==='opening'?Math.min(R.side.R.adj,1.2)+0.15:0.35);
+ return {bL,bR,L0,yT,top,W:bL+L0+bR,xl,xr,yMax:Math.max(top,yT+maxF,yT+(V.zone?R.zone:0))+0.25};}
+function fit(){const g=geo();if(!g)return;const w=cv.width/DPR,h=cv.height/DPR;if(w<10||h<10)return;
+ const mx=40,myT=64,myB=46;const sc=Math.min((w-2*mx)/(g.xr-g.xl),(h-myT-myB)/(g.yMax+0.35));V.sc=sc;V.ox=(w-(g.xr-g.xl)*sc)/2-g.xl*sc;V.oy=myT+g.yMax*sc;V.fitted=true;}
+const X=x=>V.ox+x*V.sc,Y=y=>V.oy-y*V.sc,IX=sx=>(sx-V.ox)/V.sc,IY=sy=>(V.oy-sy)/V.sc;
+function zoomAt(f,sx,sy){const w=cv.width/DPR,h=cv.height/DPR;sx=sx??w/2;sy=sy??h/2;const wx=IX(sx),wy=IY(sy);V.sc=Math.min(4000,Math.max(10,V.sc*f));V.ox=sx-wx*V.sc;V.oy=sy+wy*V.sc;draw();}
+function draw(){
+ const w=cv.width/DPR,h=cv.height/DPR;cx.setTransform(DPR,0,0,DPR,0,0);cx.clearRect(0,0,w,h);if(!R)return;const g=geo();
+ const C={ink:css('--ink'),mut:css('--mut'),line:css('--line'),acc:css('--acc'),n2:css('--neon2'),n3:css('--neon3'),amb:css('--amb'),ok:css('--ok'),bad:css('--bad'),panel:css('--panel'),bg:css('--bg'),grid:css('--grid'),mem:css('--mem')};
+ const isBlock=['dense','med','light','aac'].includes(S.mas.type)||(S.mas.type==='custom'&&false);const masCol=isBlock?css('--block'):S.mas.type==='stone'?css('--block'):css('--brick');
+ // grid
+ cx.strokeStyle=C.grid;cx.lineWidth=1;const gs=V.sc>=60?0.25:1;cx.beginPath();for(let x=Math.floor(IX(0)/gs)*gs;X(x)<w;x+=gs){cx.moveTo(X(x)+.5,0);cx.lineTo(X(x)+.5,h);}for(let y=Math.floor(IY(h)/gs)*gs;Y(y)>0;y+=gs){cx.moveTo(0,Y(y)+.5);cx.lineTo(w,Y(y)+.5);}cx.stroke();
+ // ground
+ cx.strokeStyle=C.mem;cx.lineWidth=2;cx.beginPath();cx.moveTo(X(g.xl-0.2),Y(0));cx.lineTo(X(g.xr+0.2),Y(0));cx.stroke();
+ // context beyond piers
+ const ctxSide=(s)=>{const P=S[s==='L'?'pL':'pR'],x0=s==='L'?0:g.W,dir=s==='L'?-1:1;
+  if(P.kind==='return'){const t=Math.max(0.1,S.mas.t/1000);cx.fillStyle=color(masCol,0.9);cx.fillRect(Math.min(X(x0),X(x0+dir*t)),Y(g.top),Math.abs(t*V.sc),g.top*V.sc);cx.strokeStyle=C.mem;cx.lineWidth=1.2;cx.strokeRect(Math.min(X(x0),X(x0+dir*t)),Y(g.top),Math.abs(t*V.sc),g.top*V.sc);
+   label(X(x0+dir*t/2),Y(g.top)-8,'return',C.mut,'center',10);}
+  else if(P.kind==='opening'){const a=Math.min(P.adj/1000,1.2);cx.fillStyle=color(masCol,0.35);cx.fillRect(Math.min(X(x0),X(x0+dir*(a+0.15))),Y(g.top),Math.abs((a+0.15)*V.sc),(g.top-S.hHead/1000)*V.sc);
+   cx.setLineDash([5,4]);cx.strokeStyle=C.mut;cx.lineWidth=1;cx.strokeRect(Math.min(X(x0),X(x0+dir*a)),Y(S.hHead/1000),a*V.sc,S.hHead/1000*V.sc);cx.setLineDash([]);
+   label(X(x0+dir*a/2),Y(S.hHead/1000*0.8),`opening ${P.adj}`,C.mut,'center',10);}
+  else{cx.strokeStyle=C.bad;cx.lineWidth=2;cx.setLineDash([2,3]);cx.beginPath();cx.moveTo(X(x0),Y(0));cx.lineTo(X(x0),Y(g.top));cx.stroke();cx.setLineDash([]);label(X(x0)+dir*6,Y(g.top/2),'free end',C.bad,s==='L'?'right':'left',10);}};
+ ctxSide('L');ctxSide('R');
+ // masonry with opening & lintel cut out
+ const lx1=g.bL-R.lb,lx2=g.bL+g.L0+R.lb,yH=R.hHead;
+ cx.save();cx.beginPath();cx.rect(X(0),Y(g.top),g.W*V.sc,g.top*V.sc);cx.rect(X(g.bL),Y(yH),g.L0*V.sc,yH*V.sc);cx.rect(X(lx1),Y(g.yT),(lx2-lx1)*V.sc,R.dL*V.sc);cx.clip('evenodd');
+ cx.fillStyle=masCol;cx.fillRect(X(0),Y(g.top),g.W*V.sc,g.top*V.sc);
+ const MT=MAS[S.mas.type]||MAS.custom,ch=(MT.uh+10)/1000,cl=(MT.ul+10)/1000;
+ if(V.courses&&ch*V.sc>=4){cx.strokeStyle=color(C.bg,0.55);cx.lineWidth=Math.max(.6,Math.min(1.5,0.01*V.sc));cx.beginPath();let k=0;
+  for(let y=0;y<g.top;y+=ch,k++){cx.moveTo(X(0),Y(y));cx.lineTo(X(g.W),Y(y));const off=(k%2)*cl/2;for(let x=-off;x<g.W;x+=cl){cx.moveTo(X(x),Y(y));cx.lineTo(X(x),Y(Math.min(y+ch,g.top)));}}cx.stroke();}
+ cx.restore();
+ cx.strokeStyle=C.mem;cx.lineWidth=1.4;cx.beginPath();cx.moveTo(X(0),Y(0));cx.lineTo(X(0),Y(g.top));cx.lineTo(X(g.W),Y(g.top));cx.lineTo(X(g.W),Y(0));cx.moveTo(X(g.bL),Y(0));cx.lineTo(X(g.bL),Y(yH));cx.lineTo(X(g.bL+g.L0),Y(yH));cx.lineTo(X(g.bL+g.L0),Y(0));cx.stroke();
+ // carried load region
+ if(V.tri){cx.save();cx.beginPath();cx.rect(X(g.bL),Y(g.top),g.L0*V.sc,(g.top-g.yT)*V.sc);cx.clip();cx.beginPath();
+  if(R.arch){cx.moveTo(X(g.bL),Y(g.yT));cx.lineTo(X(g.bL+g.L0/2),Y(g.yT+R.htri));cx.lineTo(X(g.bL+g.L0),Y(g.yT));}else{cx.rect(X(g.bL),Y(g.top),g.L0*V.sc,(g.top-g.yT)*V.sc);}
+  cx.closePath();cx.fillStyle=color(C.n3,0.22);cx.fill();cx.strokeStyle=C.n3;cx.lineWidth=1.6;cx.shadowColor=C.n3;cx.shadowBlur=8;cx.stroke();cx.restore();
+  label(X(g.bL+g.L0/2),Y(g.yT)-8,R.arch?`${S.theta}° load triangle`:'full masonry over opening',C.n3,'center',11,true);}
+ if(V.zone&&R.arch){cx.setLineDash([6,4]);cx.strokeStyle=C.n2;cx.lineWidth=1.2;cx.strokeRect(X(g.bL),Y(g.yT+R.zone),g.L0*V.sc,R.zone*V.sc);cx.setLineDash([]);label(X(g.bL+g.L0)-4,Y(g.yT+R.zone)+12,'loading zone 1.1L',C.n2,'right',10);}
+ // lintel
+ const lg=cx.createLinearGradient(0,Y(g.yT),0,Y(yH));lg.addColorStop(0,C.acc);lg.addColorStop(1,color(C.n3,0.85));
+ cx.fillStyle=S.lintel.type==='rc'?color(C.mut,0.75):lg;cx.fillRect(X(lx1),Y(g.yT),(lx2-lx1)*V.sc,R.dL*V.sc);cx.strokeStyle=C.ink;cx.lineWidth=1;cx.strokeRect(X(lx1),Y(g.yT),(lx2-lx1)*V.sc,R.dL*V.sc);
+ if(R.dL*V.sc>11)label(X(g.bL+g.L0/2),Y(yH+R.dL/2)+4,R.lin.name,'#fff','center',Math.min(12,R.dL*V.sc*0.6),false,true);
+ else label(X(g.bL+g.L0/2),Y(yH)+13,R.lin.name,C.ink,'center',11);
+ // floors
+ S.floors.forEach((f,i)=>{const y=g.yT+f.y/1000,it=R.B.items.find(q=>q.ref==='f'+i),hi=hov&&hov.t==='f'&&hov.i===i;
+  cx.strokeStyle=hi?C.n2:C.ink;cx.lineWidth=hi?4:3;cx.beginPath();cx.moveTo(X(g.xl),Y(y));cx.lineTo(X(g.xr),Y(y));cx.stroke();
+  if(it&&it.on!==false&&it.b>it.a){cx.strokeStyle=C.n3;cx.lineWidth=2;cx.beginPath();cx.moveTo(X(g.bL-R.sL+it.a),Y(y)-4);cx.lineTo(X(g.bL-R.sL+it.b),Y(y)-4);cx.stroke();}
+  label(X(g.xl)+4,Y(y)-6,`${f.n} · ${f2(f.gk*f.trib)}G + ${f2(f.qk*f.trib)}Q kN/m`,hi?C.n2:C.ink,'left',11,true);});
+ // point loads
+ S.pts.forEach((p,i)=>{const xs=g.bL+p.x/1000,y=g.yT+Math.max(0,p.y/1000),a=p.a/1000,hi=hov&&hov.t==='p'&&hov.i===i,col=hi?C.n2:C.amb;
+  const di=R.B.disp[i];
+  if(V.disp&&di){cx.fillStyle=color(C.amb,0.12);cx.beginPath();cx.moveTo(X(xs-a/2),Y(y));cx.lineTo(X(xs+a/2),Y(y));cx.lineTo(X(g.bL+di.x2),Y(g.yT));cx.lineTo(X(g.bL+di.x1),Y(g.yT));cx.closePath();cx.fill();cx.setLineDash([4,3]);cx.strokeStyle=col;cx.lineWidth=1;cx.stroke();cx.setLineDash([]);}
+  cx.fillStyle=col;cx.fillRect(X(xs-a/2),Y(y)-3,Math.max(3,a*V.sc),3);
+  const L=46;cx.strokeStyle=col;cx.lineWidth=2.4;cx.shadowColor=col;cx.shadowBlur=hi?12:4;cx.beginPath();cx.moveTo(X(xs),Y(y)-L);cx.lineTo(X(xs),Y(y)-4);cx.stroke();cx.beginPath();cx.moveTo(X(xs),Y(y)-3);cx.lineTo(X(xs)-6,Y(y)-13);cx.lineTo(X(xs)+6,Y(y)-13);cx.closePath();cx.fillStyle=col;cx.fill();cx.shadowBlur=0;
+  label(X(xs)+8,Y(y)-L+8,`${p.n}  ${p.gk}G + ${p.qk}Q kN`,col,'left',11,true);
+  if(!di)label(X(xs)+8,Y(y)-L+22,'carried by arching',C.mut,'left',10);});
+ // pier badges
+ for(const s of ['L','R']){const cks=R.checks.filter(c=>c.g===(s==='L'?'Left pier':'Right pier')&&!/^ADA/.test(c.n)),u=Math.max(0,...cks.map(c=>c.u)),bad=cks.some(c=>c.st==='fail'),adv=R.checks.some(c=>c.g===(s==='L'?'Left pier':'Right pier')&&c.st==='warn');
+  const xc=s==='L'?g.bL/2:g.bL+g.L0+g.bR/2;pill(X(xc),Y(yH*0.5),`${s==='L'?'Left':'Right'} pier ${f2(u)}${adv?' ⚠':''}`,bad?C.bad:C.ok);}
+ // dimensions
+ if(V.dims){const yd=Y(0)+18;dim(X(0),X(g.bL),yd,f0(g.bL*1000));dim(X(g.bL),X(g.bL+g.L0),yd,f0(g.L0*1000));dim(X(g.bL+g.L0),X(g.W),yd,f0(g.bR*1000));
+  vdim(X(g.bL)+14,Y(g.yT),Y(g.top),f0(R.Hm*1000));vdim(X(g.bL)+14,Y(0),Y(yH),f0(yH*1000));
+  if(R.lb*V.sc>18)dim(X(lx1),X(g.bL),Y(g.yT)-8,f0(R.lb*1000),true);}
+ // legend title
+ cx.font='600 11px Inter,system-ui,sans-serif';cx.fillStyle=C.mut;cx.textAlign='left';cx.fillText(`ELEVATION · ${R.arch?'arching':'no arching'} · drag loads & floors`,12,h-10);
+ function dim(x1,x2,y,t,small){cx.strokeStyle=C.mut;cx.fillStyle=C.mut;cx.lineWidth=1;cx.beginPath();cx.moveTo(x1,y);cx.lineTo(x2,y);cx.moveTo(x1,y-4);cx.lineTo(x1,y+4);cx.moveTo(x2,y-4);cx.lineTo(x2,y+4);cx.stroke();if(Math.abs(x2-x1)>22){cx.font=`600 ${small?9.5:11}px Inter,system-ui,sans-serif`;cx.textAlign='center';cx.fillText(t,(x1+x2)/2,y-4);}}
+ function vdim(x,y1,y2,t){cx.strokeStyle=C.mut;cx.fillStyle=C.mut;cx.lineWidth=1;cx.beginPath();cx.moveTo(x,y1);cx.lineTo(x,y2);cx.moveTo(x-4,y1);cx.lineTo(x+4,y1);cx.moveTo(x-4,y2);cx.lineTo(x+4,y2);cx.stroke();if(Math.abs(y2-y1)>26){cx.save();cx.translate(x+12,(y1+y2)/2);cx.rotate(-Math.PI/2);cx.font='600 11px Inter,system-ui,sans-serif';cx.textAlign='center';cx.fillText(t,0,0);cx.restore();}}
+ function pill(x,y,t,col){cx.font='700 11px Inter,system-ui,sans-serif';const tw=cx.measureText(t).width+16;cx.fillStyle=C.panel;cx.strokeStyle=col;cx.lineWidth=1.3;rr(x-tw/2,y-11,tw,22,11);cx.fill();cx.shadowColor=col;cx.shadowBlur=10;cx.stroke();cx.shadowBlur=0;cx.fillStyle=col;cx.textAlign='center';cx.fillText(t,x,y+4);}
+ function label(x,y,t,col,al,sz,bgd,noBg){cx.font=`600 ${sz||11}px Inter,system-ui,sans-serif`;cx.textAlign=al||'left';if(bgd){const tw=cx.measureText(t).width,x0=al==='center'?x-tw/2:al==='right'?x-tw:x;cx.fillStyle=color(C.panel,0.82);rr(x0-4,y-(sz||11)+1,tw+8,(sz||11)+5,5);cx.fill();}cx.fillStyle=col;cx.fillText(t,x,y);}
+ function rr(x,y,w,h,r){cx.beginPath();cx.moveTo(x+r,y);cx.arcTo(x+w,y,x+w,y+h,r);cx.arcTo(x+w,y+h,x,y+h,r);cx.arcTo(x,y+h,x,y,r);cx.arcTo(x,y,x+w,y,r);cx.closePath();}
+}
+function color(c,a){c=c.trim();if(c.startsWith('#')){let h=c.slice(1);if(h.length===3)h=h.split('').map(x=>x+x).join('');const n=parseInt(h,16);return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`;}return c;}
+function drawDg(){
+ const w=dg.width/DPR,h=dg.height/DPR;dx.setTransform(DPR,0,0,DPR,0,0);dx.clearRect(0,0,w,h);if(!R||$('#dgw').hidden)return;
+ const C={ink:css('--ink'),mut:css('--mut'),line:css('--line'),acc:css('--acc'),n2:css('--neon2'),n3:css('--neon3'),amb:css('--amb'),panel:css('--panel')};
+ const rows=[];if(V.dg.q)rows.push({k:'q',d:R.qU,c:C.n3,u:'kN/m',n:'Load ULS',ls:[]});if(V.dg.V)rows.push({k:'V',d:R.Vu,c:C.n2,u:'kN',n:'Shear ULS',ls:[7,3]});
+ if(V.dg.M)rows.push({k:'M',d:R.Mu,c:C.acc,u:'kNm',n:'Moment ULS',ls:[]});if(V.dg.d&&R.dfl)rows.push({k:'d',d:R.dfl.map(v=>v*1000),c:C.amb,u:'mm',n:'Deflection SLS',ls:[2,3]});
+ if(!rows.length)return;const ml=96,mr=24,pw=w-ml-mr,rh=(h-14)/rows.length,x=R.aG.x,Le=R.Le;
+ rows.forEach((r,k)=>{const y0=7+k*rh,pad=Math.min(14,rh*0.16),mx=Math.max(1e-9,...r.d.map(Math.abs)),inv=r.k==='M'||r.k==='q'||r.k==='d';
+  const zy=r.k==='V'?y0+rh/2:y0+pad,sc=(r.k==='V'?(rh/2-pad):(rh-2*pad))/mx;
+  const px=i=>ml+x[i]/Le*pw,py=v=>zy+(inv?v:-v)*sc;
+  dx.fillStyle=C.mut;dx.font='700 10px Inter,system-ui,sans-serif';dx.textAlign='left';dx.fillText(r.n.toUpperCase(),10,y0+16);dx.font='500 10px Inter,system-ui,sans-serif';dx.fillText(r.u,10,y0+29);
+  dx.strokeStyle=C.line;dx.lineWidth=1;dx.beginPath();dx.moveTo(ml,zy);dx.lineTo(ml+pw,zy);dx.stroke();
+  // opening edges
+  dx.setLineDash([2,3]);dx.beginPath();for(const s of [R.sL,R.sR]){dx.moveTo(ml+s/Le*pw,y0+4);dx.lineTo(ml+s/Le*pw,y0+rh-4);}dx.stroke();dx.setLineDash([]);
+  dx.beginPath();dx.moveTo(px(0),zy);for(let i=0;i<x.length;i++)dx.lineTo(px(i),py(r.d[i]));dx.lineTo(px(x.length-1),zy);dx.closePath();dx.fillStyle=color(r.c,0.16);dx.fill();
+  dx.beginPath();for(let i=0;i<x.length;i++){i?dx.lineTo(px(i),py(r.d[i])):dx.moveTo(px(i),py(r.d[i]));}dx.setLineDash(r.ls);dx.strokeStyle=r.c;dx.lineWidth=2;dx.shadowColor=r.c;dx.shadowBlur=6;dx.stroke();dx.shadowBlur=0;dx.setLineDash([]);
+  let im=0;for(let i=0;i<r.d.length;i++)if(Math.abs(r.d[i])>Math.abs(r.d[im]))im=i;
+  const lab=`${r.k==='V'?'±':''}${fmtV(Math.abs(r.d[im]))} ${r.u} @ ${f0(x[im]*1000)}`;dx.font='700 11px Inter,system-ui,sans-serif';const tw=dx.measureText(lab).width;let lx=clamp(px(im)-tw/2,ml,ml+pw-tw);const ly=r.k==='V'?y0+12:clamp(py(r.d[im])+14,y0+12,y0+rh-3);
+  dx.fillStyle=color(C.panel,0.85);dx.fillRect(lx-3,ly-10,tw+6,13);dx.fillStyle=r.c;dx.textAlign='left';dx.fillText(lab,lx,ly);
+  if(k<rows.length-1){dx.strokeStyle=color(C.line,0.8);dx.beginPath();dx.moveTo(8,y0+rh);dx.lineTo(w-8,y0+rh);dx.stroke();}});
+ dx.fillStyle=C.mut;dx.font='500 10px Inter,system-ui,sans-serif';dx.textAlign='right';dx.fillText(`x along lintel (mm), span ${f0(Le*1000)} c/c bearings · dotted = jambs`,w-mr,h-3);
+}
+// ---------- interaction ----------
+function hit(sx,sy){if(!R)return null;const g=geo();
+ for(let i=S.pts.length-1;i>=0;i--){const p=S.pts[i],xs=X(g.bL+p.x/1000),ys=Y(g.yT+Math.max(0,p.y/1000));if(Math.abs(sx-xs)<10&&sy>ys-50&&sy<ys+6)return {t:'p',i};}
+ for(let i=S.floors.length-1;i>=0;i--){const ys=Y(g.yT+S.floors[i].y/1000);if(Math.abs(sy-ys)<6&&sx>X(g.xl)-4&&sx<X(g.xr)+4)return {t:'f',i};}return null;}
+const snap=v=>Math.round(v/25)*25;
+cv.addEventListener('pointerdown',e=>{const r=cv.getBoundingClientRect(),sx=e.clientX-r.left,sy=e.clientY-r.top;const ht=hit(sx,sy);cv.setPointerCapture(e.pointerId);
+ if(ht){drag={...ht,sx,sy,o:ht.t==='p'?{x:S.pts[ht.i].x,y:S.pts[ht.i].y}:{y:S.floors[ht.i].y}};}else drag={t:'pan',sx,sy,ox:V.ox,oy:V.oy};cv.style.cursor='grabbing';});
+cv.addEventListener('pointermove',e=>{const r=cv.getBoundingClientRect(),sx=e.clientX-r.left,sy=e.clientY-r.top;
+ if(drag){if(drag.t==='pan'){V.ox=drag.ox+sx-drag.sx;V.oy=drag.oy+sy-drag.sy;draw();}
+  else{const dxm=(sx-drag.sx)/V.sc*1000,dym=-(sy-drag.sy)/V.sc*1000;if(drag.t==='p'){S.pts[drag.i].x=snap(drag.o.x+dxm);S.pts[drag.i].y=Math.max(0,snap(drag.o.y+dym));}else S.floors[drag.i].y=Math.max(0,snap(drag.o.y+dym));
+   changed();syncLists();showChip(sx,sy);}return;}
+ const ht=hit(sx,sy);const ch=JSON.stringify(ht)!==JSON.stringify(hov);hov=ht;cv.style.cursor=ht?'move':'grab';if(ch){draw();hiCards();}
+ if(ht)showChip(sx,sy);else $('#tchip').hidden=true;});
+cv.addEventListener('pointerup',()=>{drag=null;cv.style.cursor=hov?'move':'grab';});
+cv.addEventListener('pointerleave',()=>{if(!drag){hov=null;$('#tchip').hidden=true;draw();hiCards();}});
+cv.addEventListener('wheel',e=>{e.preventDefault();const r=cv.getBoundingClientRect();zoomAt(e.deltaY<0?1.12:1/1.12,e.clientX-r.left,e.clientY-r.top);},{passive:false});
+addEventListener('keydown',e=>{if(e.target.matches('input,select,textarea'))return;if(e.key==='f'||e.key==='F'){fit();draw();}if(e.key==='Escape')$('#vmodal').hidden=true;});
+function showChip(sx,sy){const c=$('#tchip');if(!hov||!R){c.hidden=true;return;}let t='';
+ if(hov.t==='p'){const p=S.pts[hov.i],it=R.B.items.find(q=>q.ref==='p'+hov.i);t=`<b>${esc(p.n)}</b> x ${p.x}, h ${p.y} mm<br>${esc(it?it.how:'')}<br>on lintel ${f2(it?it.G:0)}G + ${f2(it?it.Q:0)}Q kN`;}
+ else{const f=S.floors[hov.i],it=R.B.items.find(q=>q.ref==='f'+hov.i);t=`<b>${esc(f.n)}</b> ${f.y} mm above lintel<br>${esc(it?it.how:'')}`;}
+ c.innerHTML=t;c.hidden=false;const W=$('#wrap').clientWidth;c.style.left=Math.min(sx+16,W-290)+'px';c.style.top=(sy+16)+'px';}
+function syncLists(){for(const el of $$('[data-l]')){if(document.activeElement===el)continue;const v=getP(S,el.dataset.l);if(v!=null&&el.value!=String(v))el.value=v;}}
+function hiCards(){for(const c of $$('[data-fi]'))c.classList.toggle('hi',!!(hov&&hov.t==='f'&&hov.i==+c.dataset.fi));for(const c of $$('[data-pi]'))c.classList.toggle('hi',!!(hov&&hov.t==='p'&&hov.i==+c.dataset.pi));}
+// ---------- go ----------
+syncForm();recalc();setTimeout(()=>{resize();fit();draw();},30);
+</script></body></html>
