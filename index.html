@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark"><head><meta charset="utf-8"><title>Lintel Loader v1.1</title>
+<html lang="en" data-theme="dark"><head><meta charset="utf-8"><title>Lintel Loader v1.2</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>
 :root{--neon2:#0891b2;--neon3:#c026d3;--amb:#d97706;--ok:#059669;--bad:#e11d48;--glow:rgba(138,43,226,.30);--r:10px;--bg:#f0eafc;--panel:#fcfaff;--ink:#1a1033;--mut:#68589a;--line:#d5c4f6;--mem:#2a1b52;--acc:#8a2be2;--grid:#dfd2fa;--sh:0 12px 30px -14px rgba(90,20,160,.5),0 0 0 1px rgba(138,43,226,.10);--sh-s:0 1px 2px rgba(60,20,120,.12);--brick:#b98a7e;--block:#a9a3b8;color-scheme:light}
@@ -99,6 +99,27 @@ details.sec>summary .cnt{letter-spacing:.04em;color:var(--mut);font-weight:600}
 .ab h3{text-transform:uppercase;letter-spacing:.13em;font-size:11.5px;color:color-mix(in srgb,var(--neon2) 75%,var(--ink));margin:16px 0 6px}
 .ab .cl{border-left:2px solid color-mix(in srgb,var(--acc) 60%,var(--line));padding:2px 0 2px 14px;margin:10px 0}.ab .cl h4{margin:0;font-size:13.5px}.ab .cl h4 span{color:var(--acc)}.ab .cl h4 small{color:var(--mut);font-weight:500;margin-left:8px}.ab .cl ul{margin:4px 0 0;padding-left:18px}.ab li,.ab p{color:var(--mut);font-size:12.5px;line-height:1.5}.ab b{color:var(--ink)}
 .abB{padding:14px 26px 20px}
+/* v1.2 report dialogue (after Frame Pusher) */
+.rp{display:grid;grid-template-columns:330px minmax(0,1fr);height:100vh;background:var(--bg);color:var(--ink)}
+.rpL{overflow-y:auto;padding:12px 14px 24px;border-right:1px solid color-mix(in srgb,var(--acc) 40%,var(--line));background:linear-gradient(180deg,color-mix(in srgb,var(--acc) 8%,var(--panel)),var(--panel) 40%)}
+.rpL h2{font-size:15px;margin:2px 0 2px;color:var(--ink)}.rpL .rpS{color:var(--mut);font-size:12px;margin:0 0 12px;line-height:1.4}
+.rpL fieldset{border:1px solid color-mix(in srgb,var(--acc) 28%,var(--line));border-radius:10px;margin:0 0 12px;padding:6px 10px 9px}
+.rpL legend{font-size:10px;font-weight:700;letter-spacing:.17em;text-transform:uppercase;color:color-mix(in srgb,var(--neon2) 80%,var(--ink));padding:0 5px}
+.rpF{display:grid!important;grid-template-columns:92px minmax(0,1fr);gap:6px;align-items:center;margin:5px 0;white-space:normal}.rpF>span{font-size:12px;color:var(--mut)}
+.rpF input,.rpF select{width:100%;min-width:0;padding:4px 7px;font-size:12.5px}.rp2{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}.rp2 .rpF{grid-template-columns:62px minmax(0,1fr)}
+.rpC>label:not(.rpF){display:flex;gap:8px;align-items:flex-start;margin:5px 0;white-space:normal;font-size:12.5px;line-height:1.3;cursor:pointer}.rpC>label:not(.rpF) input{margin-top:1px;flex:none}
+.rpA{display:flex;gap:10px;font-size:11.5px;margin:2px 0 6px}.rpA a{color:var(--neon2);cursor:pointer;text-decoration:underline}
+.rpL textarea{width:100%;min-height:72px;font-family:inherit;font-size:12px;line-height:1.4;resize:vertical;color:var(--ink);background:color-mix(in srgb,var(--acc) 5%,var(--bg));border:1px solid color-mix(in srgb,var(--acc) 30%,var(--line));border-radius:8px;padding:5px 8px}
+.rpL input[type=date]{font:inherit;color:var(--ink);background:color-mix(in srgb,var(--acc) 5%,var(--bg));border:1px solid color-mix(in srgb,var(--acc) 30%,var(--line));border-radius:8px}
+.rpR{display:flex;flex-direction:column;min-width:0;min-height:0;background:color-mix(in srgb,var(--bg) 70%,#7a7590 30%)}
+.rpTb{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:8px 12px;border-bottom:1px solid color-mix(in srgb,var(--acc) 45%,var(--line));background:var(--panel)}
+.rpTb .sp{flex:1}.rpTb select{width:auto;padding:4px 6px}.rpTb button.pri,.rpTb button.pri:hover{background:linear-gradient(135deg,var(--acc),var(--neon3));border-color:transparent;color:#fff}
+.rpMsg{font-size:12px;color:var(--mut);min-height:1em}
+.rpPv{flex:1;overflow:auto;padding:22px;display:flex;flex-direction:column;align-items:center;gap:20px}
+.rpPv svg{flex:none;box-shadow:0 6px 22px rgba(10,5,30,.35);border-radius:2px}
+.rpPv .pn{color:var(--mut);font-size:11px;margin:-14px 0 0}
+#rpOv{position:fixed;inset:0;z-index:30;background:var(--bg)}#rpOv[hidden]{display:none}
+@media(max-width:760px){.rp{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr)}.rpL{max-height:45vh;border-right:0;border-bottom:1px solid var(--line)}}
 #toast{position:fixed;left:50%;bottom:64px;transform:translateX(-50%);z-index:40;max-width:min(560px,calc(100vw - 32px));padding:8px 14px;border-radius:12px;background:var(--panel);color:var(--ink);border:1px solid color-mix(in srgb,var(--ok) 55%,var(--line));box-shadow:var(--sh);font-size:12.5px}#toast.bad{border-color:color-mix(in srgb,var(--bad) 60%,var(--line))}#toast[hidden]{display:none}
 /* main */
 main{min-width:0;min-height:0;display:flex;flex-direction:column}
@@ -164,13 +185,13 @@ details.nt{margin-top:12px;font-size:11.5px;color:var(--mut);line-height:1.5}det
 </style></head><body>
 <div id="top">
  <span class="tt">Lintel Loader</span>
- <small style="color:var(--mut);margin-right:8px">v1.1</small>
+ <small style="color:var(--mut);margin-right:8px">v1.2</small>
  <button id="bGuide" title="Welcome guide">Guide</button>
  <button id="bGal" title="Examples gallery">Gallery</button>
  <button id="bMethod" title="Method, assumptions and references">Method</button>
  <button id="bAbout" title="About &amp; changelog">About</button>
  <i></i>
- <button id="bPdf" title="Download a PDF calculation sheet">⤓ PDF report</button>
+ <button id="bPdf" title="A4 calculation sheets: options, live preview and PDF download">⎙ Report</button>
  <button id="bExport" title="Download this design as a .json file">Save design</button>
  <button id="bImport" title="Open a saved .json design">Open</button>
  <button id="bPrint" title="Copy a plain-text calculation summary to the clipboard">Copy report</button>
@@ -181,7 +202,7 @@ details.nt{margin-top:12px;font-size:11.5px;color:var(--mut);line-height:1.5}det
  <input type="file" id="fImp" accept=".json,application/json" hidden>
 </div>
 <aside id="tools">
- <div class="brand">Lintel Loader <small>v1.1 · masonry lintel &amp; pier design (EC6 / EC3 / EC2, UK NA)</small></div>
+ <div class="brand">Lintel Loader <small>v1.2 · masonry lintel &amp; pier design (EC6 / EC3 / EC2, UK NA)</small></div>
 
  <details class="sec" open><summary>Examples</summary><div class="sb">
   <div class="exRow"><select id="exSel" title="Load an example"><option value="">Load example…</option></select><button id="bGal2" title="Browse the examples gallery">▦ Gallery</button></div>
@@ -294,7 +315,7 @@ details.nt{margin-top:12px;font-size:11.5px;color:var(--mut);line-height:1.5}det
 </main>
 <div id="toast" hidden></div>
 <div id="guide" class="ov" hidden><div class="gd" role="dialog" aria-label="Welcome">
- <div class="gdH"><button class="gdX" data-close="guide" title="Close">✕</button><p class="gdK">Welcome</p><h2>Lintel <span>Loader</span><small>v1.1</small></h2>
+ <div class="gdH"><button class="gdX" data-close="guide" title="Close">✕</button><p class="gdK">Welcome</p><h2>Lintel <span>Loader</span><small>v1.2</small></h2>
  <p class="gdL">Design a lintel over an opening in loadbearing masonry and check the walls either side. Set the opening, pick the masonry, add floors and point loads, choose a lintel, and every check updates as you go.</p></div>
  <div class="gdG" id="gSteps"></div>
  <div class="gdT"><span><b>Drag</b> point loads and floors on the drawing</span><span><b>Scroll</b> to zoom, drag empty space to pan</span><span><b>F</b> fits the view</span><span><b>Esc</b> closes dialogs</span></div>
@@ -307,12 +328,19 @@ details.nt{margin-top:12px;font-size:11.5px;color:var(--mut);line-height:1.5}det
  <div class="galB" id="galB"></div>
 </div></div>
 <div id="about" class="ov" hidden><div class="gd" style="width:min(760px,100%)" role="dialog" aria-label="About">
- <div class="gdH"><button class="gdX" data-close="about" title="Close">✕</button><p class="gdK">About</p><h2>Lintel <span>Loader</span><small>v1.1 “Gallery”</small></h2>
+ <div class="gdH"><button class="gdX" data-close="about" title="Close">✕</button><p class="gdK">About</p><h2>Lintel <span>Loader</span><small>v1.2 “Report”</small></h2>
  <p class="gdL">A single-page design aid for masonry lintels and the piers either side, in the style of Frame Pusher. Everything runs in your browser; your design is kept in this browser only.</p></div>
  <div class="abB ab">
   <h3>What it does</h3>
   <p>It finds the load on the lintel from the masonry above, using either a 60° or 45° arching triangle or the full masonry height, together with floors and dispersed point loads. It then checks steel, reinforced-concrete or proprietary lintels. For the walls either side it checks bearing, axial capacity, arch thrust and the Approved Document A pier rules. See <b>Method</b> for the full set of assumptions.</p>
   <h3>Changelog</h3>
+  <div class="cl"><h4><span>v1.2</span> “Report”<small>November 2026</small></h4><ul>
+   <li><b>⎙ Report</b> opens a full-screen report dialog with options on the left and a live A4 preview on the right, built the same way as Frame Pusher’s.</li>
+   <li><b>Calculation-sheet title block</b>: company, address, project, subject, job no., revision, calc by / checked with dates, and automatic sheet numbering (“3 of 8”) with a first number and prefix.</li>
+   <li><b>Ref. / Calculations / Output</b> columns, with code clause references (EC6, EC3, EC2, BS 5977-1, ADA) and key results in the Output column.</li>
+   <li><b>Contents</b> you can choose: design summary, geometry and elevation, masonry properties with the f<sub>k</sub> working, loading and arching (with the thrust working), lintel design with diagrams, pier checks, Approved Document A, method, and your own notes.</li>
+   <li><b>Drawing options</b>: colour or black and white, compact/standard/large, 1–3 decimals, peak labels, load triangle and zone, dimensions and masonry courses.</li>
+   <li><b>Vector PDF</b> in standard Helvetica, exactly as previewed, so the text can be selected and searched. Report settings are remembered.</li></ul></div>
   <div class="cl"><h4><span>v1.1</span> “Gallery”<small>November 2026</small></h4><ul>
    <li>Examples moved to the left panel, with a <b>Gallery</b> button.</li>
    <li>New <b>examples gallery</b> with live previews, pass/fail tags, category filters and search; two new examples (basement engineering brick, aircrete with proprietary lintel).</li>
@@ -813,7 +841,7 @@ function hiCards(){for(const c of $$('[data-fi]'))c.classList.toggle('hi',!!(hov
 // ---------- go ----------
 syncForm();recalc();setTimeout(()=>{resize();fit();draw();},30);
 // ===================== v1.1: overlays, gallery, guide, downloads, PDF =====================
-const VER='1.1';
+const VER='1.2';
 const openOv=id=>{for(const o of $$('.ov'))o.hidden=o.id!==id;$('#'+id).hidden=false;};
 for(const b of $$('[data-close]'))b.onclick=()=>$('#'+b.dataset.close).hidden=true;
 for(const o of $$('.ov'))o.addEventListener('click',e=>{if(e.target===o)o.hidden=true;});
@@ -833,7 +861,7 @@ const GSTEP=[
   '<rect x="30" y="40" width="140" height="12" class="fa"/><path d="M30 64q70 22 140 0" class="mg" fill="none" stroke-width="2"/><path d="M30 76h140" class="cy" stroke-dasharray="5 3"/><text x="100" y="30" class="tk" text-anchor="middle">M · V · δ</text>'],
  ['Check the walls either side','Each pier is checked for bearing under the lintel, axial load at bearing level and mid-height, and arch thrust, plus the Approved Document A width rules.',
   '<rect x="20" y="20" width="44" height="74" class="fw"/><rect x="136" y="20" width="44" height="74" class="fw"/><rect x="50" y="22" width="100" height="8" class="fa"/><rect x="24" y="56" width="36" height="16" rx="8" class="fp" stroke="var(--ok)"/><text x="42" y="67" class="tk" text-anchor="middle">0.46</text><rect x="140" y="56" width="36" height="16" rx="8" class="fp" stroke="var(--bad)"/><text x="158" y="67" class="tk" text-anchor="middle">1.28</text>'],
- ['Report','Download an A4 PDF calculation sheet, save the design as .json, or copy a plain-text summary. Every assumption is set out in Method.',
+ ['Report','⎙ Report opens A4 calculation sheets with a live preview: add your title block, choose the contents and drawing style, then download a vector PDF. Every assumption is set out in Method.',
   '<rect x="64" y="10" width="72" height="86" rx="4" class="fp" stroke="var(--acc)"/><path d="M74 24h52M74 34h40M74 44h52M74 54h30" class="ink" stroke-opacity=".5"/><rect x="74" y="64" width="52" height="20" class="fa" fill-opacity=".4"/><path d="M160 40v30M152 62l8 8 8-8" class="cy" stroke-width="2" fill="none"/>']
 ];
 $('#gSteps').innerHTML=GSTEP.map(([h,p,svg])=>`<div class="gs"><svg viewBox="0 0 200 100" fill="none">${svg}</svg><div class="gsB"><h3>${h}</h3><p>${p}</p></div></div>`).join('');
@@ -882,106 +910,280 @@ async function saveFile(name,data,fallback){const dl=await getDL();
  if(!dl){if(fallback)fallback();else flash('Downloads are not available in this view.',true);return false;}
  try{const r=await dl.save({filename:name,data});if(r&&r.status==='saved')flash('Saved '+name);return true;}
  catch(e){const c=e&&e.code;flash(c==='declined'?'Download cancelled.':c==='rate_limited'?'A download prompt is already open.':'Could not save: '+((e&&e.message)||c||'unknown error'),c!=='declined');return false;}}
-// ---------- PDF report (canvas pages + minimal PDF writer, no external libraries) ----------
-function snapImages(){const root=document.documentElement,th=root.dataset.theme,sv={...V};root.dataset.theme='light';
- const mk=(w,h)=>{const c=document.createElement('canvas');c.width=w*2;c.height=h*2;return c;};
- const ce=mk(714,380),cd=mk(714,300);
- try{TGT={e:{ctx:ce.getContext('2d'),dpr:2,w:714,h:380}};fit(714,380);draw();TGT={d:{ctx:cd.getContext('2d'),dpr:2,w:714,h:300}};drawDg();}
- finally{TGT=null;Object.assign(V,sv);root.dataset.theme=th;}
- return {e:ce,d:cd};}
-function buildSheets(){
- const PW=794,PH=1123,M=40,CW=PW-2*M,TOP=74,BOT=PH-44,pages=[];let g,y;
- const COL={ink:'#1a1033',mut:'#5e5486',line:'#ddd3f3',acc:'#7a22d6',n2:'#0e7490',ok:'#047857',bad:'#c8102e',amb:'#b45309',soft:'#f5f0fd'};
- const F=(w,sz)=>`${w} ${sz}px Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif`;
- const title=`${R.lin.name} over ${S.L0} mm opening`,date=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
- function page(){const c=document.createElement('canvas');c.width=PW*2;c.height=PH*2;g=c.getContext('2d');g.scale(2,2);g.fillStyle='#fff';g.fillRect(0,0,PW,PH);
-  g.fillStyle=COL.acc;g.font=F(800,12);g.textBaseline='alphabetic';g.textAlign='left';g.fillText('LINTEL LOADER',M,40);g.fillStyle=COL.mut;g.font=F(500,11);g.fillText('masonry lintel & pier design',M+112,40);
-  g.textAlign='right';g.fillText(title,PW-M,40);g.textAlign='left';
-  const gr=g.createLinearGradient(M,0,PW-M,0);gr.addColorStop(0,COL.acc);gr.addColorStop(.6,'#c026d3');gr.addColorStop(1,COL.n2);g.fillStyle=gr;g.fillRect(M,50,CW,2.5);
-  pages.push({c,g});y=TOP;}
- const need=h=>{if(y+h>BOT)page();};
- function wrap(t,w,font){g.font=font;const words=String(t).split(/\s+/),L=[];let cur='';for(const wd of words){const tt=cur?cur+' '+wd:wd;if(g.measureText(tt).width>w&&cur){L.push(cur);cur=wd;}else cur=tt;}if(cur)L.push(cur);return L;}
- function para(t,{size=11,w=CW,col=COL.mut,weight=400,lh=1.45,x=M}={}){const L=wrap(t,w,F(weight,size));need(L.length*size*lh+2);g.fillStyle=col;g.font=F(weight,size);for(const l of L){y+=size*lh;g.fillText(l,x,y-size*0.3);}y+=4;}
- function head(t){need(40);y+=14;const gr=g.createLinearGradient(M,0,M+16,0);gr.addColorStop(0,'#c026d3');gr.addColorStop(1,COL.n2);g.fillStyle=gr;g.fillRect(M,y-4,14,2.5);g.fillStyle=COL.n2;g.font=F(700,10);g.fillText(t.toUpperCase().split('').join(String.fromCharCode(8202)),M+22,y);y+=10;}
- function img(cv,h){need(h+6);g.drawImage(cv,M,y,CW,h);g.strokeStyle=COL.line;g.lineWidth=1;g.strokeRect(M+.5,y+.5,CW-1,h-1);y+=h+6;}
- function table(cols,rows,{fs=10.5}={}){// cols:[{h,w,al}] rows: arrays of strings or {t,col,sub,b}
-  const rowH=r=>{let mx=1;r.forEach((c,i)=>{const cc=typeof c==='object'?c:{t:c};const n=wrap(cc.t,cols[i].w-8,F(cc.b?700:500,fs)).length+(cc.sub?wrap(cc.sub,cols[i].w-8,F(400,fs-1.5)).length*0.9:0);mx=Math.max(mx,n);});return mx*fs*1.35+8;};
-  const hdr=()=>{need(22);g.fillStyle=COL.soft;g.fillRect(M,y,CW,20);let x=M;g.font=F(700,9);g.fillStyle=COL.mut;for(const c of cols){g.textAlign=c.al==='r'?'right':'left';g.fillText(c.h.toUpperCase(),c.al==='r'?x+c.w-4:x+4,y+13.5);x+=c.w;}g.textAlign='left';y+=20;};
-  hdr();for(const r of rows){const h=rowH(r);if(y+h>BOT){page();hdr();}let x=M;
-   r.forEach((c,i)=>{const cc=typeof c==='object'?c:{t:c},col=cols[i];let yy=y+fs+3;const L=wrap(cc.t,col.w-8,F(cc.b?700:500,fs));g.fillStyle=cc.col||COL.ink;g.font=F(cc.b?700:500,fs);g.textAlign=col.al==='r'?'right':'left';
-    for(const l of L){g.fillText(l,col.al==='r'?x+col.w-4:x+4,yy);yy+=fs*1.35;}
-    if(cc.sub){g.fillStyle=COL.mut;g.font=F(400,fs-1.5);for(const l of wrap(cc.sub,col.w-8,F(400,fs-1.5))){g.fillText(l,x+4,yy-1);yy+=(fs-1.5)*1.3;}}x+=col.w;});
-   g.textAlign='left';y+=h;g.strokeStyle=COL.line;g.lineWidth=1;g.beginPath();g.moveTo(M,y-.5);g.lineTo(M+CW,y-.5);g.stroke();}
-  y+=6;}
- // ----- sheet 1 -----
- page();
- g.fillStyle=COL.ink;g.font=F(700,20);g.fillText('Lintel design — calculation sheet',M,y+20);g.font=F(500,11.5);g.fillStyle=COL.mut;
- g.fillText(`${title} · span ${f0(R.Le*1000)} mm c/c bearings · ${R.arch?'arching assumed':'no arching'} · ${date}`,M,y+40);
- const chip=R.fail?`FAILS · max ${f2(R.umax)}`:`PASSES · max ${f2(R.umax)}`;g.font=F(800,12);const cw=g.measureText(chip).width+24;
- g.strokeStyle=R.fail?COL.bad:COL.ok;g.lineWidth=1.6;g.beginPath();g.roundRect(PW-M-cw,y+4,cw,24,12);g.stroke();g.fillStyle=R.fail?COL.bad:COL.ok;g.textAlign='center';g.fillText(chip,PW-M-cw/2,y+20.5);g.textAlign='left';y+=54;
- const im=snapImages();img(im.e,380*CW/714);
- // key values strip
- const kv=[['M_Ed',f2(R.Med)+' kNm'],['V_Ed',f2(R.Ved)+' kN'],['δ SLS',R.dmax!=null?f2(R.dmax*1000)+' mm':'—'],['R_L ULS',f2(R.R.L.U)+' kN'],['R_R ULS',f2(R.R.R.U)+' kN'],['f_k / f_d',f2(R.fk)+' / '+f2(R.fd)]];
- need(46);const kw=CW/6;kv.forEach(([k,v],i)=>{const x=M+i*kw;g.fillStyle=COL.soft;g.beginPath();g.roundRect(x+2,y,kw-4,40,7);g.fill();g.fillStyle=COL.mut;g.font=F(700,8.5);g.fillText(k.toUpperCase(),x+10,y+14);g.fillStyle=COL.ink;g.font=F(700,12.5);g.fillText(v,x+10,y+32);});y+=50;
- img(im.d,300*CW/714);
- // ----- inputs -----
- head('Inputs');const m=S.mas,MT=MAS[m.type]||MAS.custom,kind=k=>({return:'return / corner',opening:'pier between openings',end:'free wall end'}[k]);
- const half=CW/2,inp=[
-  ['Clear span / bearing',`${S.L0} mm / ${S.lb} mm each end`],['Head height / storey',`${S.hHead} / ${S.hStorey} mm`],['Masonry above lintel',`${S.Hm} mm`],
-  ['Masonry',MT.n],['Leaf / unit weight',`${m.t} mm · ${m.gamma} kN/m³`],['f_b · K · mortar · group',`${m.fb} N/mm² · ${m.K} · ${m.mort} · Group ${m.grp}`],['γ_M',`${m.gM}`],['f_k / f_d / f_vk0',`${f2(R.fk)} / ${f2(R.fd)} / ${R.fvk0} N/mm²`],
-  ['Left pier',`${S.pL.b} mm · ${kind(S.pL.kind)}${S.pL.kind==='opening'?` (${S.pL.adj} mm opening)`:''}`],['Right pier',`${S.pR.b} mm · ${kind(S.pR.kind)}${S.pR.kind==='opening'?` (${S.pR.adj} mm opening)`:''}`],
-  ['Arching / triangle',`${({auto:'auto',force:'assumed',none:'off'})[S.arch]} · ${S.theta}° · floors in triangle: ${S.flMode}`],['ULS / deflection',`${S.combo==='6.10'?'Eq 6.10':'Eq 6.10a/b'} · L/${S.dlim}`],
-  ['h_ef / λ',`${f0(R.slender.h_ef*1000)} mm · ${f1(R.slender.lam)} (ρ_n ${S.rho})`],['Lintel',R.lin.name]];
- table([{h:'Item',w:180},{h:'Value',w:CW-180}],inp.map(([a,b])=>[{t:a,col:COL.mut},b]));
- if(S.floors.length){head('Floors & roofs');table([{h:'Name',w:250},{h:'Height above lintel',w:130,al:'r'},{h:'Tributary',w:100,al:'r'},{h:'g_k / q_k kN/m²',w:CW-480,al:'r'}],S.floors.map(f=>[f.n,f.y+' mm',f.trib+' m',f.gk+' / '+f.qk]));}
- if(S.pts.length){head('Point loads');table([{h:'Name',w:220},{h:'x from left jamb',w:120,al:'r'},{h:'Height',w:100,al:'r'},{h:'Bearing',w:100,al:'r'},{h:'G_k / Q_k kN',w:CW-540,al:'r'}],S.pts.map(p=>[p.n,p.x+' mm',p.y+' mm',p.a+' mm',p.gk+' / '+p.qk]));}
- head('Arching');for(const c of R.archCond)para(`${c.ok?'✓':'✕'}  ${c.n}`,{col:c.ok?COL.ok:COL.bad,size:11,weight:600});
- para(S.arch==='auto'?(R.arch?'All conditions met: the lintel carries the load triangle and loads within the 1.1L loading zone.':'A condition is not met, so the full load over the opening is applied.'):S.arch==='force'?'Arching assumed by the user.':'Arching switched off by the user.');
- if(R.arch)para(`Arch thrust T = W·L/(8z) = ${f2(R.thr.Wa)} × ${f2(R.L0)} / (8 × ${f2(R.thr.z)}) = ${f2(R.thr.T)} kN.`);
- head('Loads on lintel (characteristic)');let tg=0,tq=0;
- table([{h:'Load',w:CW-180},{h:'G_k kN',w:90,al:'r'},{h:'Q_k kN',w:90,al:'r'}],[...R.B.items.map(i=>{tg+=i.G;tq+=i.Q;return [{t:i.n,sub:i.how},f2(i.G),f2(i.Q)];}),[{t:'Total on lintel',b:true},{t:f2(tg),b:true},{t:f2(tq),b:true}]]);
- para(`ULS combination ${R.gov[0]}G + ${R.gov[1]}Q governs. M_Ed = ${f2(R.Med)} kNm, V_Ed = ${f2(R.Ved)} kN, reactions ${f2(R.R.L.U)} / ${f2(R.R.R.U)} kN.`);
- for(const grp of [...new Set(R.checks.map(c=>c.g))]){head(grp==='Geometry'?'Geometry & guidance':grp+(grp.includes('pier')?` · ${f0(R.side[grp[0]].b*1000)} mm`:''));
-  if(grp.includes('pier')){const P=R.pier[grp[0]];para(`N at bearing level: G ${f1(P.Gt)} + Q ${f1(P.Qt)} kN → ULS ${f1(P.Nt)} kN; at mid-height ${f1(P.Nm)} kN.`,{size:10});}
-  table([{h:'Check',w:CW-300},{h:'E_d',w:75,al:'r'},{h:'R_d',w:75,al:'r'},{h:'Unit',w:50},{h:'Util.',w:100,al:'r'}],R.checks.filter(c=>c.g===grp).map(c=>{const st=c.st==='ok'?COL.ok:c.st==='warn'?COL.amb:COL.bad,na=c.ed===0&&c.rd===0;
-   return [{t:c.n,sub:c.note||''},na?'—':fmtV(c.ed),na?'—':fmtV(c.rd),c.unit||'',{t:na?'advisory':`${f2(c.u)} ${c.st==='ok'?'OK':c.st==='warn'?'ADVISORY':'FAIL'}`,col:st,b:true}];}));}
- if(R.warn.length){head('Notes');for(const w of R.warn)para('⚠ '+w,{col:COL.amb});}
- head('Method & limitations');
- para('Loads: arching uses a load triangle (BS 5977-1 practice) with a 1.1L loading zone; point loads spread at 60° (EC6 6.1.3). Steel to EN 1993-1-1 with nominal properties (root radii ignored); RC to EN 1992-1-1 (no links, span/depth deflection); proprietary lintels are checked by the equivalent UDL against the maker’s safe working load. Piers are checked to EC6: bearing (6.1.3), axial at bearing level and mid-height (6.1.2, Annex G) and bed-joint shear against arch thrust; Approved Document A Diagram 14 is advisory.',{size:10});
- para('Not checked: lateral (wind) load on the piers, local loading on the lintel flange or toe, construction-stage loading except through the LTB option, and cavity or thermal details. Library properties are indicative. This is a design aid; results should be verified by a competent engineer.',{size:10});
- // footers
- pages.forEach((p,i)=>{const q=p.g;q.strokeStyle=COL.line;q.lineWidth=1;q.beginPath();q.moveTo(M,PH-34);q.lineTo(PW-M,PH-34);q.stroke();q.fillStyle=COL.mut;q.font=F(500,9.5);q.textAlign='left';q.fillText(`Lintel Loader v${VER} · design aid, verify with a competent engineer · ${date}`,M,PH-20);q.textAlign='right';q.fillText(`Sheet ${i+1} of ${pages.length}`,PW-M,PH-20);q.textAlign='left';});
- return pages.map(p=>p.c);
-}
-function b64bytes(u){const b=atob(u.split(',')[1]),a=new Uint8Array(b.length);for(let i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a;}
-function makePDF(imgs,info){// imgs: [{jpg:Uint8Array,w,h}] → one A4 page each
- const enc=new TextEncoder(),parts=[],off=[];let len=0;const push=x=>{const b=typeof x==='string'?enc.encode(x):x;parts.push(b);len+=b.length;};
- const n=imgs.length,PWp=595.28,PHp=841.89,infoId=3+3*n;
- push('%PDF-1.4\n');push(new Uint8Array([37,226,227,207,211,10]));
- const obj=(id,body,stream)=>{off[id]=len;push(`${id} 0 obj\n`);push(body);if(stream){push('\nstream\n');push(stream);push('\nendstream');}push('\nendobj\n');};
- obj(1,'<< /Type /Catalog /Pages 2 0 R >>');
- obj(2,`<< /Type /Pages /Count ${n} /Kids [${imgs.map((_,i)=>`${3+3*i} 0 R`).join(' ')}] >>`);
- imgs.forEach((im,i)=>{const p=3+3*i,c=p+1,x=p+2,cs=`q ${PWp} 0 0 ${PHp} 0 0 cm /Im${i} Do Q`;
-  obj(p,`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${PWp} ${PHp}] /Resources << /XObject << /Im${i} ${x} 0 R >> >> /Contents ${c} 0 R >>`);
-  obj(c,`<< /Length ${enc.encode(cs).length} >>`,cs);
-  obj(x,`<< /Type /XObject /Subtype /Image /Width ${im.w} /Height ${im.h} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${im.jpg.length} >>`,im.jpg);});
- const ps=t=>'('+t.replace(/[\\()]/g,'\\$&').replace(/[^\x20-\x7e]/g,'-')+')';
- obj(infoId,`<< /Title ${ps(info.title)} /Creator ${ps('Lintel Loader v'+VER)} /Producer ${ps('Lintel Loader')} >>`);
- const xref=len;let xr=`xref\n0 ${infoId+1}\n0000000000 65535 f \n`;for(let i=1;i<=infoId;i++)xr+=String(off[i]).padStart(10,'0')+' 00000 n \n';
- push(xr);push(`trailer\n<< /Size ${infoId+1} /Root 1 0 R /Info ${infoId} 0 R >>\nstartxref\n${xref}\n%%EOF\n`);
- const out=new Uint8Array(len);let o=0;for(const p of parts){out.set(p,o);o+=p.length;}return out;}
-async function pdfReport(){
- if(!R){flash('Nothing to report yet.',true);return;}
- flash('Building the PDF…',false,8000);await new Promise(r=>setTimeout(r,30));
- let bytes;try{const pages=buildSheets();bytes=makePDF(pages.map(c=>({jpg:b64bytes(c.toDataURL('image/jpeg',0.9)),w:c.width,h:c.height})),{title:'Lintel Loader - '+R.lin.name});}
- catch(e){console.error(e);flash('Could not build the PDF: '+e.message,true);return;}
- const d=new Date(),stamp=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
- window.__pdf=bytes;await saveFile(`lintel-${S.L0}mm-${stamp}.pdf`,new Blob([bytes],{type:'application/pdf'}));
-}
-$('#bPdf').onclick=pdfReport;
+
 // ---------- start ----------
 let noG='';try{noG=localStorage.getItem(KEY+'.noGuide')||'';}catch(e){}
 $('#gNo').checked=!!noG;if(!noG)openOv('guide');
 renderRes();
+
+// ===================== v1.2 "Report": options + live A4 preview, vector PDF =====================
+// One draw list per sheet (mm, origin top-left) feeds the SVG preview and the PDF writer, so the download is exactly
+// the preview. Standard Helvetica / Symbol fonts with Adobe core-font metrics; no external libraries.
+// The page engine follows Frame Pusher's report writer.
+const RP={st:null,pages:[],zoom:'fit',t:0,host:null};
+const PW_H=[278,278,355,556,556,889,667,191,333,333,389,584,278,333,278,278,556,556,556,556,556,556,556,556,556,556,278,278,584,584,584,556,1015,667,667,722,722,667,611,778,722,278,500,667,556,833,722,778,667,778,722,667,611,722,667,944,667,667,611,278,278,278,469,556,333,556,556,500,556,556,278,556,556,222,222,500,222,833,556,556,556,556,333,500,278,556,500,722,500,500,500,334,260,334,584,0,556,0,222,556,333,1000,556,556,333,1000,667,333,1000,0,611,0,0,222,222,333,333,350,556,1000,333,1000,500,333,944,0,500,500,278,333,556,556,556,556,260,556,333,737,370,556,584,333,737,333,400,584,333,333,333,556,537,278,333,333,365,556,834,834,834,611,667,667,667,667,667,667,1000,722,667,667,667,667,278,278,278,278,722,722,778,778,778,778,778,584,778,722,722,722,722,667,667,611,556,556,556,556,556,556,889,500,556,556,556,556,278,278,278,278,556,556,556,556,556,556,556,584,611,556,556,556,556,500,556,500],
+PW_B=[278,333,474,556,556,889,722,238,333,333,389,584,278,333,278,278,556,556,556,556,556,556,556,556,556,556,333,333,584,584,584,611,975,722,722,722,722,667,611,778,722,278,556,722,611,833,722,778,667,778,722,667,611,722,667,944,667,667,611,333,278,333,584,556,333,556,611,556,611,556,333,611,611,278,278,556,278,889,611,611,611,611,389,556,333,611,556,778,556,556,500,389,280,389,584,0,556,0,278,556,500,1000,556,556,333,1000,667,333,1000,0,611,0,0,278,278,500,500,350,556,1000,333,1000,556,333,944,0,500,556,278,333,556,556,556,556,280,556,333,737,370,556,584,333,737,333,400,584,333,333,333,611,556,278,333,333,365,556,834,834,834,611,722,722,722,722,722,722,1000,722,667,667,667,667,278,278,278,278,722,722,778,778,778,778,778,584,778,722,722,722,722,667,667,611,556,556,556,556,556,556,889,556,556,556,556,556,278,278,278,278,611,611,611,611,611,611,611,584,611,611,611,611,611,556,611,556],
+PW_U={338:140,339:156,352:138,353:154,376:159,381:142,382:158,402:131,710:136,732:152,8211:150,8212:151,8216:145,8217:146,8218:130,8220:147,8221:148,8222:132,8224:134,8225:135,8226:149,8230:133,8240:137,8249:139,8250:155,8364:128,8482:153},
+PW_S={916:[68,612],931:[83,592],934:[70,763],937:[87,768],945:[97,631],946:[98,549],947:[103,411],948:[100,494],949:[101,439],951:[104,603],952:[113,521],955:[108,549],956:[109,576],960:[112,549],961:[114,549],963:[115,603],964:[116,439],966:[102,521],967:[99,549],968:[121,686],969:[119,686],8592:[172,987],8593:[173,603],8594:[174,987],8595:[175,603],8706:[182,494],8722:[45,549],8730:[214,549],8734:[165,713],8747:[242,274],8776:[187,549],8804:[163,549],8805:[179,549]};
+for(let c=160;c<=255;c++)PW_U[c]=c;
+const RPK=.3527778;/* mm per pt */
+const rpClean=s=>String(s).replace(/[̀-ͯ]/g,'').replace(/✓/g,'OK').replace(/✕/g,'X').replace(/⚠/g,'!');
+function rpRuns(s,f0){const out=[];let cur=null;for(const ch of rpClean(s)){const cp=ch.codePointAt(0);let f=f0,c,w;
+  if(cp>=32&&cp<=126)c=cp;else if(PW_U[cp])c=PW_U[cp];else if(PW_S[cp]){f='S';c=PW_S[cp][0];w=PW_S[cp][1]}else c=63;
+  if(w===undefined)w=(f0=='B'?PW_B:PW_H)[c-32]||556;if(!cur||cur.f!=f){cur={f,c:[],w:0};out.push(cur)}cur.c.push(c);cur.w+=w}return out}
+const rpW=(s,pt,f)=>rpRuns(s,f||'H').reduce((t,r)=>t+r.w,0)*pt/1000*RPK;
+const RPG={W:210,H:297,X0:12,X1:198,XR:28,XO:164,HT:10,HH:27,BT:39,BB:280};RPG.MX=RPG.XR+3;RPG.MW=RPG.XO-6-RPG.MX;
+const rpL=(pg,x1,y1,x2,y2,w,c,d)=>pg.it.push({t:'l',x1,y1,x2,y2,w:w||.2,c:c||'#000',d});
+const rpP=(pg,pts,o)=>pg.it.push(Object.assign({t:'p',pts},o));
+const rpR=(pg,x,y,w,h,o)=>rpP(pg,[[x,y],[x+w,y],[x+w,y+h],[x,y+h]],Object.assign({cl:1},o));
+const rpT=(pg,x,y,s,pt,o)=>{o=o||{};if(s===''||s==null)return;pg.it.push({t:'t',x,y,s:rpClean(s),pt,f:o.f||'H',a:o.a||'l',c:o.c||'#000'})};
+const rpCirc=(cx,cy,r,n)=>{n=n||20;const p=[];for(let i=0;i<n;i++){const a=i/n*2*Math.PI;p.push([cx+r*Math.cos(a),cy+r*Math.sin(a)])}return p};
+function rpWrap(s,pt,w,f){const out=[];rpClean(s).split('\n').forEach(par=>{let line='';par.split(/\s+/).forEach(wd=>{if(!wd)return;const t=line?line+' '+wd:wd;if(rpW(t,pt,f)<=w||!line)line=t;else{out.push(line);line=wd}});out.push(line)});return out}
+const rpMix=(c,k)=>{const n=parseInt(c.slice(1),16),r=n>>16,g=n>>8&255,b=n&255,m=v=>Math.round(v+(255-v)*k).toString(16).padStart(2,'0');return'#'+m(r)+m(g)+m(b)};
+function rpF(v,d){if(!isFinite(v))return'–';const s=Math.abs(v)<.5*Math.pow(10,-d)?0:v;return s.toFixed(d)}
+const rpEsc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function rpSVG(pg,wpx){let s='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 297" width="'+wpx+'" height="'+(wpx*297/210)+'" style="background:#fff"><rect width="210" height="297" fill="#fff"/>';
+ pg.it.forEach(o=>{if(o.t=='l')s+='<line x1="'+o.x1.toFixed(2)+'" y1="'+o.y1.toFixed(2)+'" x2="'+o.x2.toFixed(2)+'" y2="'+o.y2.toFixed(2)+'" stroke="'+o.c+'" stroke-width="'+o.w+'"'+(o.d?' stroke-dasharray="'+o.d.join(' ')+'"':'')+'/>';
+  else if(o.t=='p'){const d=o.pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(2)+' '+p[1].toFixed(2)).join('')+(o.cl?'Z':'');s+='<path d="'+d+'" fill="'+(o.fill||'none')+'" stroke="'+(o.st||'none')+'" stroke-width="'+(o.w||.2)+'" stroke-linejoin="round"'+(o.d?' stroke-dasharray="'+o.d.join(' ')+'"':'')+'/>'}
+  else if(o.t=='t'){const fs=(o.pt*RPK).toFixed(3),an=o.a=='c'?'middle':o.a=='r'?'end':'start';s+='<text x="'+o.x.toFixed(2)+'" y="'+o.y.toFixed(2)+'" font-size="'+fs+'" font-family="Helvetica,Arial,\'Liberation Sans\',sans-serif"'+(o.f=='B'?' font-weight="bold"':'')+(o.f=='I'?' font-style="italic"':'')+' text-anchor="'+an+'" fill="'+o.c+'" xml:space="preserve">'+rpEsc(o.s)+'</text>'}});
+ return s+'</svg>'}
+function rpPDF(pages,info){const K=72/25.4,H=297*K,n=v=>(+v.toFixed(3)).toString(),X=x=>n(x*K),Y=y=>n(H-y*K);
+ const col=c=>{if(c.length==4)c='#'+c[1]+c[1]+c[2]+c[2]+c[3]+c[3];const v=parseInt(c.slice(1),16);return[(v>>16)/255,(v>>8&255)/255,(v&255)/255].map(q=>n(q)).join(' ')};
+ const esc=codes=>codes.map(c=>c==40||c==41||c==92?'\\'+String.fromCharCode(c):c<32||c>126?'\\'+c.toString(8).padStart(3,'0'):String.fromCharCode(c)).join('');
+ const FN={H:'/F1',B:'/F2',S:'/F3',I:'/F4'};
+ const streams=pages.map(pg=>{const o=['1 j 0 J'];pg.it.forEach(e=>{
+  if(e.t=='l'){o.push(col(e.c)+' RG '+n(e.w*K)+' w ['+(e.d||[]).map(v=>n(v*K)).join(' ')+'] 0 d '+X(e.x1)+' '+Y(e.y1)+' m '+X(e.x2)+' '+Y(e.y2)+' l S')}
+  else if(e.t=='p'){if(!e.fill&&!e.st)return;let s='';if(e.fill)s+=col(e.fill)+' rg ';if(e.st)s+=col(e.st)+' RG '+n((e.w||.2)*K)+' w ['+(e.d||[]).map(v=>n(v*K)).join(' ')+'] 0 d ';
+   s+=e.pts.map((p,i)=>X(p[0])+' '+Y(p[1])+(i?' l':' m')).join(' ')+(e.cl?' h':'')+' '+(e.fill&&e.st?'B':e.fill?'f':'S');o.push(s)}
+  else if(e.t=='t'){const f0=e.f=='I'?'H':e.f,runs=rpRuns(e.s,f0),tw=runs.reduce((t,r)=>t+r.w,0)*e.pt/1000*RPK;let x=e.a=='c'?e.x-tw/2:e.a=='r'?e.x-tw:e.x;
+   let s=col(e.c)+' rg BT';runs.forEach(r=>{const f=r.f=='S'?'S':e.f;s+=' '+FN[f]+' '+n(e.pt)+' Tf 1 0 0 1 '+X(x)+' '+Y(e.y)+' Tm ('+esc(r.c)+') Tj';x+=r.w*e.pt/1000*RPK});o.push(s+' ET')}});return o.join('\n')});
+ const objs=[];const add=s=>{objs.push(s);return objs.length};
+ add('<< /Type /Catalog /Pages 2 0 R >>');add('');
+ const f1=add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>'),f2=add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>'),
+  f3=add('<< /Type /Font /Subtype /Type1 /BaseFont /Symbol >>'),f4=add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Oblique /Encoding /WinAnsiEncoding >>');
+ const ps=v=>'('+esc(rpRuns(String(v||'').replace(/[–—]/g,'-'),'H').flatMap(r=>r.f=='S'?r.c.map(()=>63):r.c))+')';
+ const inf=add('<< /Title '+ps(info.title)+' /Author '+ps(info.author)+' /Subject '+ps(info.subject)+' /Creator (Lintel Loader v'+VER+') /Producer (Lintel Loader report writer) /CreationDate (D:'+new Date().toISOString().replace(/[-:T]/g,'').slice(0,14)+'Z) >>');
+ const res='<< /Font << /F1 '+f1+' 0 R /F2 '+f2+' 0 R /F3 '+f3+' 0 R /F4 '+f4+' 0 R >> >>',kids=[];
+ streams.forEach(st=>{const c=add('<< /Length '+st.length+' >>\nstream\n'+st+'\nendstream');kids.push(add('<< /Type /Page /Parent 2 0 R /MediaBox [0 0 '+n(210*K)+' '+n(H)+'] /Resources '+res+' /Contents '+c+' 0 R >>'))});
+ objs[1]='<< /Type /Pages /Kids ['+kids.map(k=>k+' 0 R').join(' ')+'] /Count '+kids.length+' >>';
+ let out='%PDF-1.4\n%\xE2\xE3\xCF\xD3\n';const off=[];objs.forEach((s,i)=>{off.push(out.length);out+=(i+1)+' 0 obj\n'+s+'\nendobj\n'});
+ const xr=out.length;out+='xref\n0 '+(objs.length+1)+'\n0000000000 65535 f \n'+off.map(o=>String(o).padStart(10,'0')+' 00000 n \n').join('')+'trailer\n<< /Size '+(objs.length+1)+' /Root 1 0 R /Info '+inf+' 0 R >>\nstartxref\n'+xr+'\n%%EOF\n';
+ const b=new Uint8Array(out.length);for(let i=0;i<out.length;i++)b[i]=out.charCodeAt(i)&255;return b}
+function rpArrow(pg,x1,y1,x2,y2,c,w,hd){const l=Math.hypot(x2-x1,y2-y1)||1,ux=(x2-x1)/l,uy=(y2-y1)/l,h=hd||1.9,b=h*.38;rpL(pg,x1,y1,x2-ux*h*.6,y2-uy*h*.6,w||.3,c);
+ rpP(pg,[[x2,y2],[x2-ux*h-uy*b,y2-uy*h+ux*b],[x2-ux*h+uy*b,y2-uy*h-ux*b]],{cl:1,fill:c})}
+function rpLab(pg,boxes,F,x,y,s,pt,o){o=o||{};const w=rpW(s,pt,o.f),h=pt*RPK,a=o.a||'l',x0=a=='c'?x-w/2:a=='r'?x-w:x,tries=o.tries||[[0,0],[0,-2.4],[0,2.4],[2.5,0],[-2.5,0],[0,-4.6],[0,4.6]];
+ for(const[dx,dy]of tries){const b=[x0+dx-.4,y+dy-h*.82,x0+dx+w+.4,y+dy+h*.22];if(F&&(b[0]<F.X+.5||b[2]>F.X+F.w-.5||b[1]<F.Y+.5||b[3]>F.Y+F.h-.5))continue;
+  if(boxes.some(q=>b[0]<q[2]&&b[2]>q[0]&&b[1]<q[3]&&b[3]>q[1]))continue;boxes.push(b);if(o.bg)rpR(pg,b[0],b[1],b[2]-b[0],b[3]-b[1],{fill:'#ffffff'});rpT(pg,x+dx,y+dy,s,pt,{a,c:o.c,f:o.f});return true}return false}
+const rpPal=o=>o.mono?{L:'#000',M:'#000',V:'#000',D:'#000',P:'#000',acc:'#333',tri:'#e6e6e6',triS:'#000',zone:'#555',ok:'#000',bad:'#000',wall:'#efefef',wallS:'#000',lint:'#666',course:'#cfcfcf'}
+ :{L:'#b3125d',M:'#6a1fc2',V:'#0b7f8f',D:'#cf5a06',P:'#c2410c',acc:'#6a1fc2',tri:'#f4d3ec',triS:'#b3125d',zone:'#0b7f8f',ok:'#047857',bad:'#c0261f',wall:'#f1e3dc',wallS:'#5b4a4a',lint:'#7a3fd6',course:'#dcc5bb'};
+/* ---------- figures ---------- */
+function rpElev(o,hMax){const s0=S,r=R,bL=r.side.L.b,bR=r.side.R.b,L0=r.L0,yT=r.hHead+r.dL,top=yT+r.Hm,W=bL+L0+bR;
+ const xl=-(s0.pL.kind==='opening'?Math.min(r.side.L.adj,1.2)+0.15:0.3),xr=W+(s0.pR.kind==='opening'?Math.min(r.side.R.adj,1.2)+0.15:0.3);
+ const yMax=Math.max(top,yT+Math.max(0,...s0.floors.map(f=>f.y/1000)),...s0.pts.map(p=>yT+p.y/1000+0.5),yT+(o.zone&&r.arch?r.zone:0))+0.15;
+ const pad={l:8,r:12,t:6,b:o.dims?13:6},w=RPG.MW,sc=Math.min((w-pad.l-pad.r)/(xr-xl),(hMax-pad.t-pad.b)/(yMax+0.05)),h=Math.min(hMax,yMax*sc+pad.t+pad.b+1);
+ return{h,draw:(pg,Y0)=>{const X0=RPG.MX,ox=X0+pad.l+(w-pad.l-pad.r-(xr-xl)*sc)/2-xl*sc,oy=Y0+h-pad.b,P=(x,y)=>[ox+x*sc,oy-y*sc],pal=rpPal(o),boxes=[],FB={X:X0,Y:Y0,w,h},dp=o.dp;
+  rpR(pg,X0,Y0,w,h,{st:'#c8c8c8',w:.15});
+  const rect=(x0,y0,x1,y1,st)=>{const a=P(x0,y0),b=P(x1,y1);rpP(pg,[[a[0],a[1]],[b[0],a[1]],[b[0],b[1]],[a[0],b[1]]],Object.assign({cl:1},st))};
+  // context
+  for(const sd of ['L','R']){const Pq=s0[sd==='L'?'pL':'pR'],x0=sd==='L'?0:W,dir=sd==='L'?-1:1;
+   if(Pq.kind==='return'){const t=Math.max(0.1,s0.mas.t/1000);rect(Math.min(x0,x0+dir*t),0,Math.max(x0,x0+dir*t),top,{fill:o.mono?'#d8d8d8':'#e3cfc6',st:pal.wallS,w:.2});const c=P(x0+dir*t/2,top);rpT(pg,c[0],c[1]-1.2,'return',5.2,{a:'c',c:'#555'})}
+   else if(Pq.kind==='opening'){const a=Math.min(Pq.adj/1000,1.2);rect(Math.min(x0,x0+dir*(a+0.15)),r.hHead,Math.max(x0,x0+dir*(a+0.15)),top,{fill:rpMix(o.mono?'#999999':'#c9a89c',.6)});const p1=P(Math.min(x0,x0+dir*a),0),p2=P(Math.max(x0,x0+dir*a),r.hHead);rpP(pg,[[p1[0],p1[1]],[p2[0],p1[1]],[p2[0],p2[1]],[p1[0],p2[1]]],{cl:1,st:'#777',w:.18,d:[1,.8]});const c=P(x0+dir*a/2,r.hHead*0.55);rpT(pg,c[0],c[1],'opening '+Pq.adj,5.2,{a:'c',c:'#555'})}
+   else{const a=P(x0,0),b=P(x0,top);rpL(pg,a[0],a[1],b[0],b[1],.35,pal.bad,[1,.8]);rpT(pg,a[0]+dir*1.2,(a[1]+b[1])/2,'free end',5.4,{a:sd==='L'?'r':'l',c:pal.bad})}}
+  // wall with opening (draw wall, then opening and lintel over it)
+  rect(0,0,W,top,{fill:pal.wall,st:pal.wallS,w:.25});
+  if(o.courses){const MT=MAS[s0.mas.type]||MAS.custom,ch=(MT.uh+10)/1000;if(ch*sc>=.7){for(let y=ch;y<top-1e-6;y+=ch){const segs=[[0,W]];if(y<r.hHead)segs.splice(0,1,[0,bL],[bL+L0,W]);else if(y<yT)segs.splice(0,1,[0,bL-r.lb],[bL+L0+r.lb,W]);
+    for(const[a,b]of segs){if(b-a<=0)continue;const p=P(a,y),q=P(b,y);rpL(pg,p[0],p[1],q[0],q[1],.08,pal.course)}}}}
+  rect(bL,0,bL+L0,r.hHead,{fill:'#ffffff',st:pal.wallS,w:.25});
+  if(o.zone){if(r.arch){const a=P(bL,yT),b=P(bL+L0/2,yT+Math.min(r.htri,r.Hm)),c=P(bL+L0,yT);rpP(pg,[a,b,c],{cl:1,fill:pal.tri,st:pal.triS,w:.3});
+    const z1=P(bL,yT),z2=P(bL+L0,yT+r.zone);rpP(pg,[[z1[0],z1[1]],[z2[0],z1[1]],[z2[0],z2[1]],[z1[0],z2[1]]],{cl:1,st:pal.zone,w:.2,d:[1.2,.8]});rpT(pg,z2[0]-.8,z2[1]+2.4,'loading zone 1.1L',5.2,{a:'r',c:pal.zone})}
+   else rect(bL,yT,bL+L0,top,{fill:pal.tri,st:pal.triS,w:.25});
+   const lp=P(bL+L0/2,yT);rpLab(pg,boxes,FB,lp[0],lp[1]-1.4,r.arch?S.theta+'° load triangle':'full masonry over opening',5.6,{a:'c',c:pal.triS,bg:1,tries:[[0,0],[0,-3]]})}
+  rect(bL-r.lb,r.hHead,bL+L0+r.lb,yT,{fill:pal.lint,st:'#000',w:.2});
+  {const c=P(bL+L0/2,r.hHead);rpLab(pg,boxes,FB,c[0],c[1]+2.6,r.lin.name,5.6,{a:'c',f:'B',c:'#222',bg:1,tries:[[0,0],[0,2.6]]})}
+  // ground
+  {const a=P(xl,0),b=P(xr,0);rpL(pg,a[0],a[1],b[0],b[1],.35,'#000');for(let x=a[0];x<b[0]-1;x+=1.4)rpL(pg,x+1.2,a[1],x,a[1]+1.2,.12,'#555')}
+  // floors
+  s0.floors.forEach((f,i)=>{const y=yT+f.y/1000,a=P(xl+0.05,y),b=P(xr-0.05,y);rpL(pg,a[0],a[1],b[0],b[1],.55,'#111');const it=r.B.items.find(q=>q.ref==='f'+i);
+   if(it&&it.on!==false&&it.b>it.a){const p=P(bL-r.sL+it.a,y),q=P(bL-r.sL+it.b,y);rpL(pg,p[0],p[1]-.9,q[0],q[1]-.9,.45,pal.L)}
+   rpLab(pg,boxes,FB,a[0]+.6,a[1]-1.1,`${f.n} · ${rpF(f.gk*f.trib,dp)} G + ${rpF(f.qk*f.trib,dp)} Q kN/m`,5.6,{c:'#111',bg:1,tries:[[0,0],[0,4],[20,0],[20,4]]})});
+  // point loads
+  s0.pts.forEach((p,i)=>{const xs=bL+p.x/1000,y=yT+Math.max(0,p.y/1000),a=p.a/1000,di=r.B.disp[i],c=pal.P,t=P(xs,y);
+   if(o.zone&&di){const l1=P(xs-a/2,y),l2=P(xs+a/2,y),g1=P(bL+di.x1,yT),g2=P(bL+di.x2,yT);rpL(pg,l1[0],l1[1],g1[0],g1[1],.18,c,[.8,.6]);rpL(pg,l2[0],l2[1],g2[0],g2[1],.18,c,[.8,.6])}
+   {const l1=P(xs-a/2,y),l2=P(xs+a/2,y);rpR(pg,l1[0],l1[1]-.7,Math.max(.6,l2[0]-l1[0]),.7,{fill:c})}
+   rpArrow(pg,t[0],t[1]-9,t[0],t[1]-.8,c,.35,2);rpLab(pg,boxes,FB,t[0]+1.2,t[1]-6.5,`${p.n} ${rpF(p.gk,dp)} G + ${rpF(p.qk,dp)} Q kN${di?'':' (arched)'}`,5.8,{c,f:'B',bg:1,tries:[[0,0],[0,-3],[-3-rpW(p.n+' 00.00 G + 00.00 Q kN',5.8,'B'),0],[0,3]]})});
+  // pier utilisation
+  for(const sd of ['L','R']){const g=sd==='L'?'Left pier':'Right pier',cks=r.checks.filter(c=>c.g===g&&!c.adv),u=Math.max(0,...cks.map(c=>c.u)),bad=cks.some(c=>c.st==='fail'),xc=sd==='L'?bL/2:bL+L0+bR/2,pp=P(xc,r.hHead*0.45);
+   const tx=`${sd==='L'?'L':'R'} pier ${rpF(u,2)}`,tw=rpW(tx,5.6,'B')+3;rpR(pg,pp[0]-tw/2,pp[1]-2.4,tw,3.6,{fill:'#ffffff',st:bad?pal.bad:pal.ok,w:.25});rpT(pg,pp[0],pp[1]+.3,tx,5.6,{a:'c',f:'B',c:bad?pal.bad:pal.ok})}
+  // dims
+  if(o.dims){const yy=P(0,0)[1]+6.5,tick=(x,y)=>rpL(pg,x-.8,y+.8,x+.8,y-.8,.25,'#555'),hd=(x1,x2,t)=>{rpL(pg,x1,yy,x2,yy,.15,'#555');tick(x1,yy);tick(x2,yy);if(x2-x1>rpW(t,5.8)+1)rpT(pg,(x1+x2)/2,yy-.9,t,5.8,{a:'c',c:'#333'})};
+   const xs=[0,bL,bL+L0,W].map(x=>P(x,0)[0]);xs.forEach(x=>rpL(pg,x,yy-2,x,yy+1.2,.1,'#777'));hd(xs[0],xs[1],rpF(bL*1000,0));hd(xs[1],xs[2],rpF(L0*1000,0));hd(xs[2],xs[3],rpF(bR*1000,0));
+   const vx=P(bL,0)[0]+3,vd=(y1,y2,t)=>{const a=P(0,y1)[1],b=P(0,y2)[1];rpL(pg,vx,a,vx,b,.15,'#555');tick(vx,a);tick(vx,b);if(a-b>rpW(t,5.6)+1){rpT(pg,vx+1,(a+b)/2+1,t,5.6,{c:'#333'})}};
+   vd(0,r.hHead,rpF(r.hHead*1000,0));vd(yT,top,rpF(r.Hm*1000,0))}
+ }}}
+function rpDiagF(o,hMax){const rows=[['q',R.qU,'Load ULS','kN/m','L'],['V',R.Vu,'Shear ULS','kN','V'],['M',R.Mu,'Moment ULS','kNm','M']];if(R.dfl)rows.push(['d',R.dfl.map(v=>v*1000),'Deflection SLS','mm','D']);
+ const rh=Math.max(11,Math.min(22,(hMax-6)/rows.length)),h=rows.length*rh+6;
+ return{h,draw:(pg,Y0)=>{const X0=RPG.MX,w=RPG.MW,pal=rpPal(o),x=R.aG.x,Le=R.Le,ml=X0+20,pw=w-24;rpR(pg,X0,Y0,w,h,{st:'#c8c8c8',w:.15});
+  const px=i=>ml+x[i]/Le*pw;
+  rows.forEach(([k,d,nm,u,ck],j)=>{const y0=Y0+3+j*rh,c=pal[ck],mx=Math.max(1e-9,...d.map(Math.abs)),inv=k!=='V',zy=k==='V'?y0+rh/2:y0+2,sc=(k==='V'?rh/2-2:rh-4)/mx,py=v=>zy+(inv?v:-v)*sc;
+   rpT(pg,X0+1.5,y0+3.5,nm,5.6,{f:'B',c:'#333'});rpT(pg,X0+1.5,y0+6.4,u,5.4,{c:'#666'});
+   rpL(pg,ml,zy,ml+pw,zy,.12,'#999');for(const sx of [R.sL,R.sR]){const q=ml+sx/Le*pw;rpL(pg,q,y0+.6,q,y0+rh-.6,.08,'#aaa',[.5,.6])}
+   const pts=[];const step=Math.max(1,Math.floor(x.length/240));for(let i=0;i<x.length;i+=step)pts.push([px(i),py(d[i])]);pts.push([px(x.length-1),py(d[x.length-1])]);
+   rpP(pg,[[ml,zy],...pts,[ml+pw,zy]],{cl:1,fill:o.mono?'#e8e8e8':rpMix(c,.85)});rpP(pg,pts,{st:c,w:.3,d:k==='d'?[.6,.5]:k==='V'?[1.6,.6]:undefined});
+   if(o.vals){let im=0;for(let i=0;i<d.length;i++)if(Math.abs(d[i])>Math.abs(d[im]))im=i;const t=(k==='V'?'±':'')+rpF(Math.abs(d[im]),k==='d'?2:o.dp)+' '+u+' at '+rpF(x[im]*1000,0),tw=rpW(t,5.8,'B');
+    let lx=Math.min(Math.max(px(im)-tw/2,ml),ml+pw-tw),ly=k==='V'?y0+3:Math.min(Math.max(py(d[im])+3,y0+3),y0+rh-.8);rpR(pg,lx-.5,ly-2.3,tw+1,2.9,{fill:'#ffffff'});rpT(pg,lx,ly,t,5.8,{f:'B',c})}
+   if(j<rows.length-1)rpL(pg,X0,y0+rh,X0+w,y0+rh,.08,'#ccc')});
+  rpT(pg,X0+w-1.2,Y0+h-1.2,'x along lintel (mm), span '+rpF(Le*1000,0)+' c/c bearings; dotted lines are the jambs',5,{a:'r',c:'#666'})}}}
+function rpFigure(kind,o,hMax){return kind==='elev'?rpElev(o,hMax):rpDiagF(o,hMax)}
+/* ---------- content blocks ---------- */
+const rpRef=(c,lin)=>/Section class/.test(c.n)?'EC3 5.5':/Bending/.test(c.n)?(lin==='rc'?'EC2 6.1':'EC3 6.2.5'):/Shear/.test(c.n)?(lin==='rc'?'EC2 6.2.2':'EC3 6.2.6'):/Deflection/.test(c.n)?'EC3 7.2':/Span/.test(c.n)?'EC2 7.4.2':/Minimum/.test(c.n)?'EC2 9.2.1.1':/^K/.test(c.n)?'EC2':/Equivalent/.test(c.n)?'Maker':/wide enough/.test(c.n)?'':/^Bearing under/.test(c.n)?'EC6 6.1.3':/bearing level/.test(c.n)?'EC6 6.1.2':/mid-height/.test(c.n)?'EC6 G':/thrust/.test(c.n)?'EC6 3.6.2':/^ADA/.test(c.n)?'ADA D14':/Slender/.test(c.n)?'EC6 5.5.1':/Bearing length/.test(c.n)?'EN 845-2':'';
+const rpShort=n=>n.replace(/_/g,'').replace(/ \(.*\)$/,'').replace(/^ADA( Diagram 14)?: /,'').replace(/ — .*/,'').slice(0,34);
+function rpBlocks(o){const B=[],dp=o.dp,f=v=>rpF(v,dp),hM=o.size=='s'?60:o.size=='l'?120:85,m=S.mas,MT=MAS[m.type]||MAS.custom,lin=R.lin;let sec=0,fig=0,tab=0;
+ const H=t=>{sec++;B.push({k:'h',t,ref:String(sec)})},Pp=(t,x)=>B.push(Object.assign({k:'p',t},x||{})),
+  Fg=(kind,cap,out)=>{fig++;B.push({k:'fig',kind,o,f:rpFigure(kind,o,hM),cap:'Figure '+fig+' – '+cap,ref:'Fig '+fig,out})},
+  Tb=(title,cols,rows,out,x)=>{if(!rows.length)return;tab++;B.push(Object.assign({k:'tbl',title:'Table '+tab+' – '+title,ref:'Tab '+tab,cols,rows,out},x||{}))};
+ const st=c=>c.st==='ok'?'OK':c.st==='warn'?'ADVISORY':'FAIL',stc=c=>o.mono?'#000':c.st==='ok'?'#047857':c.st==='warn'?'#b45309':'#c0261f',na=c=>c.ed===0&&c.rd===0;
+ const ckP=c=>Pp(rpShortFull(c)+(c.note?' ('+c.note.replace(/_/g,'')+').':''),{ref:rpRef(c,lin.kind),out:[{l:rpShort(c.n),v:na(c)?'see note':rpF(c.u,2)+' '+st(c),c:stc(c)}]});
+ function rpShortFull(c){if(na(c))return c.n.replace(/_/g,'')+': outside the prescriptive guidance.';const u=c.unit?' '+c.unit:'',adv=/^ADA/.test(c.n)||/Bearing length/.test(c.n)||/Minimum tension/.test(c.n)||/Pier wide/.test(c.n);
+  return adv?`${c.n.replace(/_/g,'')}: required ${fmtV(c.ed)}${u}, provided ${fmtV(c.rd)}${u}; ratio ${rpF(c.u,2)}.`:`${c.n.replace(/_/g,'')}: Ed = ${fmtV(c.ed)}${u} ${c.u<=1?'≤':'>'} Rd = ${fmtV(c.rd)}${u}; utilisation ${rpF(c.u,2)}.`}
+ const Sx=o.sel;
+ if(Sx.sum){H('Design summary');
+  Pp(`${lin.name} over a ${S.L0} mm clear opening (${rpF(R.Le*1000,0)} mm between bearing centres, ${S.lb} mm bearing each end) in ${MT.n.toLowerCase()}, leaf ${m.t} mm. ${R.arch?`The masonry above arches, so the lintel carries a ${S.theta}° load triangle and loads within the 1.1L loading zone.`:'Arching is not taken, so the lintel carries the full masonry and floor loads over the opening.'} ${R.fail?'One or more checks fail.':'All design checks pass.'}`,
+   {out:[{l:'Result',v:R.fail?'FAILS':'PASSES',c:o.mono?'#000':R.fail?'#c0261f':'#047857'},{l:'Max utilisation',v:rpF(R.umax,2)}]});
+  Tb('Summary of checks',[{h:'Group',w:22},{h:'Check',w:62},{h:'Ed',w:16,a:'r'},{h:'Rd',w:16,a:'r'},{h:'Unit',w:10},{h:'Util.',w:12,a:'r'},{h:'Status',w:18}],
+   R.checks.map(c=>[c.g,c.n.replace(/_/g,''),na(c)?'–':fmtV(c.ed),na(c)?'–':fmtV(c.rd),c.unit,na(c)?'–':rpF(c.u,2),{t:st(c),c:stc(c),b:1}]),null,{note:'Ed / Rd is action / resistance; for geometric and Approved Document A rows it is required / provided. Advisory rows do not fail the design.'});
+  for(const w of R.warn)Pp('Note: '+w,{c:'#9a3412'})}
+ if(Sx.geom){H('Geometry');
+  Pp(`Clear opening ${S.L0} mm with ${S.lb} mm bearings, so the lintel span between bearing centres is L = ${S.L0} + ${S.lb} = ${rpF(R.Le*1000,0)} mm. Head height ${S.hHead} mm above floor, storey height ${S.hStorey} mm, masonry above the lintel ${S.Hm} mm. Lintel depth ${rpF(R.dL*1000,0)} mm, bearing width on the leaf ${rpF(Math.min(R.lin.bw,R.t)*1000,0)} mm.`,{out:[{l:'Span c/c bearings',v:rpF(R.Le*1000,0)+' mm'}]});
+  Fg('elev','Elevation: load triangle, loading zone, floors and point loads (dimensions in mm)',[{l:'Clear span',v:S.L0+' mm'},{l:'Masonry above',v:S.Hm+' mm'}]);
+  const kn=k=>({return:'Return / corner wall',opening:'Another opening',end:'Free end of wall'}[k]);
+  Tb('Walls either side of the opening',[{h:'Side',w:22},{h:'Pier width (mm)',w:28,a:'r'},{h:'Beyond the pier',w:48},{h:'Adjacent opening (mm)',w:34,a:'r'}],
+   [['Left',String(S.pL.b),kn(S.pL.kind),S.pL.kind==='opening'?String(S.pL.adj):'–'],['Right',String(S.pR.b),kn(S.pR.kind),S.pR.kind==='opening'?String(S.pR.adj):'–']])}
+ if(Sx.mas){H('Masonry properties');const fm=Math.min(MORT[m.mort]||4,20,2*m.fb);
+  Pp(`${MT.n}: Group ${m.grp} units, normalised mean compressive strength fb = ${m.fb} N/mm² (${MT.note}), mortar ${MORTN[m.mort]}, fm = ${fm} N/mm². Unit weight γ = ${m.gamma} kN/m³, so the leaf weighs γt = ${m.gamma} × ${rpF(R.t,4)} = ${rpF(R.gw,2)} kN/m².`,{ref:'EC6 3.1',out:[{l:'Wall self-weight',v:rpF(R.gw,2)+' kN/m²'}]});
+  Pp(`Characteristic compressive strength, general purpose mortar: fk = K fb^0.7 fm^0.3 = ${m.K} × ${m.fb}^0.7 × ${fm}^0.3 = ${rpF(R.fk,2)} N/mm² (K from UK NA Table NA.4; fm taken ≤ 20 and ≤ 2fb).`,{ref:'EC6 3.6.1.2',out:[{l:'fk',v:rpF(R.fk,2)+' N/mm²'}]});
+  Pp(`Design strength fd = fk / γM = ${rpF(R.fk,2)} / ${m.gM} = ${rpF(R.fd,3)} N/mm².`,{ref:'NA Tab NA.1',out:[{l:'fd',v:rpF(R.fd,3)+' N/mm²'}]});
+  Pp(`Initial shear strength fvk0 = ${R.fvk0} N/mm² for ${({clay:'clay',cs:'calcium silicate',conc:'aggregate concrete',aac:'autoclaved aerated concrete',stone:'natural stone'})[m.cat]||m.cat} units in ${m.mort} mortar; fvk = fvk0 + 0.4σd ≤ 0.065fb = ${rpF(0.065*m.fb,3)} N/mm².`,{ref:'EC6 Tab 3.4',out:[{l:'fvk0',v:R.fvk0+' N/mm²'}]})}
+ if(Sx.load){H('Loading');
+  Tb('Floors and roofs',[{h:'Name',w:44},{h:'Height above lintel (mm)',w:30,a:'r'},{h:'Trib. width (m)',w:22,a:'r'},{h:'gk / qk (kN/m²)',w:26,a:'r'},{h:'Line load G / Q (kN/m)',w:32,a:'r'}],
+   S.floors.map(fl=>[fl.n,String(fl.y),rpF(fl.trib,2),rpF(fl.gk,2)+' / '+rpF(fl.qk,2),f(fl.gk*fl.trib)+' / '+f(fl.qk*fl.trib)]),null,{note:'Line load = area load × tributary width (half the floor span for a simply supported floor bearing on this wall).'});
+  Tb('Point loads',[{h:'Name',w:40},{h:'x from left jamb (mm)',w:28,a:'r'},{h:'Height (mm)',w:22,a:'r'},{h:'Bearing (mm)',w:22,a:'r'},{h:'Gk / Qk (kN)',w:26,a:'r'}],S.pts.map(p=>[p.n,String(p.x),String(p.y),String(p.a),f(p.gk)+' / '+f(p.qk)]));
+  if(!S.floors.length&&!S.pts.length)Pp('No floors or point loads: the lintel carries masonry and its own weight only.');
+  const htri=R.htri*1000;Pp(`Load triangle at ${S.theta}° to the horizontal: height = (L0/2) tan ${S.theta}° = ${rpF(S.L0/2,0)} × ${rpF(Math.tan(S.theta*DEG),3)} = ${rpF(htri,0)} mm. Loading zone height 1.1 L0 = ${rpF(R.zone*1000,0)} mm.`,{ref:'BS 5977-1',out:[{l:'Triangle height',v:rpF(htri,0)+' mm'}]});
+  Pp('Arching conditions ('+({auto:'checked automatically',force:'arching assumed by the user',none:'arching switched off by the user'})[S.arch]+'): '+R.archCond.map(c=>c.n+' – '+(c.ok?'met':'NOT met')).join('; ')+'.',{out:[{l:'Arching',v:R.arch?'Yes':'No'}]});
+  if(R.arch)Pp(`Arched load over the opening (masonry above the triangle and loads outside the zone) Warch = ${f(R.thr.Wa)} kN (ULS). Lever arm z = 0.8 × min(triangle, masonry height) = ${rpF(R.thr.z*1000,0)} mm. Thrust T = Warch L0 / 8z = ${f(R.thr.Wa)} × ${rpF(R.L0,3)} / (8 × ${rpF(R.thr.z,3)}) = ${f(R.thr.T)} kN.`,{out:[{l:'Arch thrust T',v:f(R.thr.T)+' kN'}]});
+  Pp('Point loads spread at 60° to the horizontal through the masonry; any part of the spread beyond a jamb is carried by that pier.',{ref:'EC6 6.1.3'});
+  let tg=0,tq=0;const rows=R.B.items.map(i=>{tg+=i.G;tq+=i.Q;return[i.n,i.how,f(i.G),f(i.Q)]});rows.push(['Total on lintel','',f(tg),f(tq)]);
+  Tb('Loads on the lintel (characteristic)',[{h:'Load',w:36},{h:'Treatment',w:68},{h:'Gk (kN)',w:14,a:'r'},{h:'Qk (kN)',w:14,a:'r'}],rows,[{l:'Total Gk',v:f(tg)+' kN'},{l:'Total Qk',v:f(tq)+' kN'}],{boldLast:1})}
+ if(Sx.lint){H('Lintel design');
+  Pp(`ULS combination ${S.combo==='6.10'?'EN 1990 Eq 6.10':'EN 1990 Eq 6.10a/b (UK NA), the worse of'}; ${R.gov[0]}Gk + ${R.gov[1]}Qk governs the moment. Simply supported span L = ${rpF(R.Le*1000,0)} mm. Design moment MEd = ${f(R.Med)} kNm, design shear VEd = ${f(R.Ved)} kN; end reactions RL = ${f(R.R.L.U)} kN, RR = ${f(R.R.R.U)} kN.${R.dmax!=null?` Deflection under Gk + Qk δ = ${rpF(R.dmax*1000,2)} mm.`:''}`,
+   {ref:'EN 1990',out:[{l:'MEd',v:f(R.Med)+' kNm'},{l:'VEd',v:f(R.Ved)+' kN'}].concat(R.dmax!=null?[{l:'δ (SLS)',v:rpF(R.dmax*1000,2)+' mm'}]:[])});
+  Fg('dg','Load, shear and moment along the lintel (ULS) and deflection (SLS)',[]);
+  if(lin.kind==='steel'){const s=lin.s;Pp(`${s.key}, grade ${S.lintel.grade}: h = ${s.h}, b = ${s.b}, tw = ${s.tw}, tf = ${s.tf} mm (nominal; root radii ignored). A = ${rpF(s.A,0)} mm², Iy = ${rpF(s.Iy/1e4,0)} cm4, Wel = ${rpF(s.Wel/1e3,1)} cm³, Wpl = ${rpF(s.Wpl/1e3,1)} cm³, fy = ${s.fy} N/mm², Class ${s.cls}. Self-weight ${rpF(s.sw,3)} kN/m. ${S.lintel.restr?'Compression flange restrained laterally by the masonry.':'Compression flange not restrained: lateral-torsional buckling checked.'}`,{ref:'EC3 5.5',out:[{l:'Section class',v:String(s.cls)}]})}
+  else if(lin.kind==='rc'){const q=lin.r,d=q.h-q.cover-q.dia/2;Pp(`Reinforced concrete ${q.b} × ${q.h} mm, C${q.fck}, ${q.n} H${q.dia} bottom bars (As = ${rpF(q.n*Math.PI*q.dia*q.dia/4,0)} mm²), cover ${q.cover} mm, d = ${rpF(d,0)} mm, fyk = ${q.fyk} N/mm². No shear links assumed.`,{ref:'EC2',out:[{l:'d',v:rpF(d,0)+' mm'}]})}
+  else Pp(`Proprietary lintel with a maker's safe working load of ${lin.p.swl} kN (total UDL) for this length. Check the maker's table for the leaf ratio, length and load case.`,{ref:'Maker'});
+  R.checks.filter(c=>c.g==='Lintel').forEach(ckP)}
+ if(Sx.pier){for(const sd of ['L','R']){const g=sd==='L'?'Left pier':'Right pier',P=R.pier[sd],b=R.side[sd].b;H(`${g} – ${rpF(b*1000,0)} mm wide`);
+  Pp(`Load at lintel bearing level: lintel reaction plus masonry and floors over the pier width${R.arch?', plus its share of the arched load':''} and any point-load spread beyond the jamb. Gk = ${rpF(P.Gt,1)} kN, Qk = ${rpF(P.Qt,1)} kN, so NEd = ${rpF(P.Nt,1)} kN; at mid-height (adding the pier's own weight) NEd = ${rpF(P.Nm,1)} kN. Pier cross-section ${rpF(b*1000,0)} × ${rpF(R.t*1000,1)} mm = ${rpF(b*R.t,4)} m². Effective height hef = ${S.rho} × ${S.hStorey} = ${rpF(R.slender.h_ef*1000,0)} mm; hef/tef = ${rpF(R.slender.lam,1)}.`,{out:[{l:'NEd (bearing level)',v:rpF(P.Nt,1)+' kN'},{l:'NEd (mid-height)',v:rpF(P.Nm,1)+' kN'}]});
+  R.checks.filter(c=>c.g===g&&!/^ADA/.test(c.n)).forEach(ckP)}}
+ if(Sx.ada){H('Approved Document A guidance');Pp('Approved Document A (England), Diagram 14: prescriptive limits on openings and pier widths for walls designed without calculation. These rows are advisory and do not fail the design.',{ref:'ADA D14'});
+  R.checks.filter(c=>/^ADA/.test(c.n)||/Bearing length|Slender/.test(c.n)).forEach(ckP)}
+ if(Sx.meth){H('Method, assumptions and limitations');
+  Pp('Loads. Where the masonry can arch, the lintel carries the masonry inside a load triangle (BS 5977-1 practice) and loads within a loading zone 1.1 L0 high; loads above the zone are carried by the arch to the piers. Otherwise all masonry up to the height entered and every floor act over the full clear span. Point loads spread at 60° to the horizontal (EC6 6.1.3). The lintel is simply supported between bearing centres and its self-weight is included.');
+  Pp('Lintel. Steel to EN 1993-1-1 (classification, Mc,Rd, Vpl,Rd, LTB with C1 = 1.13 when the flange is unrestrained, SLS deflection). Reinforced concrete to EN 1992-1-1 (rectangular stress block, VRd,c without links, span/effective depth, minimum steel). Proprietary lintels: equivalent UDL max(8M/L, 2Rmax) under unfactored load compared with the maker\'s safe working load.');
+  Pp('Piers. EC6 6.1.3 bearing with a1 = 0 at the jamb and the spread limited by the pier width; EC6 6.1.2 and Annex G axial capacity at bearing level and mid-height, with the small-area factor (0.7 + 3A) where A < 0.1 m²; bed-joint shear fvk = fvk0 + 0.4σd under permanent load resisting the arch thrust T = Warch L0 / 8z with z = 0.8 × min(triangle, masonry height).');
+  Pp('Not checked: lateral (wind) load on the piers, local loading on the lintel flange or toe, construction-stage loading (except through the LTB option), cavity trays and thermal details. Masonry library values are indicative and should be replaced with the manufacturer\'s declared values. This is a design aid: results must be checked by a competent engineer.',{c:'#555',f:'I'})}
+ if(Sx.notes&&o.notes&&o.notes.trim()){H('Notes');Pp(o.notes.trim())}
+ return B}
+/* ---------- pagination ---------- */
+function rpPages(o){const G=RPG,B=rpBlocks(o),pages=[],top=G.BT+8,bot=G.BB-3;let pg,y;
+ const np=()=>{pg={it:[],oy:top};pages.push(pg);y=top};np();
+ const outs=(list,y0)=>{if(!list)return;let oy=Math.max(y0,pg.oy);list.forEach(e=>{const L=rpWrap(e.l,5.8,G.X1-G.XO-4);L.forEach((s,i)=>rpT(pg,G.XO+2,oy+2.2+i*2.4,s,5.8,{c:'#555'}));oy+=L.length*2.4+1.6;rpT(pg,G.XO+2,oy+1.2,e.v,8,{f:'B',c:e.c||'#000'});oy+=4.6});pg.oy=oy+1.5};
+ const ref=(s,y0,b)=>rpT(pg,G.X0+2,y0,s,b?8.5:6,{f:b?'B':'H',c:b?'#000':'#555'});
+ const hgt=b=>b.k=='h'?7.5:b.k=='p'?rpWrap(b.t,7.6,G.MW,b.f).length*3.55+2:b.k=='fig'?b.f.h+6.5:b.k=='tbl'?(b.title?5:0)+5+4.1*Math.min(3,b.rows.length):0;
+ B.forEach((b,bi)=>{
+  if(b.k=='h'){let la=0;for(let j=bi+1;j<B.length&&B[j].k!='h';j++){const hh=B[j].k=='fig'?Math.min(hgt(B[j]),62):hgt(B[j]);la+=hh;if(B[j].k!='p')break}la=Math.min(la,130);if(y+7.5+la>bot&&y>top+1)np();else if(y>top+1)y+=2.5;ref(b.ref,y+3.6,1);rpT(pg,G.MX,y+3.6,b.t,10,{f:'B'});rpL(pg,G.MX,y+5.1,G.MX+G.MW,y+5.1,.2,'#000');y+=7.5;return}
+  if(b.k=='p'){const L=rpWrap(b.t,7.6,G.MW,b.f);let i=0;if(y+3.6>bot)np();if(b.ref)ref(b.ref,y+2.9,0);if(b.out)outs(b.out,y);while(i<L.length){if(y+3.6>bot)np();rpT(pg,G.MX,y+2.9,L[i],7.6,{c:b.c||'#111',f:b.f});y+=3.55;i++}y+=2;return}
+  if(b.k=='fig'){let h=b.f.h+6.5;if(y+h>bot&&y>top+1){const room=bot-y-8;if(room>=Math.max(45,.62*b.f.h)){b.f=rpFigure(b.kind,b.o,room);h=b.f.h+6.5}else np()}b.f.draw(pg,y);ref(b.ref,y+3,0);outs(b.out,y);rpT(pg,G.MX,y+b.f.h+3.6,b.cap,6.8,{f:'I',c:'#333'});y+=h+1.5;return}
+  if(b.k=='tbl'){const tw=b.cols.reduce((t,c)=>t+c.w,0),sc=Math.min(1,G.MW/tw),xs=[];let x=G.MX;b.cols.forEach(c=>{xs.push(x);x+=c.w*sc});const xe=x,pt=6.6;
+   const head=()=>{rpR(pg,G.MX,y,xe-G.MX,4.8,{fill:'#eeeeee'});b.cols.forEach((c,j)=>{const a=c.a||'l';rpWrap(c.h,6,c.w*sc-2.4,'B').slice(0,1).forEach(s=>rpT(pg,a=='r'?xs[j]+c.w*sc-1.2:xs[j]+1.2,y+3.4,s,6,{f:'B',a}))});rpL(pg,G.MX,y,xe,y,.25);rpL(pg,G.MX,y+4.8,xe,y+4.8,.25);y+=4.8};
+   const rowL=(row,bold)=>row.map((v,j)=>{const c=b.cols[j],cc=typeof v=='object'&&v?v:{t:v};return rpWrap(String(cc.t==null?'':cc.t),pt,c.w*sc-2.4,bold||cc.b?'B':'H').slice(0,3)});
+   if(y+hgt(b)>bot&&y>top+1)np();rpT(pg,G.MX,y+3.3,b.title,7.2,{f:'B'});ref(b.ref,y+3.3,0);if(b.out)outs(b.out,y);y+=5;head();
+   b.rows.forEach((row,ri)=>{const bold=b.boldLast&&ri==b.rows.length-1,LL=rowL(row,bold),nl=Math.max(1,...LL.map(l=>l.length)),rh=1.25+nl*2.85;
+    if(y+rh>bot){np();rpT(pg,G.MX,y+3.3,b.title+' (continued)',7.2,{f:'B'});y+=5;head()}
+    if(bold)rpL(pg,G.MX,y,xe,y,.25);
+    row.forEach((v,j)=>{const c=b.cols[j],a=c.a||'l',cc=typeof v=='object'&&v?v:{t:v};LL[j].forEach((s,k)=>rpT(pg,a=='r'?xs[j]+c.w*sc-1.2:xs[j]+1.2,y+2.95+k*2.85,s,pt,{a,f:bold||cc.b?'B':'H',c:cc.c}))});
+    y+=rh;const last=ri==b.rows.length-1;rpL(pg,G.MX,y,xe,y,last?.25:.08,last?'#000':'#9a9a9a')});
+   if(b.note){y+=.6;rpWrap(b.note,6.2,G.MW,'I').forEach(s=>{if(y+3>bot)np();rpT(pg,G.MX,y+2.5,s,6.2,{f:'I',c:'#555'});y+=2.9})}y+=3.5;return}});
+ return pages}
+/* ---------- calculation-sheet frame ---------- */
+function rpTrim(s,pt,w,f){s=String(s||'');while(s.length>1&&rpW(s,pt,f)>w)s=s.slice(0,-2)+'…';return s}
+function rpDate(v){if(!v)return'';const q=/^(\d{4})-(\d\d)-(\d\d)$/.exec(v);return q?q[3]+'/'+q[2]+'/'+q[1]:v}
+function rpFrame(pg,i,n,st){const G=RPG,x0=G.X0,x1=G.X1,y0=G.HT,h1=13,h2=14,xa=x0+100,xb=xa+43,g='#666',it=pg.it;pg.it=[];
+ const lab=(x,y,s)=>rpT(pg,x+1.6,y+2.9,s,5.6,{c:g}),val=(x,y,w,s,pt,f)=>rpT(pg,x+1.6,y,rpTrim(s,pt,w-3,f),pt,{f});
+ rpR(pg,x0,y0,x1-x0,h1+h2,{st:'#000',w:.4});rpL(pg,x0,y0+h1,x1,y0+h1,.25);rpL(pg,xa,y0,xa,y0+h1+h2,.25);rpL(pg,xb,y0,xb,y0+h1,.25);
+ if(st.co)val(x0+1,y0+6.2,100,st.co,12,'B');else rpT(pg,x0+2.6,y0+6.2,'Company name',12,{f:'B',c:'#bbbbbb'});val(x0+1,y0+10.6,100,st.co2||'',6.4,'H');
+ lab(xa,y0,'Job no.');val(xa,y0+9.6,43,st.job||'',9.5,'B');
+ lab(xb,y0,'Sheet no.');const sn=(+st.start||1)+i,tot=(+st.start||1)+n-1;rpT(pg,xb+1.6,y0+9.6,(st.pre||'')+sn,10,{f:'B'});rpT(pg,xb+1.6+rpW((st.pre||'')+sn,10,'B')+1.2,y0+9.6,'of '+(st.pre||'')+tot,7,{c:'#333'});
+ const r2=y0+h1;lab(x0,r2,'Project');val(x0,r2+6.1,100,st.proj||'',8.6,'B');rpL(pg,x0,r2+7,xa,r2+7,.08,'#999');lab(x0,r2+7,'Subject');val(x0,r2+13.1,100,st.subj||'',8.6,'B');
+ const c1=xa+21,c2=c1+34,mid=r2+7;rpL(pg,xa,mid,c2,mid,.18);rpL(pg,c1,r2,c1,r2+h2,.18);rpL(pg,c2,r2,c2,r2+h2,.18);
+ lab(xa,r2,'Calc. by');val(xa,r2+6.2,21,st.by||'',8,'B');lab(c1,r2,'Date');val(c1,r2+6.2,34,rpDate(st.date),8,'H');
+ lab(xa,mid,'Checked by');val(xa,mid+6.2,21,st.chk||'',8,'B');lab(c1,mid,'Date');val(c1,mid+6.2,34,rpDate(st.cdate),8,'H');
+ lab(c2,r2,'Revision');rpT(pg,(c2+x1)/2,r2+10.4,rpTrim(st.rev||'–',11,x1-c2-3,'B'),11,{f:'B',a:'c'});
+ rpR(pg,x0,G.BT,x1-x0,G.BB-G.BT,{st:'#000',w:.3});rpL(pg,G.XR,G.BT,G.XR,G.BB,.18);rpL(pg,G.XO,G.BT,G.XO,G.BB,.18);
+ rpT(pg,x0+2,G.BT+3.4,'Ref.',6,{c:g});rpT(pg,G.MX,G.BT+3.4,'Calculations',6,{c:g});rpT(pg,G.XO+2,G.BT+3.4,'Output',6,{c:g});rpL(pg,x0,G.BT+5,x1,G.BT+5,.08,'#999');
+ const now=new Date(),pd=String(now.getDate()).padStart(2,'0')+'/'+String(now.getMonth()+1).padStart(2,'0')+'/'+now.getFullYear()+' '+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+ rpT(pg,x0,G.BB+4.2,'Lintel Loader v'+VER+' · masonry lintel & pier design',5.8,{c:g});rpT(pg,(x0+x1)/2,G.BB+4.2,rpTrim(st.job?(st.job+(st.subj?' · '+st.subj:'')):(st.subj||''),5.8,70),5.8,{a:'c',c:g});rpT(pg,x1,G.BB+4.2,'Printed '+pd,5.8,{a:'r',c:g});
+ pg.it=pg.it.concat(it)}
+function rpMake(st){const o={sel:st.sel,mono:st.mono,vals:st.vals,dims:st.dims,zone:st.zone,courses:st.courses,dp:+st.dp,size:st.size,notes:st.notes},pages=rpPages(o);pages.forEach((p,i)=>rpFrame(p,i,pages.length,st));return pages}
+/* ---------- dialogue: options left, live preview right ---------- */
+const RPDEF={co:'',co2:'',proj:'',job:'',subj:'Lintel design',by:'',chk:'',cdate:'',rev:'A',start:1,pre:'',notes:'',mono:false,vals:true,dims:true,zone:true,courses:true,dp:2,size:'m',
+ sel:{sum:1,geom:1,mas:1,load:1,lint:1,pier:1,ada:1,meth:1,notes:1}};
+const RPITEMS=[['sum','Design summary – every check and its utilisation'],['geom','Geometry, elevation and walls either side'],['mas','Masonry properties (fk, fd, fvk0)'],['load','Loading – floors, point loads, arching, loads on the lintel'],
+ ['lint','Lintel design – actions, diagrams and checks'],['pier','Pier checks – bearing, axial, arch thrust'],['ada','Approved Document A and geometry guidance'],['meth','Method, assumptions and limitations'],['notes','Notes (text below)']];
+function rpLoadSt(){let s={};try{s=JSON.parse(localStorage.getItem('lintelReport'))||{}}catch(e){}const st=Object.assign({},RPDEF,s);st.sel=Object.assign({},RPDEF.sel,s.sel||{});
+ const d=new Date();st.date=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');return st}
+function rpSave(){try{const s=Object.assign({},RP.st);delete s.date;localStorage.setItem('lintelReport',JSON.stringify(s))}catch(e){}}
+function rpBuild(host){RP.st=RP.st||rpLoadSt();const st=RP.st,e=rpEsc;
+ const fld=(k,l,ph,ty)=>'<label class="rpF"><span>'+l+'</span><input data-rk="'+k+'" type="'+(ty||'text')+'" value="'+e(st[k]==null?'':st[k])+'" placeholder="'+e(ph||'')+'"></label>';
+ const ck=(k,l)=>'<label><input type="checkbox" data-rk="'+k+'"'+(st[k]?' checked':'')+'><span>'+l+'</span></label>';
+ host.innerHTML='<div class="rp"><div class="rpL"><h2>⎙ Report</h2><p class="rpS">A4 calculation sheets for the current design. Choose what to include; the preview updates as you type and follows changes to the design.</p>'+
+ '<fieldset><legend>Sheet details</legend>'+fld('co','Company','Company name')+fld('co2','Address / tel','Address, telephone or email')+fld('proj','Project','Project or job title')+fld('subj','Subject','e.g. Lintel L1, ground floor rear')+
+ '<div class="rp2">'+fld('job','Job no.','')+fld('rev','Revision','')+fld('by','Calc. by','Initials')+fld('chk','Checked','Initials')+fld('start','1st sheet','','number')+fld('pre','Prefix','e.g. L/')+'</div>'+fld('date','Calc. date','','date')+fld('cdate','Check date','','date')+
+ '<p class="rpS" style="margin:4px 0 0">Sheets are numbered automatically from the first sheet number (“3 of 8”). The date defaults to today.</p></fieldset>'+
+ '<fieldset class="rpC"><legend>Contents</legend>'+RPITEMS.map(([k,l])=>'<label><input type="checkbox" data-rs="'+k+'"'+(st.sel[k]?' checked':'')+'><span>'+e(l)+'</span></label>').join('')+
+ '<div class="rpA"><a data-ra="all">Select all</a><a data-ra="none">Clear</a><a data-ra="sum">Summary only</a></div><textarea data-rk="notes" placeholder="Notes, assumptions or references to print in the Notes section">'+e(st.notes||'')+'</textarea></fieldset>'+
+ '<fieldset class="rpC"><legend>Drawings</legend><label class="rpF"><span>Colour</span><select data-rk="mono"><option value="0">Colour</option><option value="1"'+(st.mono?' selected':'')+'>Black and white</option></select></label>'+
+ '<label class="rpF"><span>Size</span><select data-rk="size"><option value="s">Compact</option><option value="m"'+(st.size=='m'?' selected':'')+'>Standard</option><option value="l"'+(st.size=='l'?' selected':'')+'>Large</option></select></label>'+
+ '<label class="rpF"><span>Decimals</span><select data-rk="dp">'+[1,2,3].map(v=>'<option'+(+st.dp==v?' selected':'')+'>'+v+'</option>').join('')+'</select></label>'+
+ ck('vals','Label peak values on the diagrams')+ck('zone','Show the load triangle, loading zone and dispersal')+ck('dims','Dimensions on the elevation')+ck('courses','Masonry courses on the elevation')+'</fieldset></div>'+
+ '<div class="rpR"><div class="rpTb"><button class="pri" data-rb="pdf">⬇ Download PDF</button><button data-rb="print">⎙ Print</button><button data-rb="ref" title="Re-read the design">↻ Update</button><span class="rpMsg"></span><span class="sp"></span>'+
+ '<select data-rb="zoom" title="Preview zoom"><option value="fit">Fit width</option><option value="0.6">60%</option><option value="0.8">80%</option><option value="1">100%</option><option value="1.4">140%</option></select><button data-rb="close">✕ Close</button></div><div class="rpPv"></div></div></div>';
+ const q=s=>host.querySelector(s),upd=()=>{rpSave();clearTimeout(RP.t);RP.t=setTimeout(rpRefresh,250)};
+ host.querySelectorAll('[data-rk]').forEach(el=>{el.oninput=el.onchange=()=>{const k=el.dataset.rk;st[k]=el.type=='checkbox'?el.checked:k=='mono'?el.value=='1':el.value;upd()}});
+ host.querySelectorAll('[data-rs]').forEach(el=>{el.onchange=()=>{st.sel[el.dataset.rs]=el.checked?1:0;upd()}});
+ host.querySelectorAll('[data-ra]').forEach(el=>{el.onclick=()=>{const a=el.dataset.ra;RPITEMS.forEach(([k])=>{st.sel[k]=a=='all'?1:a=='none'?0:k=='sum'?1:0});host.querySelectorAll('[data-rs]').forEach(c=>c.checked=!!st.sel[c.dataset.rs]);upd()}});
+ q('[data-rb=pdf]').onclick=rpDownload;q('[data-rb=print]').onclick=rpPrint;q('[data-rb=ref]').onclick=()=>{rpRefresh();rpMsg('Updated from the design')};
+ q('[data-rb=zoom]').value=RP.zoom;q('[data-rb=zoom]').onchange=ev=>{RP.zoom=ev.target.value;rpPaint()};q('[data-rb=close]').onclick=rpClose;
+ const pv=q('.rpPv');try{new ResizeObserver(()=>{if(RP.zoom=='fit'){clearTimeout(RP.rz);RP.rz=setTimeout(rpPaint,120)}}).observe(pv)}catch(err){}
+ rpRefresh()}
+function rpMsg(s){const m=RP.host&&RP.host.querySelector('.rpMsg');if(m){m.textContent=s;clearTimeout(RP.mt);RP.mt=setTimeout(()=>{m.textContent=RP.pages.length+' A4 sheet'+(RP.pages.length==1?'':'s')},5000)}}
+function rpRefresh(){if(!RP.host||!R)return;try{RP.pages=rpMake(RP.st)}catch(err){console.error(err);rpMsg('Report error: '+err.message);return}rpPaint();rpMsg(RP.pages.length+' A4 sheet'+(RP.pages.length==1?'':'s'))}
+function rpPaint(){const pv=RP.host&&RP.host.querySelector('.rpPv');if(!pv)return;const top=pv.scrollTop,fw=Math.max(260,pv.clientWidth-48),w=RP.zoom=='fit'?Math.min(fw,1100):Math.round(793.7*+RP.zoom);
+ pv.innerHTML=RP.pages.map((p,i)=>rpSVG(p,w)+'<div class="pn">Sheet '+(RP.st.pre||'')+((+RP.st.start||1)+i)+'</div>').join('');pv.scrollTop=top}
+function rpQueue(){if(!RP.host)return;clearTimeout(RP.t);RP.t=setTimeout(rpRefresh,500)}
+function rpName(){const s=RP.st,b=[s.job,s.proj||'Lintel Loader',s.subj].filter(Boolean).join(' ').replace(/[\\/:*?"<>|]+/g,'-').replace(/\s+/g,' ').trim().slice(0,90);return(b||'Lintel report')+' '+(s.date||'')+'.pdf'}
+async function rpDownload(){if(!RP.pages.length)rpRefresh();const s=RP.st,bytes=rpPDF(RP.pages,{title:[s.proj,s.subj].filter(Boolean).join(' – ')||'Lintel Loader report',author:[s.by,s.co].filter(Boolean).join(', '),subject:s.subj||''}),name=rpName();
+ window.__pdf=bytes;const dl=await getDL();
+ if(dl){try{await dl.save({filename:name,data:new Blob([bytes],{type:'application/pdf'})});rpMsg('Saved '+name)}catch(e){const c=e&&e.code;rpMsg(c=='declined'?'Download cancelled':c=='rate_limited'?'A save prompt is already open':'Download is not available here')}return}
+ try{const url=URL.createObjectURL(new Blob([bytes],{type:'application/pdf'})),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);rpMsg('Downloaded '+name)}
+ catch(e){rpMsg('Download blocked in this view')}}
+function rpPrint(){if(!RP.pages.length)rpRefresh();const f=document.createElement('iframe');f.style.cssText='position:fixed;right:0;bottom:0;width:1px;height:1px;border:0;opacity:0';document.body.appendChild(f);
+ const fd=f.contentDocument;fd.open();fd.write('<!doctype html><html><head><meta charset="utf-8"><title>'+rpEsc(rpName().replace(/\.pdf$/,''))+'</title><style>@page{size:A4 portrait;margin:0}html,body{margin:0;padding:0;background:#fff}svg{display:block;width:210mm;height:296.6mm;break-after:page;page-break-after:always}svg:last-child{break-after:auto;page-break-after:auto}</style></head><body>'+RP.pages.map(p=>rpSVG(p,794)).join('')+'</body></html>');fd.close();
+ setTimeout(()=>{try{f.contentWindow.focus();f.contentWindow.print()}catch(e){rpMsg('Printing is blocked here – use Download PDF')}setTimeout(()=>f.remove(),60000)},300)}
+function rpOpen(){let ov=$('#rpOv');if(!ov){ov=document.createElement('div');ov.id='rpOv';document.body.appendChild(ov)}ov.hidden=false;RP.host=ov;rpBuild(ov)}
+function rpClose(){const ov=$('#rpOv');if(ov){ov.hidden=true;ov.innerHTML=''}RP.host=null}
+$('#bPdf').onclick=rpOpen;
+{const rc0=recalc;recalc=function(){rc0();rpQueue()}}
+addEventListener('keydown',e=>{if(e.key==='Escape'&&RP.host&&!e.target.matches('input,select,textarea'))rpClose()});
 
 </script></body></html>
