@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark"><head><meta charset="utf-8"><title>Lintel Loader v1.0</title>
+<html lang="en" data-theme="dark"><head><meta charset="utf-8"><title>Lintel Loader v1.1</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>
 :root{--neon2:#0891b2;--neon3:#c026d3;--amb:#d97706;--ok:#059669;--bad:#e11d48;--glow:rgba(138,43,226,.30);--r:10px;--bg:#f0eafc;--panel:#fcfaff;--ink:#1a1033;--mut:#68589a;--line:#d5c4f6;--mem:#2a1b52;--acc:#8a2be2;--grid:#dfd2fa;--sh:0 12px 30px -14px rgba(90,20,160,.5),0 0 0 1px rgba(138,43,226,.10);--sh-s:0 1px 2px rgba(60,20,120,.12);--brick:#b98a7e;--block:#a9a3b8;color-scheme:light}
@@ -13,7 +13,7 @@ button{display:inline-flex;align-items:center;gap:5px;font:inherit;font-weight:5
 button:hover{border-color:var(--neon2);background:color-mix(in srgb,var(--neon2) 9%,var(--panel));box-shadow:0 0 0 1px color-mix(in srgb,var(--neon2) 55%,transparent),0 0 16px -3px color-mix(in srgb,var(--neon2) 60%,transparent)}
 button:focus-visible{outline:2px solid var(--neon2);outline-offset:1px}
 button.on,button.on:hover{background:linear-gradient(135deg,var(--acc),var(--neon3));border-color:transparent;color:#fff;box-shadow:0 0 18px -2px color-mix(in srgb,var(--neon3) 70%,transparent)}
-select,input[type=text],input[type=number]{font:inherit;color:var(--ink);background:color-mix(in srgb,var(--acc) 5%,var(--bg));border:1px solid color-mix(in srgb,var(--acc) 30%,var(--line));border-radius:8px;padding:4px 7px;min-width:0;transition:border-color .12s,box-shadow .12s}
+select,input[type=text],input[type=number],input[type=search]{font:inherit;color:var(--ink);background:color-mix(in srgb,var(--acc) 5%,var(--bg));border:1px solid color-mix(in srgb,var(--acc) 30%,var(--line));border-radius:8px;padding:4px 7px;min-width:0;transition:border-color .12s,box-shadow .12s}
 select:focus,input:focus{outline:none;border-color:var(--neon2);box-shadow:0 0 0 3px color-mix(in srgb,var(--neon2) 22%,transparent),0 0 14px -2px color-mix(in srgb,var(--neon2) 50%,transparent)}
 label{display:inline-flex;gap:6px;align-items:center;white-space:nowrap}
 a{color:var(--neon2)}
@@ -50,11 +50,56 @@ details.sec>summary .cnt{letter-spacing:.04em;color:var(--mut);font-weight:600}
 .card.hi{border-color:var(--neon2);box-shadow:0 0 12px -4px var(--neon2)}
 .card .ch{display:flex;gap:6px;align-items:center;margin-bottom:4px}.card .ch input{flex:1;font-weight:600}.card .ch button{padding:2px 8px;color:var(--mut)}
 .card .cg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px 6px}
-.card .cg label{display:flex;flex-direction:column;align-items:stretch;gap:1px;font-size:10px;color:var(--mut);white-space:normal}.card .cg input{width:100%;text-align:right;padding:3px 5px;font-size:12px}
+.card .cg label{display:block;font-size:10px;color:var(--mut);white-space:normal;line-height:1.3}.card .cg input{display:block;width:100%;margin-top:1px;text-align:right;padding:3px 5px;font-size:12px}.card .cg label>span{display:flex;gap:3px;margin-top:1px}
 .addb{width:100%;justify-content:center;margin-top:2px}
 .seg{display:flex;border:1px solid color-mix(in srgb,var(--acc) 30%,var(--line));border-radius:8px;overflow:hidden;margin:4px 0 6px}
 .seg button{flex:1 1 0;justify-content:center;border:0;border-radius:0;box-shadow:none;padding:5px 4px;font-size:12px;background:transparent}
 .seg button+button{border-left:1px solid var(--line)}
+.seg button.on,.seg button.on:hover,.galF button.on,.galF button.on:hover{background:linear-gradient(135deg,var(--acc),var(--neon3));color:#fff;border-color:transparent}
+.exRow{display:flex;gap:6px;margin:2px 0}.exRow select{flex:1;min-width:0}.exRow button{flex:none}
+/* v1.1 overlays: guide, gallery, about */
+.ov{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;padding:16px;background:color-mix(in srgb,#05020d 62%,transparent);backdrop-filter:blur(4px)}.ov[hidden]{display:none}
+.gd{position:relative;width:min(1080px,100%);max-height:calc(100vh - 32px);overflow:auto;background:var(--panel);color:var(--ink);border:1px solid color-mix(in srgb,var(--acc) 45%,var(--line));border-radius:16px;box-shadow:0 24px 60px -18px rgba(8,2,24,.7),0 0 0 1px color-mix(in srgb,var(--acc) 12%,transparent),0 0 40px -12px var(--glow)}
+.gdH{position:sticky;top:0;z-index:2;padding:22px 26px 14px;border-bottom:1px solid var(--line);background:linear-gradient(100deg,color-mix(in srgb,var(--acc) 14%,transparent),transparent 55%,color-mix(in srgb,var(--neon2) 8%,transparent)),var(--panel)}
+.gdK{font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--neon2);margin:0 0 4px}
+.gdH h2{margin:0;font-size:22px;line-height:1.2;color:var(--ink)}.gdH h2 span{color:var(--acc)}.gdH h2 small{font-size:12px;font-weight:500;color:var(--mut);margin-left:10px}
+.gdL{margin:6px 0 0;max-width:72ch;color:var(--mut);font-size:13.5px;line-height:1.5}
+.gdX{position:absolute;top:12px;right:12px;width:32px;height:32px;padding:0!important;justify-content:center;font-size:16px;background:transparent!important;border-color:transparent!important;box-shadow:none!important;color:var(--mut)}
+.gdX:hover{color:var(--ink)}
+.gdG{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:16px 20px 6px;counter-reset:gstep}
+.gs{display:flex;flex-direction:column;background:color-mix(in srgb,var(--acc) 4%,var(--bg));border:1px solid var(--line);border-radius:12px;overflow:hidden;counter-increment:gstep}
+.gs svg{display:block;width:100%;height:auto;aspect-ratio:2/1;background:color-mix(in srgb,var(--acc) 6%,var(--panel));border-bottom:1px solid var(--line)}
+.gsB{padding:10px 12px 12px;font-size:12.5px;line-height:1.5;color:var(--mut)}
+.gsB h3{display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:13.5px;color:var(--ink)}
+.gsB h3::before{content:counter(gstep);flex:none;display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:700;color:#fff;background:var(--acc);box-shadow:0 0 10px -2px var(--acc)}
+.gsB p{margin:0}
+.gdT{display:flex;flex-wrap:wrap;gap:6px 16px;margin:8px 20px 0;padding:10px 14px;border:1px dashed var(--line);border-radius:10px;font-size:12px;color:var(--mut)}.gdT b{color:var(--ink);font-weight:600}
+.gdF{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:14px 20px 18px}.gdF label{margin-right:auto;font-size:12.5px;color:var(--mut)}.gdF button{padding:7px 14px}
+.gs .ink{stroke:var(--mem)}.gs .ac{stroke:var(--acc)}.gs .cy{stroke:var(--neon2)}.gs .mg{stroke:var(--neon3)}.gs .am{stroke:var(--amb)}
+.gs .fw{fill:var(--brick)}.gs .fb{fill:var(--block)}.gs .fp{fill:var(--panel)}.gs .fa{fill:var(--acc)}.gs .fm{fill:var(--neon3)}.gs .fo{fill:var(--ok)}.gs .fr{fill:var(--bad)}
+.gs .tx{fill:var(--mut);font:600 9px ui-monospace,Menlo,monospace}.gs .tk{fill:var(--ink);font:600 9px ui-monospace,Menlo,monospace}
+@media(max-width:860px){.gdG{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.ov{padding:8px}.gdH{padding:16px 14px 10px}.gdH h2{font-size:18px;padding-right:30px}.gdG{grid-template-columns:minmax(0,1fr);padding:12px}.gdL{display:none}}
+.galR{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-top:12px}
+.galF{display:flex;flex-wrap:wrap;gap:5px;flex:1 1 auto}.galF button{padding:3px 11px;font-size:12px;border-radius:999px;box-shadow:none}
+.galR input{flex:0 1 260px;min-width:160px;margin-left:auto}
+.galB{padding:6px 20px 22px}.galB h3{font-size:10.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);margin:16px 2px 8px}
+.galG{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.galC{display:flex;flex-direction:column;background:color-mix(in srgb,var(--acc) 4%,var(--bg));border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:border-color .12s,box-shadow .12s}
+.galC:hover,.galC:focus-within{border-color:var(--acc);box-shadow:0 0 18px -8px var(--acc)}
+.galD{display:block;width:100%;padding:0!important;border:0!important;border-bottom:1px solid var(--line)!important;border-radius:0!important;box-shadow:none!important;background:color-mix(in srgb,var(--acc) 6%,var(--panel))!important;cursor:pointer;aspect-ratio:320/176}
+.galD svg{display:block;width:100%;height:100%}
+.galT{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;flex:1}.galT h4{margin:0;font-size:13.5px;font-weight:600;line-height:1.3}
+.galT p{margin:0;font-size:12.5px;color:var(--mut);line-height:1.45}
+.galM{display:flex;flex-wrap:wrap;gap:4px;margin-top:auto;padding-top:2px}.galM span{font-size:10.5px;color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:0 7px}
+.galM span.ok{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 50%,var(--line))}.galM span.bad{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 50%,var(--line))}
+.galA{display:flex;gap:6px;align-items:center}.galA button{padding:4px 12px}
+.galE{color:var(--mut);padding:30px 2px}.galC[hidden],.galSec[hidden],.galE[hidden]{display:none}
+.th .wl{fill:var(--brick)}.th .wb{fill:var(--block)}.th .op{fill:var(--panel)}.th .ln{fill:var(--acc)}.th .tr{fill:var(--neon3);fill-opacity:.25;stroke:var(--neon3)}.th .fl{stroke:var(--ink)}.th .pt{stroke:var(--amb);fill:var(--amb)}.th .gr{stroke:var(--mem)}.th .bd{fill:var(--panel);stroke-width:1.2}.th .bdo{stroke:var(--ok)}.th .bdb{stroke:var(--bad)}.th text{font:700 10px Inter,system-ui,sans-serif}.th .to{fill:var(--ok)}.th .tb{fill:var(--bad)}.th .tm{fill:var(--mut);font-weight:600}
+.ab h3{text-transform:uppercase;letter-spacing:.13em;font-size:11.5px;color:color-mix(in srgb,var(--neon2) 75%,var(--ink));margin:16px 0 6px}
+.ab .cl{border-left:2px solid color-mix(in srgb,var(--acc) 60%,var(--line));padding:2px 0 2px 14px;margin:10px 0}.ab .cl h4{margin:0;font-size:13.5px}.ab .cl h4 span{color:var(--acc)}.ab .cl h4 small{color:var(--mut);font-weight:500;margin-left:8px}.ab .cl ul{margin:4px 0 0;padding-left:18px}.ab li,.ab p{color:var(--mut);font-size:12.5px;line-height:1.5}.ab b{color:var(--ink)}
+.abB{padding:14px 26px 20px}
+#toast{position:fixed;left:50%;bottom:64px;transform:translateX(-50%);z-index:40;max-width:min(560px,calc(100vw - 32px));padding:8px 14px;border-radius:12px;background:var(--panel);color:var(--ink);border:1px solid color-mix(in srgb,var(--ok) 55%,var(--line));box-shadow:var(--sh);font-size:12.5px}#toast.bad{border-color:color-mix(in srgb,var(--bad) 60%,var(--line))}#toast[hidden]{display:none}
 /* main */
 main{min-width:0;min-height:0;display:flex;flex-direction:column}
 #mid{flex:1;min-height:0;display:flex}
@@ -119,12 +164,16 @@ details.nt{margin-top:12px;font-size:11.5px;color:var(--mut);line-height:1.5}det
 </style></head><body>
 <div id="top">
  <span class="tt">Lintel Loader</span>
- <select id="exSel" title="Load an example"><option value="">Examples…</option></select>
- <i></i>
+ <small style="color:var(--mut);margin-right:8px">v1.1</small>
+ <button id="bGuide" title="Welcome guide">Guide</button>
+ <button id="bGal" title="Examples gallery">Gallery</button>
  <button id="bMethod" title="Method, assumptions and references">Method</button>
+ <button id="bAbout" title="About &amp; changelog">About</button>
+ <i></i>
+ <button id="bPdf" title="Download a PDF calculation sheet">⤓ PDF report</button>
+ <button id="bExport" title="Download this design as a .json file">Save design</button>
+ <button id="bImport" title="Open a saved .json design">Open</button>
  <button id="bPrint" title="Copy a plain-text calculation summary to the clipboard">Copy report</button>
- <button id="bExport" title="Copy this design as JSON (paste into a .json file to keep it)">Copy design</button>
- <button id="bImport" title="Open a saved .json design">Import</button>
  <button id="bReset" title="Start again from the default design">Reset</button>
  <i></i>
  <button id="bTheme" title="Toggle light / dark">Theme</button>
@@ -132,7 +181,12 @@ details.nt{margin-top:12px;font-size:11.5px;color:var(--mut);line-height:1.5}det
  <input type="file" id="fImp" accept=".json,application/json" hidden>
 </div>
 <aside id="tools">
- <div class="brand">Lintel Loader <small>v1.0 · masonry lintel &amp; pier design (EC6 / EC3 / EC2, UK NA)</small></div>
+ <div class="brand">Lintel Loader <small>v1.1 · masonry lintel &amp; pier design (EC6 / EC3 / EC2, UK NA)</small></div>
+
+ <details class="sec" open><summary>Examples</summary><div class="sb">
+  <div class="exRow"><select id="exSel" title="Load an example"><option value="">Load example…</option></select><button id="bGal2" title="Browse the examples gallery">▦ Gallery</button></div>
+  <p class="hint" id="exCur"></p>
+ </div></details>
 
  <details class="sec" open><summary>Opening</summary><div class="sb">
   <div class="sl"><span>Clear span <small>width of opening</small></span><div class="iu"><input type="number" data-k="L0" step="25" min="150"><i>mm</i></div></div>
@@ -238,6 +292,43 @@ details.nt{margin-top:12px;font-size:11.5px;color:var(--mut);line-height:1.5}det
   <label style="margin-left:auto"><input type="checkbox" id="dgOn" checked> Show diagram strip</label>
  </div>
 </main>
+<div id="toast" hidden></div>
+<div id="guide" class="ov" hidden><div class="gd" role="dialog" aria-label="Welcome">
+ <div class="gdH"><button class="gdX" data-close="guide" title="Close">✕</button><p class="gdK">Welcome</p><h2>Lintel <span>Loader</span><small>v1.1</small></h2>
+ <p class="gdL">Design a lintel over an opening in loadbearing masonry and check the walls either side. Set the opening, pick the masonry, add floors and point loads, choose a lintel, and every check updates as you go.</p></div>
+ <div class="gdG" id="gSteps"></div>
+ <div class="gdT"><span><b>Drag</b> point loads and floors on the drawing</span><span><b>Scroll</b> to zoom, drag empty space to pan</span><span><b>F</b> fits the view</span><span><b>Esc</b> closes dialogs</span></div>
+ <div class="gdF"><label><input type="checkbox" id="gNo"> Don't show this on start</label><button id="gGal">▦ Examples gallery</button><button id="gGo" class="on">Start designing</button></div>
+</div></div>
+<div id="galOv" class="ov" hidden><div class="gd" style="width:min(1180px,100%)" role="dialog" aria-label="Examples gallery">
+ <div class="gdH"><button class="gdX" data-close="galOv" title="Close">✕</button><p class="gdK">Examples gallery</p><h2>Worked <span>examples</span><small id="galN"></small></h2>
+ <p class="gdL">Each preview is calculated live with the current method. Load one to start from it; it replaces the design on screen.</p>
+ <div class="galR"><div class="galF" id="galF"></div><input type="search" id="galQ" placeholder="Search examples…"></div></div>
+ <div class="galB" id="galB"></div>
+</div></div>
+<div id="about" class="ov" hidden><div class="gd" style="width:min(760px,100%)" role="dialog" aria-label="About">
+ <div class="gdH"><button class="gdX" data-close="about" title="Close">✕</button><p class="gdK">About</p><h2>Lintel <span>Loader</span><small>v1.1 “Gallery”</small></h2>
+ <p class="gdL">A single-page design aid for masonry lintels and the piers either side, in the style of Frame Pusher. Everything runs in your browser; your design is kept in this browser only.</p></div>
+ <div class="abB ab">
+  <h3>What it does</h3>
+  <p>It finds the load on the lintel from the masonry above, using either a 60° or 45° arching triangle or the full masonry height, together with floors and dispersed point loads. It then checks steel, reinforced-concrete or proprietary lintels. For the walls either side it checks bearing, axial capacity, arch thrust and the Approved Document A pier rules. See <b>Method</b> for the full set of assumptions.</p>
+  <h3>Changelog</h3>
+  <div class="cl"><h4><span>v1.1</span> “Gallery”<small>November 2026</small></h4><ul>
+   <li>Examples moved to the left panel, with a <b>Gallery</b> button.</li>
+   <li>New <b>examples gallery</b> with live previews, pass/fail tags, category filters and search; two new examples (basement engineering brick, aircrete with proprietary lintel).</li>
+   <li><b>Welcome guide</b> on opening (can be turned off), reopened from the top bar.</li>
+   <li><b>About &amp; changelog</b> page.</li>
+   <li><b>PDF report</b>: an A4 calculation sheet with elevation, diagrams, inputs, loads and every check, built in the page with no external libraries.</li>
+   <li><b>Save design</b> now downloads a .json file; <b>Open</b> reads one back.</li>
+   <li>Fix: in the light theme, the text on selected buttons (lintel type) was white on a transparent background.</li></ul></div>
+  <div class="cl"><h4><span>v1.0</span> “Lintel”<small>November 2026</small></h4><ul>
+   <li>Opening, masonry library (10 types) with EC6 f<sub>k</sub>, f<sub>d</sub> and f<sub>vk0</sub>; floors and point loads, dragged on the elevation.</li>
+   <li>Arching check with load triangle and 1.1L zone; 60° point-load dispersal that sends any spill past a jamb into the pier.</li>
+   <li>Steel (UB/UC/PFC, LTB option, lightest-section picker), RC and proprietary lintel checks; load, shear, moment and deflection diagrams.</li>
+   <li>Pier checks: EC6 bearing, axial at bearing level and mid-height, arch thrust, and the Approved Document A Diagram 14 rules.</li></ul></div>
+  <h3>Disclaimer</h3><p>This is a design aid. Results should be verified by a competent engineer, and library properties replaced with the manufacturer's declared values.</p>
+ </div>
+</div></div>
 <div id="vmodal" hidden><div class="vc"><button class="x" id="mX">✕</button>
  <h2>Lintel Loader <span>· method</span></h2>
  <p>A design aid for a lintel over an opening in a single leaf of loadbearing masonry, and for the masonry piers either side. Units: kN, m (inputs in mm). Run each leaf of a cavity wall separately with the loads that leaf carries.</p>
@@ -470,14 +561,17 @@ function defS(){return {v:1,L0:1800,lb:150,hHead:2100,hStorey:2550,Hm:2400,
  pts:[{n:'Beam end',x:1300,y:900,a:100,gk:6,qk:4}],
  lintel:{type:'steel',sec:'UB 152×89×16',grade:'S275',restr:true,rc:{b:100,h:215,n:2,dia:12,cover:30,fck:40,fyk:500},prop:{swl:15,bw:100,sw:0.15,d:150}},
  combo:'6.10',arch:'auto',zoneJoints:false,theta:60,flMode:'full',dlim:325};}
-const EX={
- door:['Door in brick outer leaf — no arching',s=>{s.L0=900;s.Hm=450;s.floors=[];s.pts=[];s.pL={b:665,kind:'return',adj:0};s.pR={b:1200,kind:'opening',adj:1200};s.lintel.type='steel';s.lintel.sec='UB 127×76×13';s.arch='auto';}],
- window:['Window, arching masonry with first floor',s=>{}],
- garage:['2.4 m opening, beam point load, blockwork',s=>{s.L0=2400;s.lb=150;s.Hm=1800;Object.assign(s.mas,{type:'dense',t:100,...pick('dense')});s.pL={b:450,kind:'return',adj:0};s.pR={b:900,kind:'end',adj:0};s.floors=[{n:'Bedroom floor',y:300,trib:2.4,gk:1.5,qk:1.5}];s.pts=[{n:'Steel beam',x:1600,y:250,a:150,gk:18,qk:10}];s.lintel.sec='UB 203×133×25';}],
- inner:['Inner leaf blockwork, RC lintel, joists',s=>{s.L0=1200;s.Hm=600;Object.assign(s.mas,{type:'med',t:100,...pick('med')});s.floors=[{n:'Joists (bearing on lintel line)',y:225,trib:2.1,gk:0.75,qk:1.5},{n:'Roof',y:2400,trib:1.8,gk:1.0,qk:0.75}];s.pts=[];s.lintel.type='rc';s.lintel.rc={b:100,h:215,n:2,dia:12,cover:30,fck:40,fyk:500};s.pL={b:600,kind:'return',adj:0};s.pR={b:450,kind:'opening',adj:900};}],
- narrow:['Narrow pier between two openings',s=>{s.L0=1500;s.pR={b:250,kind:'opening',adj:1800};s.pts=[{n:'Padstone load',x:1600,y:400,a:215,gk:12,qk:6}];}],
- stone:['Stone wall, wide opening, forced no-arching',s=>{s.L0=2700;s.Hm=1200;Object.assign(s.mas,{type:'stone',t:300,...pick('stone')});s.arch='none';s.lintel.sec='UB 254×146×31';s.pL={b:1000,kind:'return',adj:0};s.pR={b:1000,kind:'return',adj:0};s.floors=[{n:'Floor',y:450,trib:2.5,gk:1.5,qk:1.5}];s.pts=[];}]
-};
+const EX=[
+ {k:'window',c:'Brick',n:'Window with first floor and beam end',d:'1.8 m window in a brick outer leaf. The masonry arches; the first floor bears just above the lintel and a beam end sits inside the loading zone.',t:['arching','UB','floor','point load'],f:s=>{}},
+ {k:'door',c:'Brick',n:'Door with little masonry above',d:'900 mm door with only 450 mm of brickwork above, too shallow to arch, so the full masonry height loads the lintel.',t:['no arching','UB','return pier'],f:s=>{s.L0=900;s.Hm=450;s.floors=[];s.pts=[];s.pL={b:665,kind:'return',adj:0};s.pR={b:1200,kind:'opening',adj:1200};s.lintel.type='steel';s.lintel.sec='UB 127×76×13';s.arch='auto';}},
+ {k:'narrow',c:'Brick',n:'Narrow pier between two openings',d:'250 mm pier between a 1.5 m and a 1.8 m opening, with a padstone load spilling past the jamb into the pier. It fails the Approved Document A pier rule.',t:['pier','ADA','padstone'],f:s=>{s.L0=1500;s.pR={b:250,kind:'opening',adj:1800};s.pts=[{n:'Padstone load',x:1600,y:400,a:215,gk:12,qk:6}];}},
+ {k:'eng',c:'Brick',n:'Basement opening, engineering brick',d:'1.2 m opening in a 215 mm Class B engineering-brick wall carrying a ground-floor slab, on an RC lintel.',t:['RC','215 wall','heavy floor'],f:s=>{s.L0=1200;s.Hm=1800;s.hHead=2000;s.hStorey=2400;Object.assign(s.mas,{type:'claye',t:215,mort:'M12',...pick('claye')});s.floors=[{n:'Ground floor slab',y:150,trib:2.5,gk:4.0,qk:1.5}];s.pts=[];s.lintel.type='rc';s.lintel.rc={b:215,h:215,n:3,dia:12,cover:35,fck:40,fyk:500};s.pL={b:665,kind:'return',adj:0};s.pR={b:900,kind:'return',adj:0};}},
+ {k:'garage',c:'Block',n:'2.4 m opening, beam point load, free end',d:'Dense blockwork with a steel beam bearing close to the lintel. One pier is a free wall end, so arching is not assumed.',t:['no arching','UB','point load','free end'],f:s=>{s.L0=2400;s.lb=150;s.Hm=1800;Object.assign(s.mas,{type:'dense',t:100,...pick('dense')});s.pL={b:450,kind:'return',adj:0};s.pR={b:900,kind:'end',adj:0};s.floors=[{n:'Bedroom floor',y:300,trib:2.4,gk:1.5,qk:1.5}];s.pts=[{n:'Steel beam',x:1600,y:250,a:150,gk:18,qk:10}];s.lintel.sec='UB 203×133×25';}},
+ {k:'inner',c:'Block',n:'Inner leaf, RC lintel, joists and roof',d:'Medium-density block inner leaf. Joists bear just above the lintel and the roof is above the zone.',t:['RC','joists','roof'],f:s=>{s.L0=1200;s.Hm=600;Object.assign(s.mas,{type:'med',t:100,...pick('med')});s.floors=[{n:'Joists',y:225,trib:2.1,gk:0.75,qk:1.5},{n:'Roof',y:2400,trib:1.8,gk:1.0,qk:0.75}];s.pts=[];s.lintel.type='rc';s.lintel.rc={b:100,h:215,n:2,dia:12,cover:30,fck:40,fyk:500};s.pL={b:600,kind:'return',adj:0};s.pR={b:450,kind:'opening',adj:900};}},
+ {k:'prop',c:'Block',n:'Kitchen window, aircrete, proprietary lintel',d:'1.5 m window in an aircrete inner leaf on a proprietary lintel, checked against the maker’s safe working load. The low-strength blocks make the bearing check worth watching.',t:['proprietary','aircrete','bearing'],f:s=>{s.L0=1500;s.Hm=1500;Object.assign(s.mas,{type:'aac',t:100,...pick('aac')});s.lintel.type='prop';s.lintel.prop={swl:16,bw:100,sw:0.12,d:150};s.floors=[{n:'First floor',y:300,trib:2.2,gk:1.2,qk:1.5}];s.pts=[];s.pL={b:700,kind:'return',adj:0};s.pR={b:900,kind:'opening',adj:1200};}},
+ {k:'stone',c:'Stone',n:'Stone wall, wide opening, no arching',d:'2.7 m opening in a 300 mm coursed-stone wall with arching switched off by the user, on a UB lintel.',t:['no arching','UB','300 wall'],f:s=>{s.L0=2700;s.Hm=1200;Object.assign(s.mas,{type:'stone',t:300,...pick('stone')});s.arch='none';s.lintel.sec='UB 254×146×31';s.pL={b:1000,kind:'return',adj:0};s.pR={b:1000,kind:'return',adj:0};s.floors=[{n:'Floor',y:450,trib:2.5,gk:1.5,qk:1.5}];s.pts=[];}}
+];
+const exS=k=>{const e=EX.find(q=>q.k===k);const s=defS();e.f(s);s.ex=k;return s;};
 function pick(k){const m=MAS[k];return {gamma:m.gamma,fb:m.fb,K:m.K,grp:m.grp,cat:m.cat};}
 let S;try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
 if(!S||S.v!==1)S=defS();
@@ -491,7 +585,7 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 $('#masType').innerHTML=Object.entries(MAS).map(([k,m])=>`<option value="${k}">${m.n}</option>`).join('');
 $('[data-k="mas.mort"]').innerHTML=Object.entries(MORTN).map(([k,n])=>`<option value="${k}">${n}</option>`).join('');
 $('#secSel').innerHTML=['UB','UC','PFC'].map(f=>`<optgroup label="${f}">`+LIB.filter(r=>r[0]===f).map(r=>`<option>${r[0]} ${r[1]}</option>`).join('')+'</optgroup>').join('');
-$('#exSel').innerHTML+=Object.entries(EX).map(([k,[n]])=>`<option value="${k}">${n}</option>`).join('');
+$('#exSel').innerHTML+=[...new Set(EX.map(e=>e.c))].map(c=>`<optgroup label="${c}">`+EX.filter(e=>e.c===c).map(e=>`<option value="${e.k}">${e.n}</option>`).join('')+'</optgroup>').join('');
 function syncForm(){
  for(const el of $$('[data-k]')){const v=getP(S,el.dataset.k);if(el.type==='checkbox')el.checked=!!v;else if(document.activeElement!==el)el.value=v;}
  $('#masType').value=S.mas.type;
@@ -519,13 +613,14 @@ $('#lType').onclick=e=>{const b=e.target.closest('button');if(!b)return;S.lintel
 document.addEventListener('click',e=>{const d=e.target.closest('[data-del]');if(!d)return;const [a,i]=d.dataset.del.split('.');S[a].splice(+i,1);hov=null;listForms();changed();});
 $('#addF').onclick=()=>{const top=S.floors.reduce((m,f)=>Math.max(m,f.y),0);S.floors.push({n:'Floor '+(S.floors.length+1),y:S.floors.length?top+2600:375,trib:2,gk:1.2,qk:1.5});listForms();changed();};
 $('#addP').onclick=()=>{S.pts.push({n:'P'+(S.pts.length+1),x:Math.round(S.L0/2/25)*25,y:600,a:100,gk:5,qk:3});listForms();changed();};
-$('#exSel').onchange=e=>{const k=e.target.value;if(!k)return;S=defS();EX[k][1](S);e.target.value='';V.fitted=false;syncForm();changed();};
+function loadEx(k){S=exS(k);V.fitted=false;syncForm();changed();}
+$('#exSel').onchange=e=>{const k=e.target.value;if(!k)return;loadEx(k);e.target.value='';};
 $('#bReset').onclick=()=>{S=defS();V.fitted=false;syncForm();changed();};
 $('#bTheme').onclick=()=>{const r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem(KEY+'.theme',r.dataset.theme)}catch(e){}draw();drawDg();};
 try{const th=localStorage.getItem(KEY+'.theme');if(th)document.documentElement.dataset.theme=th;}catch(e){}
 $('#bMethod').onclick=()=>$('#vmodal').hidden=false;$('#mX').onclick=()=>$('#vmodal').hidden=true;$('#vmodal').onclick=e=>{if(e.target.id==='vmodal')e.target.hidden=true;};
 $('#bSide').onclick=()=>{const s=$('#side');s.classList.toggle('col');$('#bSide').textContent=s.classList.contains('col')?'⟨':'⟩';setTimeout(resize,0);};
-$('#bExport').onclick=()=>copyT(JSON.stringify(S,null,1),'Design JSON copied');
+$('#bExport').onclick=()=>saveFile(`lintel-${S.L0}mm.json`,JSON.stringify(S,null,1),()=>copyT(JSON.stringify(S,null,1),'Downloads unavailable here, so the design JSON was copied to the clipboard instead'));
 $('#bImport').onclick=()=>$('#fImp').click();
 $('#fImp').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const o=JSON.parse(t);if(o&&o.v===1){S=Object.assign(defS(),o);V.fitted=false;syncForm();changed();}}catch(err){alert('Could not read that file.');}});e.target.value='';};
 let thPrev=null;
@@ -551,7 +646,7 @@ $('#bFit').onclick=()=>{fit();draw();};$('#bZi').onclick=()=>zoomAt(1.25);$('#bZ
 $('#bLight').onclick=()=>{const keep=S.lintel.sec;const cand=LIB.map(r=>r[0]+' '+r[1]).filter(k=>S.lintel.restr||!k.startsWith('PFC')).map(k=>({k,sw:steelProps(k,S.lintel.grade).sw})).sort((a,b)=>a.sw-b.sw);
  for(const c of cand){S.lintel.sec=c.k;const r=compute(S);if(!r.checks.some(q=>q.g==='Lintel'&&q.st==='fail')){syncForm();changed();flash(`Lightest passing: ${c.k}`);return;}}
  S.lintel.sec=keep;flash('No section in the library passes — try S355 or a different lintel');};
-function flash(t){const c=$('#tchip');c.innerHTML=t;c.hidden=false;c.style.left='14px';c.style.top='86px';clearTimeout(flash.t);flash.t=setTimeout(()=>c.hidden=true,2600);}
+function flash(t,bad,ms){const c=$('#toast');c.textContent=t;c.classList.toggle('bad',!!bad);c.hidden=false;clearTimeout(flash.t);flash.t=setTimeout(()=>c.hidden=true,ms||2800);}
 // ---------- compute & results ----------
 let raf=0;function changed(){if(!raf)raf=requestAnimationFrame(()=>{raf=0;recalc();});}
 function recalc(){
@@ -593,7 +688,7 @@ function props(){const m=S.mas;$('#masProp').innerHTML=`f<sub>k</sub> = ${f2(R.f
  if(R.lin.kind==='steel'){const s=R.lin.s;$('#stProp').innerHTML=`<b>${s.key}</b> · ${f1(s.sw/9.81*1000)} kg/m · Class ${s.cls}<br>I<sub>y</sub> ${f0(s.Iy/1e4)} cm⁴ · W<sub>pl</sub> ${f0(s.Wpl/1e3)} cm³ · W<sub>el</sub> ${f0(s.Wel/1e3)} cm³<br>h ${s.h} · b ${s.b} · t<sub>w</sub> ${s.tw} · t<sub>f</sub> ${s.tf} mm`;}}
 function fmtV(v){const a=Math.abs(v);return a>=100?f0(v):a>=10?f1(v):f2(v);}
 // ---------- drawing ----------
-const cv=$('#cv'),cx=cv.getContext('2d'),dg=$('#dg'),dx=dg.getContext('2d');let DPR=1;
+const cv=$('#cv'),CX=cv.getContext('2d'),dg=$('#dg'),DX=dg.getContext('2d');let DPR=1,TGT=null;
 function css(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
 function resize(){DPR=Math.min(2,devicePixelRatio||1);for(const c of [cv,dg]){const r=c.getBoundingClientRect();c.width=Math.max(1,r.width*DPR);c.height=Math.max(1,r.height*DPR);}draw();drawDg();}
 new ResizeObserver(()=>resize()).observe($('#wrap'));new ResizeObserver(()=>resize()).observe($('#dgw'));
@@ -601,16 +696,16 @@ function geo(){if(!R)return null;const bL=R.side.L.b,bR=R.side.R.b,L0=R.L0,yT=R.
  const maxF=Math.max(0,...S.floors.map(f=>f.y/1000),...S.pts.map(p=>p.y/1000+0.45));
  const xl=-(S.pL.kind==='opening'?Math.min(R.side.L.adj,1.2)+0.15:0.35),xr=bL+L0+bR+(S.pR.kind==='opening'?Math.min(R.side.R.adj,1.2)+0.15:0.35);
  return {bL,bR,L0,yT,top,W:bL+L0+bR,xl,xr,yMax:Math.max(top,yT+maxF,yT+(V.zone?R.zone:0))+0.25};}
-function fit(){const g=geo();if(!g)return;const w=cv.width/DPR,h=cv.height/DPR;if(w<10||h<10)return;
- const mx=40,myT=64,myB=46;const sc=Math.min((w-2*mx)/(g.xr-g.xl),(h-myT-myB)/(g.yMax+0.35));V.sc=sc;V.ox=(w-(g.xr-g.xl)*sc)/2-g.xl*sc;V.oy=myT+g.yMax*sc;V.fitted=true;}
+function fit(W_,H_){const g=geo();if(!g)return;const w=W_||cv.width/DPR,h=H_||cv.height/DPR;if(w<10||h<10)return;
+ const mx=W_?20:40,myT=W_?22:64,myB=W_?40:46;const sc=Math.min((w-2*mx)/(g.xr-g.xl),(h-myT-myB)/(g.yMax+0.35));V.sc=sc;V.ox=(w-(g.xr-g.xl)*sc)/2-g.xl*sc;V.oy=myT+g.yMax*sc;V.fitted=true;}
 const X=x=>V.ox+x*V.sc,Y=y=>V.oy-y*V.sc,IX=sx=>(sx-V.ox)/V.sc,IY=sy=>(V.oy-sy)/V.sc;
 function zoomAt(f,sx,sy){const w=cv.width/DPR,h=cv.height/DPR;sx=sx??w/2;sy=sy??h/2;const wx=IX(sx),wy=IY(sy);V.sc=Math.min(4000,Math.max(10,V.sc*f));V.ox=sx-wx*V.sc;V.oy=sy+wy*V.sc;draw();}
 function draw(){
- const w=cv.width/DPR,h=cv.height/DPR;cx.setTransform(DPR,0,0,DPR,0,0);cx.clearRect(0,0,w,h);if(!R)return;const g=geo();
+ const T=TGT&&TGT.e,cx=T?T.ctx:CX,D=T?T.dpr:DPR,w=T?T.w:cv.width/DPR,h=T?T.h:cv.height/DPR;cx.setTransform(D,0,0,D,0,0);cx.clearRect(0,0,w,h);if(T){cx.fillStyle='#fff';cx.fillRect(0,0,w,h);}if(!R)return;const g=geo();
  const C={ink:css('--ink'),mut:css('--mut'),line:css('--line'),acc:css('--acc'),n2:css('--neon2'),n3:css('--neon3'),amb:css('--amb'),ok:css('--ok'),bad:css('--bad'),panel:css('--panel'),bg:css('--bg'),grid:css('--grid'),mem:css('--mem')};
  const isBlock=['dense','med','light','aac'].includes(S.mas.type)||(S.mas.type==='custom'&&false);const masCol=isBlock?css('--block'):S.mas.type==='stone'?css('--block'):css('--brick');
  // grid
- cx.strokeStyle=C.grid;cx.lineWidth=1;const gs=V.sc>=60?0.25:1;cx.beginPath();for(let x=Math.floor(IX(0)/gs)*gs;X(x)<w;x+=gs){cx.moveTo(X(x)+.5,0);cx.lineTo(X(x)+.5,h);}for(let y=Math.floor(IY(h)/gs)*gs;Y(y)>0;y+=gs){cx.moveTo(0,Y(y)+.5);cx.lineTo(w,Y(y)+.5);}cx.stroke();
+ if(!T){cx.strokeStyle=C.grid;cx.lineWidth=1;const gs=V.sc>=60?0.25:1;cx.beginPath();for(let x=Math.floor(IX(0)/gs)*gs;X(x)<w;x+=gs){cx.moveTo(X(x)+.5,0);cx.lineTo(X(x)+.5,h);}for(let y=Math.floor(IY(h)/gs)*gs;Y(y)>0;y+=gs){cx.moveTo(0,Y(y)+.5);cx.lineTo(w,Y(y)+.5);}cx.stroke();}
  // ground
  cx.strokeStyle=C.mem;cx.lineWidth=2;cx.beginPath();cx.moveTo(X(g.xl-0.2),Y(0));cx.lineTo(X(g.xr+0.2),Y(0));cx.stroke();
  // context beyond piers
@@ -663,7 +758,7 @@ function draw(){
   vdim(X(g.bL)+14,Y(g.yT),Y(g.top),f0(R.Hm*1000));vdim(X(g.bL)+14,Y(0),Y(yH),f0(yH*1000));
   if(R.lb*V.sc>18)dim(X(lx1),X(g.bL),Y(g.yT)-8,f0(R.lb*1000),true);}
  // legend title
- cx.font='600 11px Inter,system-ui,sans-serif';cx.fillStyle=C.mut;cx.textAlign='left';cx.fillText(`ELEVATION · ${R.arch?'arching':'no arching'} · drag loads & floors`,12,h-10);
+ cx.font='600 11px Inter,system-ui,sans-serif';cx.fillStyle=C.mut;cx.textAlign='left';cx.fillText(`ELEVATION · ${R.arch?'arching':'no arching'}${T?'':' · drag loads & floors'}`,12,h-10);
  function dim(x1,x2,y,t,small){cx.strokeStyle=C.mut;cx.fillStyle=C.mut;cx.lineWidth=1;cx.beginPath();cx.moveTo(x1,y);cx.lineTo(x2,y);cx.moveTo(x1,y-4);cx.lineTo(x1,y+4);cx.moveTo(x2,y-4);cx.lineTo(x2,y+4);cx.stroke();if(Math.abs(x2-x1)>22){cx.font=`600 ${small?9.5:11}px Inter,system-ui,sans-serif`;cx.textAlign='center';cx.fillText(t,(x1+x2)/2,y-4);}}
  function vdim(x,y1,y2,t){cx.strokeStyle=C.mut;cx.fillStyle=C.mut;cx.lineWidth=1;cx.beginPath();cx.moveTo(x,y1);cx.lineTo(x,y2);cx.moveTo(x-4,y1);cx.lineTo(x+4,y1);cx.moveTo(x-4,y2);cx.lineTo(x+4,y2);cx.stroke();if(Math.abs(y2-y1)>26){cx.save();cx.translate(x+12,(y1+y2)/2);cx.rotate(-Math.PI/2);cx.font='600 11px Inter,system-ui,sans-serif';cx.textAlign='center';cx.fillText(t,0,0);cx.restore();}}
  function pill(x,y,t,col){cx.font='700 11px Inter,system-ui,sans-serif';const tw=cx.measureText(t).width+16;cx.fillStyle=C.panel;cx.strokeStyle=col;cx.lineWidth=1.3;rr(x-tw/2,y-11,tw,22,11);cx.fill();cx.shadowColor=col;cx.shadowBlur=10;cx.stroke();cx.shadowBlur=0;cx.fillStyle=col;cx.textAlign='center';cx.fillText(t,x,y+4);}
@@ -672,10 +767,10 @@ function draw(){
 }
 function color(c,a){c=c.trim();if(c.startsWith('#')){let h=c.slice(1);if(h.length===3)h=h.split('').map(x=>x+x).join('');const n=parseInt(h,16);return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`;}return c;}
 function drawDg(){
- const w=dg.width/DPR,h=dg.height/DPR;dx.setTransform(DPR,0,0,DPR,0,0);dx.clearRect(0,0,w,h);if(!R||$('#dgw').hidden)return;
+ const T=TGT&&TGT.d,dx=T?T.ctx:DX,D=T?T.dpr:DPR,w=T?T.w:dg.width/DPR,h=T?T.h:dg.height/DPR,DG=T?{q:1,V:1,M:1,d:1}:V.dg;dx.setTransform(D,0,0,D,0,0);dx.clearRect(0,0,w,h);if(T){dx.fillStyle='#fff';dx.fillRect(0,0,w,h);}if(!R||(!T&&$('#dgw').hidden))return;
  const C={ink:css('--ink'),mut:css('--mut'),line:css('--line'),acc:css('--acc'),n2:css('--neon2'),n3:css('--neon3'),amb:css('--amb'),panel:css('--panel')};
- const rows=[];if(V.dg.q)rows.push({k:'q',d:R.qU,c:C.n3,u:'kN/m',n:'Load ULS',ls:[]});if(V.dg.V)rows.push({k:'V',d:R.Vu,c:C.n2,u:'kN',n:'Shear ULS',ls:[7,3]});
- if(V.dg.M)rows.push({k:'M',d:R.Mu,c:C.acc,u:'kNm',n:'Moment ULS',ls:[]});if(V.dg.d&&R.dfl)rows.push({k:'d',d:R.dfl.map(v=>v*1000),c:C.amb,u:'mm',n:'Deflection SLS',ls:[2,3]});
+ const rows=[];if(DG.q)rows.push({k:'q',d:R.qU,c:C.n3,u:'kN/m',n:'Load ULS',ls:[]});if(DG.V)rows.push({k:'V',d:R.Vu,c:C.n2,u:'kN',n:'Shear ULS',ls:[7,3]});
+ if(DG.M)rows.push({k:'M',d:R.Mu,c:C.acc,u:'kNm',n:'Moment ULS',ls:[]});if(DG.d&&R.dfl)rows.push({k:'d',d:R.dfl.map(v=>v*1000),c:C.amb,u:'mm',n:'Deflection SLS',ls:[2,3]});
  if(!rows.length)return;const ml=96,mr=24,pw=w-ml-mr,rh=(h-14)/rows.length,x=R.aG.x,Le=R.Le;
  rows.forEach((r,k)=>{const y0=7+k*rh,pad=Math.min(14,rh*0.16),mx=Math.max(1e-9,...r.d.map(Math.abs)),inv=r.k==='M'||r.k==='q'||r.k==='d';
   const zy=r.k==='V'?y0+rh/2:y0+pad,sc=(r.k==='V'?(rh/2-pad):(rh-2*pad))/mx;
@@ -708,7 +803,7 @@ cv.addEventListener('pointermove',e=>{const r=cv.getBoundingClientRect(),sx=e.cl
 cv.addEventListener('pointerup',()=>{drag=null;cv.style.cursor=hov?'move':'grab';});
 cv.addEventListener('pointerleave',()=>{if(!drag){hov=null;$('#tchip').hidden=true;draw();hiCards();}});
 cv.addEventListener('wheel',e=>{e.preventDefault();const r=cv.getBoundingClientRect();zoomAt(e.deltaY<0?1.12:1/1.12,e.clientX-r.left,e.clientY-r.top);},{passive:false});
-addEventListener('keydown',e=>{if(e.target.matches('input,select,textarea'))return;if(e.key==='f'||e.key==='F'){fit();draw();}if(e.key==='Escape')$('#vmodal').hidden=true;});
+addEventListener('keydown',e=>{if(e.target.matches('input,select,textarea'))return;if(e.key==='f'||e.key==='F'){fit();draw();}if(e.key==='Escape')for(const o of $$('#vmodal,.ov'))o.hidden=true;});
 function showChip(sx,sy){const c=$('#tchip');if(!hov||!R){c.hidden=true;return;}let t='';
  if(hov.t==='p'){const p=S.pts[hov.i],it=R.B.items.find(q=>q.ref==='p'+hov.i);t=`<b>${esc(p.n)}</b> x ${p.x}, h ${p.y} mm<br>${esc(it?it.how:'')}<br>on lintel ${f2(it?it.G:0)}G + ${f2(it?it.Q:0)}Q kN`;}
  else{const f=S.floors[hov.i],it=R.B.items.find(q=>q.ref==='f'+hov.i);t=`<b>${esc(f.n)}</b> ${f.y} mm above lintel<br>${esc(it?it.how:'')}`;}
@@ -717,4 +812,176 @@ function syncLists(){for(const el of $$('[data-l]')){if(document.activeElement==
 function hiCards(){for(const c of $$('[data-fi]'))c.classList.toggle('hi',!!(hov&&hov.t==='f'&&hov.i==+c.dataset.fi));for(const c of $$('[data-pi]'))c.classList.toggle('hi',!!(hov&&hov.t==='p'&&hov.i==+c.dataset.pi));}
 // ---------- go ----------
 syncForm();recalc();setTimeout(()=>{resize();fit();draw();},30);
+// ===================== v1.1: overlays, gallery, guide, downloads, PDF =====================
+const VER='1.1';
+const openOv=id=>{for(const o of $$('.ov'))o.hidden=o.id!==id;$('#'+id).hidden=false;};
+for(const b of $$('[data-close]'))b.onclick=()=>$('#'+b.dataset.close).hidden=true;
+for(const o of $$('.ov'))o.addEventListener('click',e=>{if(e.target===o)o.hidden=true;});
+$('#bGuide').onclick=()=>openOv('guide');$('#bAbout').onclick=()=>openOv('about');
+$('#bGal').onclick=$('#bGal2').onclick=()=>{buildGal();openOv('galOv');};
+$('#gGal').onclick=()=>{buildGal();openOv('galOv');};$('#gGo').onclick=()=>$('#guide').hidden=true;
+$('#gNo').onchange=e=>{try{localStorage.setItem(KEY+'.noGuide',e.target.checked?'1':'')}catch(err){}};
+// ---------- welcome guide ----------
+const GSTEP=[
+ ['Set the opening','Enter the clear span, bearing length, head height and the masonry above. The elevation and every check update as you type.',
+  '<rect x="20" y="14" width="160" height="80" class="fw"/><rect x="70" y="44" width="60" height="50" class="fp"/><rect x="62" y="36" width="76" height="8" class="fa"/><path d="M70 100h60M70 97v6M130 97v6" class="ink" fill="none"/><text x="100" y="98" class="tk" text-anchor="middle" dy="-2">L</text>'],
+ ['Choose the masonry','Pick from 10 typical brick, block and stone types, or enter your own. f<sub>k</sub>, f<sub>d</sub> and f<sub>vk0</sub> are calculated to EC6 with the UK NA.',
+  '<g>'+[0,1,2,3,4].map(r=>`<path d="M20 ${20+r*14}h160" class="ink" stroke-opacity=".35"/>`+[0,1,2,3,4,5].map(c=>`<path d="M${20+c*32+(r%2)*16} ${20+r*14}v14" class="ink" stroke-opacity=".35"/>`).join('')).join('')+'</g><rect x="20" y="20" width="160" height="70" class="fw" fill-opacity=".5"/><text x="100" y="58" class="tk" text-anchor="middle">fk = K·fb^0.7·fm^0.3</text>'],
+ ['Add floors & point loads','Floors are kN/m² × tributary width; point loads spread at 60° through the wall. Drag either one on the drawing.',
+  '<rect x="20" y="20" width="160" height="72" class="fw"/><path d="M10 40h180" class="ink" stroke-width="3"/><path d="M118 8v24M112 24l6 8 6-8" class="am" stroke-width="2.4" fill="none"/><path d="M114 32l-26 46M122 32l26 46" class="am" stroke-dasharray="3 2" fill="none"/><rect x="56" y="78" width="88" height="7" class="fa"/>'],
+ ['Pick a lintel','Steel UB, UC or PFC (with an LTB option), reinforced concrete, or a proprietary lintel checked against the maker’s safe working load. One click picks the lightest passing steel section.',
+  '<rect x="30" y="40" width="140" height="12" class="fa"/><path d="M30 64q70 22 140 0" class="mg" fill="none" stroke-width="2"/><path d="M30 76h140" class="cy" stroke-dasharray="5 3"/><text x="100" y="30" class="tk" text-anchor="middle">M · V · δ</text>'],
+ ['Check the walls either side','Each pier is checked for bearing under the lintel, axial load at bearing level and mid-height, and arch thrust, plus the Approved Document A width rules.',
+  '<rect x="20" y="20" width="44" height="74" class="fw"/><rect x="136" y="20" width="44" height="74" class="fw"/><rect x="50" y="22" width="100" height="8" class="fa"/><rect x="24" y="56" width="36" height="16" rx="8" class="fp" stroke="var(--ok)"/><text x="42" y="67" class="tk" text-anchor="middle">0.46</text><rect x="140" y="56" width="36" height="16" rx="8" class="fp" stroke="var(--bad)"/><text x="158" y="67" class="tk" text-anchor="middle">1.28</text>'],
+ ['Report','Download an A4 PDF calculation sheet, save the design as .json, or copy a plain-text summary. Every assumption is set out in Method.',
+  '<rect x="64" y="10" width="72" height="86" rx="4" class="fp" stroke="var(--acc)"/><path d="M74 24h52M74 34h40M74 44h52M74 54h30" class="ink" stroke-opacity=".5"/><rect x="74" y="64" width="52" height="20" class="fa" fill-opacity=".4"/><path d="M160 40v30M152 62l8 8 8-8" class="cy" stroke-width="2" fill="none"/>']
+];
+$('#gSteps').innerHTML=GSTEP.map(([h,p,svg])=>`<div class="gs"><svg viewBox="0 0 200 100" fill="none">${svg}</svg><div class="gsB"><h3>${h}</h3><p>${p}</p></div></div>`).join('');
+// ---------- gallery ----------
+function thumb(s){
+ let r;try{r=compute(s);}catch(e){return '<svg viewBox="0 0 320 176"></svg>';}
+ const bL=r.side.L.b,bR=r.side.R.b,L0=r.L0,yT=r.hHead+r.dL,top=yT+r.Hm,W=bL+L0+bR;
+ const maxY=Math.max(top,yT+Math.max(0,...s.floors.map(f=>f.y/1000)),...s.pts.map(p=>yT+p.y/1000+0.45))+0.15;
+ const xl=-0.3,xr=W+0.3,sc=Math.min(296/(xr-xl),150/maxY),ox=(320-(xr-xl)*sc)/2-xl*sc,oy=162,x=v=>(ox+v*sc).toFixed(1),y=v=>(oy-v*sc).toFixed(1),d=v=>(v*sc).toFixed(1);
+ const blk=['dense','med','light','aac','stone'].includes(s.mas.type);let o=`<svg viewBox="0 0 320 176" class="th">`;
+ o+=`<rect x="${x(0)}" y="${y(top)}" width="${d(W)}" height="${d(top)}" class="${blk?'wb':'wl'}"/>`;
+ o+=`<rect x="${x(bL)}" y="${y(r.hHead)}" width="${d(L0)}" height="${d(r.hHead)}" class="op"/>`;
+ if(r.arch)o+=`<path d="M${x(bL)} ${y(yT)}L${x(bL+L0/2)} ${y(yT+Math.min(r.htri,r.Hm))}L${x(bL+L0)} ${y(yT)}Z" class="tr"/>`;
+ else o+=`<rect x="${x(bL)}" y="${y(top)}" width="${d(L0)}" height="${d(r.Hm)}" class="tr"/>`;
+ o+=`<rect x="${x(bL-r.lb)}" y="${y(yT)}" width="${d(L0+2*r.lb)}" height="${Math.max(3,r.dL*sc).toFixed(1)}" class="ln"/>`;
+ o+=`<path d="M${x(xl)} ${y(0)}H${x(xr)}" class="gr" stroke-width="1.5"/>`;
+ for(const f of s.floors){const yy=y(yT+f.y/1000);o+=`<path d="M${x(xl+0.1)} ${yy}H${x(xr-0.1)}" class="fl" stroke-width="2.4"/>`;}
+ for(const p of s.pts){const px=x(bL+p.x/1000),py=oy-(yT+p.y/1000)*sc;o+=`<path d="M${px} ${(py-22).toFixed(1)}V${(py-3).toFixed(1)}" class="pt" stroke-width="2.4"/><path d="M${(+px-5)} ${(py-9).toFixed(1)}L${px} ${py.toFixed(1)}L${(+px+5)} ${(py-9).toFixed(1)}Z" class="pt"/>`;}
+ const t=r.fail?`FAILS ${r.umax.toFixed(2)}`:`PASSES ${r.umax.toFixed(2)}`,tw=t.length*6.6+16;
+ o+=`<rect x="${(312-tw).toFixed(1)}" y="8" width="${tw.toFixed(1)}" height="20" rx="10" class="bd ${r.fail?'bdb':'bdo'}"/><text x="${(312-tw/2).toFixed(1)}" y="22" text-anchor="middle" class="${r.fail?'tb':'to'}">${t}</text>`;
+ o+=`<text x="10" y="22" class="tm">${esc(r.lin.name)}</text></svg>`;return {svg:o,r};
+}
+let galCat='All',galBuilt=false;
+function buildGal(){
+ const cats=['All',...new Set(EX.map(e=>e.c))];
+ $('#galF').innerHTML=cats.map(c=>`<button data-c="${c}" class="${c===galCat?'on':''}">${c}</button>`).join('');
+ if(!galBuilt){$('#galB').innerHTML=cats.slice(1).map(c=>`<section class="galSec" data-c="${c}"><h3>${c}</h3><div class="galG">`+EX.filter(e=>e.c===c).map(e=>{const s=exS(e.k),th=thumb(s);
+  return `<div class="galC" data-k="${e.k}" data-q="${esc((e.n+' '+e.d+' '+e.t.join(' ')+' '+c).toLowerCase())}"><button class="galD" data-load="${e.k}" title="Load this example">${th.svg}</button><div class="galT"><h4>${esc(e.n)}</h4><p>${esc(e.d)}</p>
+   <div class="galM"><span class="${th.r&&th.r.fail?'bad':'ok'}">${th.r&&th.r.fail?'fails':'passes'}</span><span>${(s.L0/1000).toFixed(2)} m span</span>${e.t.map(t=>`<span>${esc(t)}</span>`).join('')}</div>
+   <div class="galA"><button class="on" data-load="${e.k}">Load example</button></div></div></div>`;}).join('')+`</div></section>`).join('')+`<p class="galE" hidden>No examples match.</p>`;galBuilt=true;}
+ $('#galN').textContent=`${EX.length} examples`;filtGal();
+}
+function filtGal(){const q=($('#galQ').value||'').trim().toLowerCase();let n=0;
+ for(const c of $$('.galC')){const ok=(galCat==='All'||c.closest('.galSec').dataset.c===galCat)&&(!q||q.split(/\s+/).every(w=>c.dataset.q.includes(w)));c.hidden=!ok;if(ok)n++;}
+ for(const sct of $$('.galSec'))sct.hidden=![...sct.querySelectorAll('.galC')].some(c=>!c.hidden);$('.galE').hidden=n>0;}
+$('#galF').onclick=e=>{const b=e.target.closest('button');if(!b)return;galCat=b.dataset.c;for(const x of $$('#galF button'))x.classList.toggle('on',x===b);filtGal();};
+$('#galQ').oninput=filtGal;
+$('#galB').onclick=e=>{const b=e.target.closest('[data-load]');if(!b)return;loadEx(b.dataset.load);$('#galOv').hidden=true;flash('Loaded: '+EX.find(q=>q.k===b.dataset.load).n);};
+// theme change: thumbnails use CSS vars so they follow automatically
+// ---------- current example hint ----------
+const _renderRes=renderRes;renderRes=function(){_renderRes();const e=S.ex&&EX.find(q=>q.k===S.ex);$('#exCur').innerHTML=e?`Started from <b>${esc(e.n)}</b>.`:'Pick a worked example to start from, or browse the gallery.';};
+$('#bReset').onclick=()=>{S=defS();V.fitted=false;syncForm();changed();};
+// ---------- downloads capability ----------
+async function getDL(){try{if(!window.claude||!claude.use)return null;return await claude.use('downloads');}catch(e){return null;}}
+async function saveFile(name,data,fallback){const dl=await getDL();
+ if(!dl){if(fallback)fallback();else flash('Downloads are not available in this view.',true);return false;}
+ try{const r=await dl.save({filename:name,data});if(r&&r.status==='saved')flash('Saved '+name);return true;}
+ catch(e){const c=e&&e.code;flash(c==='declined'?'Download cancelled.':c==='rate_limited'?'A download prompt is already open.':'Could not save: '+((e&&e.message)||c||'unknown error'),c!=='declined');return false;}}
+// ---------- PDF report (canvas pages + minimal PDF writer, no external libraries) ----------
+function snapImages(){const root=document.documentElement,th=root.dataset.theme,sv={...V};root.dataset.theme='light';
+ const mk=(w,h)=>{const c=document.createElement('canvas');c.width=w*2;c.height=h*2;return c;};
+ const ce=mk(714,380),cd=mk(714,300);
+ try{TGT={e:{ctx:ce.getContext('2d'),dpr:2,w:714,h:380}};fit(714,380);draw();TGT={d:{ctx:cd.getContext('2d'),dpr:2,w:714,h:300}};drawDg();}
+ finally{TGT=null;Object.assign(V,sv);root.dataset.theme=th;}
+ return {e:ce,d:cd};}
+function buildSheets(){
+ const PW=794,PH=1123,M=40,CW=PW-2*M,TOP=74,BOT=PH-44,pages=[];let g,y;
+ const COL={ink:'#1a1033',mut:'#5e5486',line:'#ddd3f3',acc:'#7a22d6',n2:'#0e7490',ok:'#047857',bad:'#c8102e',amb:'#b45309',soft:'#f5f0fd'};
+ const F=(w,sz)=>`${w} ${sz}px Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif`;
+ const title=`${R.lin.name} over ${S.L0} mm opening`,date=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+ function page(){const c=document.createElement('canvas');c.width=PW*2;c.height=PH*2;g=c.getContext('2d');g.scale(2,2);g.fillStyle='#fff';g.fillRect(0,0,PW,PH);
+  g.fillStyle=COL.acc;g.font=F(800,12);g.textBaseline='alphabetic';g.textAlign='left';g.fillText('LINTEL LOADER',M,40);g.fillStyle=COL.mut;g.font=F(500,11);g.fillText('masonry lintel & pier design',M+112,40);
+  g.textAlign='right';g.fillText(title,PW-M,40);g.textAlign='left';
+  const gr=g.createLinearGradient(M,0,PW-M,0);gr.addColorStop(0,COL.acc);gr.addColorStop(.6,'#c026d3');gr.addColorStop(1,COL.n2);g.fillStyle=gr;g.fillRect(M,50,CW,2.5);
+  pages.push({c,g});y=TOP;}
+ const need=h=>{if(y+h>BOT)page();};
+ function wrap(t,w,font){g.font=font;const words=String(t).split(/\s+/),L=[];let cur='';for(const wd of words){const tt=cur?cur+' '+wd:wd;if(g.measureText(tt).width>w&&cur){L.push(cur);cur=wd;}else cur=tt;}if(cur)L.push(cur);return L;}
+ function para(t,{size=11,w=CW,col=COL.mut,weight=400,lh=1.45,x=M}={}){const L=wrap(t,w,F(weight,size));need(L.length*size*lh+2);g.fillStyle=col;g.font=F(weight,size);for(const l of L){y+=size*lh;g.fillText(l,x,y-size*0.3);}y+=4;}
+ function head(t){need(40);y+=14;const gr=g.createLinearGradient(M,0,M+16,0);gr.addColorStop(0,'#c026d3');gr.addColorStop(1,COL.n2);g.fillStyle=gr;g.fillRect(M,y-4,14,2.5);g.fillStyle=COL.n2;g.font=F(700,10);g.fillText(t.toUpperCase().split('').join(String.fromCharCode(8202)),M+22,y);y+=10;}
+ function img(cv,h){need(h+6);g.drawImage(cv,M,y,CW,h);g.strokeStyle=COL.line;g.lineWidth=1;g.strokeRect(M+.5,y+.5,CW-1,h-1);y+=h+6;}
+ function table(cols,rows,{fs=10.5}={}){// cols:[{h,w,al}] rows: arrays of strings or {t,col,sub,b}
+  const rowH=r=>{let mx=1;r.forEach((c,i)=>{const cc=typeof c==='object'?c:{t:c};const n=wrap(cc.t,cols[i].w-8,F(cc.b?700:500,fs)).length+(cc.sub?wrap(cc.sub,cols[i].w-8,F(400,fs-1.5)).length*0.9:0);mx=Math.max(mx,n);});return mx*fs*1.35+8;};
+  const hdr=()=>{need(22);g.fillStyle=COL.soft;g.fillRect(M,y,CW,20);let x=M;g.font=F(700,9);g.fillStyle=COL.mut;for(const c of cols){g.textAlign=c.al==='r'?'right':'left';g.fillText(c.h.toUpperCase(),c.al==='r'?x+c.w-4:x+4,y+13.5);x+=c.w;}g.textAlign='left';y+=20;};
+  hdr();for(const r of rows){const h=rowH(r);if(y+h>BOT){page();hdr();}let x=M;
+   r.forEach((c,i)=>{const cc=typeof c==='object'?c:{t:c},col=cols[i];let yy=y+fs+3;const L=wrap(cc.t,col.w-8,F(cc.b?700:500,fs));g.fillStyle=cc.col||COL.ink;g.font=F(cc.b?700:500,fs);g.textAlign=col.al==='r'?'right':'left';
+    for(const l of L){g.fillText(l,col.al==='r'?x+col.w-4:x+4,yy);yy+=fs*1.35;}
+    if(cc.sub){g.fillStyle=COL.mut;g.font=F(400,fs-1.5);for(const l of wrap(cc.sub,col.w-8,F(400,fs-1.5))){g.fillText(l,x+4,yy-1);yy+=(fs-1.5)*1.3;}}x+=col.w;});
+   g.textAlign='left';y+=h;g.strokeStyle=COL.line;g.lineWidth=1;g.beginPath();g.moveTo(M,y-.5);g.lineTo(M+CW,y-.5);g.stroke();}
+  y+=6;}
+ // ----- sheet 1 -----
+ page();
+ g.fillStyle=COL.ink;g.font=F(700,20);g.fillText('Lintel design — calculation sheet',M,y+20);g.font=F(500,11.5);g.fillStyle=COL.mut;
+ g.fillText(`${title} · span ${f0(R.Le*1000)} mm c/c bearings · ${R.arch?'arching assumed':'no arching'} · ${date}`,M,y+40);
+ const chip=R.fail?`FAILS · max ${f2(R.umax)}`:`PASSES · max ${f2(R.umax)}`;g.font=F(800,12);const cw=g.measureText(chip).width+24;
+ g.strokeStyle=R.fail?COL.bad:COL.ok;g.lineWidth=1.6;g.beginPath();g.roundRect(PW-M-cw,y+4,cw,24,12);g.stroke();g.fillStyle=R.fail?COL.bad:COL.ok;g.textAlign='center';g.fillText(chip,PW-M-cw/2,y+20.5);g.textAlign='left';y+=54;
+ const im=snapImages();img(im.e,380*CW/714);
+ // key values strip
+ const kv=[['M_Ed',f2(R.Med)+' kNm'],['V_Ed',f2(R.Ved)+' kN'],['δ SLS',R.dmax!=null?f2(R.dmax*1000)+' mm':'—'],['R_L ULS',f2(R.R.L.U)+' kN'],['R_R ULS',f2(R.R.R.U)+' kN'],['f_k / f_d',f2(R.fk)+' / '+f2(R.fd)]];
+ need(46);const kw=CW/6;kv.forEach(([k,v],i)=>{const x=M+i*kw;g.fillStyle=COL.soft;g.beginPath();g.roundRect(x+2,y,kw-4,40,7);g.fill();g.fillStyle=COL.mut;g.font=F(700,8.5);g.fillText(k.toUpperCase(),x+10,y+14);g.fillStyle=COL.ink;g.font=F(700,12.5);g.fillText(v,x+10,y+32);});y+=50;
+ img(im.d,300*CW/714);
+ // ----- inputs -----
+ head('Inputs');const m=S.mas,MT=MAS[m.type]||MAS.custom,kind=k=>({return:'return / corner',opening:'pier between openings',end:'free wall end'}[k]);
+ const half=CW/2,inp=[
+  ['Clear span / bearing',`${S.L0} mm / ${S.lb} mm each end`],['Head height / storey',`${S.hHead} / ${S.hStorey} mm`],['Masonry above lintel',`${S.Hm} mm`],
+  ['Masonry',MT.n],['Leaf / unit weight',`${m.t} mm · ${m.gamma} kN/m³`],['f_b · K · mortar · group',`${m.fb} N/mm² · ${m.K} · ${m.mort} · Group ${m.grp}`],['γ_M',`${m.gM}`],['f_k / f_d / f_vk0',`${f2(R.fk)} / ${f2(R.fd)} / ${R.fvk0} N/mm²`],
+  ['Left pier',`${S.pL.b} mm · ${kind(S.pL.kind)}${S.pL.kind==='opening'?` (${S.pL.adj} mm opening)`:''}`],['Right pier',`${S.pR.b} mm · ${kind(S.pR.kind)}${S.pR.kind==='opening'?` (${S.pR.adj} mm opening)`:''}`],
+  ['Arching / triangle',`${({auto:'auto',force:'assumed',none:'off'})[S.arch]} · ${S.theta}° · floors in triangle: ${S.flMode}`],['ULS / deflection',`${S.combo==='6.10'?'Eq 6.10':'Eq 6.10a/b'} · L/${S.dlim}`],
+  ['h_ef / λ',`${f0(R.slender.h_ef*1000)} mm · ${f1(R.slender.lam)} (ρ_n ${S.rho})`],['Lintel',R.lin.name]];
+ table([{h:'Item',w:180},{h:'Value',w:CW-180}],inp.map(([a,b])=>[{t:a,col:COL.mut},b]));
+ if(S.floors.length){head('Floors & roofs');table([{h:'Name',w:250},{h:'Height above lintel',w:130,al:'r'},{h:'Tributary',w:100,al:'r'},{h:'g_k / q_k kN/m²',w:CW-480,al:'r'}],S.floors.map(f=>[f.n,f.y+' mm',f.trib+' m',f.gk+' / '+f.qk]));}
+ if(S.pts.length){head('Point loads');table([{h:'Name',w:220},{h:'x from left jamb',w:120,al:'r'},{h:'Height',w:100,al:'r'},{h:'Bearing',w:100,al:'r'},{h:'G_k / Q_k kN',w:CW-540,al:'r'}],S.pts.map(p=>[p.n,p.x+' mm',p.y+' mm',p.a+' mm',p.gk+' / '+p.qk]));}
+ head('Arching');for(const c of R.archCond)para(`${c.ok?'✓':'✕'}  ${c.n}`,{col:c.ok?COL.ok:COL.bad,size:11,weight:600});
+ para(S.arch==='auto'?(R.arch?'All conditions met: the lintel carries the load triangle and loads within the 1.1L loading zone.':'A condition is not met, so the full load over the opening is applied.'):S.arch==='force'?'Arching assumed by the user.':'Arching switched off by the user.');
+ if(R.arch)para(`Arch thrust T = W·L/(8z) = ${f2(R.thr.Wa)} × ${f2(R.L0)} / (8 × ${f2(R.thr.z)}) = ${f2(R.thr.T)} kN.`);
+ head('Loads on lintel (characteristic)');let tg=0,tq=0;
+ table([{h:'Load',w:CW-180},{h:'G_k kN',w:90,al:'r'},{h:'Q_k kN',w:90,al:'r'}],[...R.B.items.map(i=>{tg+=i.G;tq+=i.Q;return [{t:i.n,sub:i.how},f2(i.G),f2(i.Q)];}),[{t:'Total on lintel',b:true},{t:f2(tg),b:true},{t:f2(tq),b:true}]]);
+ para(`ULS combination ${R.gov[0]}G + ${R.gov[1]}Q governs. M_Ed = ${f2(R.Med)} kNm, V_Ed = ${f2(R.Ved)} kN, reactions ${f2(R.R.L.U)} / ${f2(R.R.R.U)} kN.`);
+ for(const grp of [...new Set(R.checks.map(c=>c.g))]){head(grp==='Geometry'?'Geometry & guidance':grp+(grp.includes('pier')?` · ${f0(R.side[grp[0]].b*1000)} mm`:''));
+  if(grp.includes('pier')){const P=R.pier[grp[0]];para(`N at bearing level: G ${f1(P.Gt)} + Q ${f1(P.Qt)} kN → ULS ${f1(P.Nt)} kN; at mid-height ${f1(P.Nm)} kN.`,{size:10});}
+  table([{h:'Check',w:CW-300},{h:'E_d',w:75,al:'r'},{h:'R_d',w:75,al:'r'},{h:'Unit',w:50},{h:'Util.',w:100,al:'r'}],R.checks.filter(c=>c.g===grp).map(c=>{const st=c.st==='ok'?COL.ok:c.st==='warn'?COL.amb:COL.bad,na=c.ed===0&&c.rd===0;
+   return [{t:c.n,sub:c.note||''},na?'—':fmtV(c.ed),na?'—':fmtV(c.rd),c.unit||'',{t:na?'advisory':`${f2(c.u)} ${c.st==='ok'?'OK':c.st==='warn'?'ADVISORY':'FAIL'}`,col:st,b:true}];}));}
+ if(R.warn.length){head('Notes');for(const w of R.warn)para('⚠ '+w,{col:COL.amb});}
+ head('Method & limitations');
+ para('Loads: arching uses a load triangle (BS 5977-1 practice) with a 1.1L loading zone; point loads spread at 60° (EC6 6.1.3). Steel to EN 1993-1-1 with nominal properties (root radii ignored); RC to EN 1992-1-1 (no links, span/depth deflection); proprietary lintels are checked by the equivalent UDL against the maker’s safe working load. Piers are checked to EC6: bearing (6.1.3), axial at bearing level and mid-height (6.1.2, Annex G) and bed-joint shear against arch thrust; Approved Document A Diagram 14 is advisory.',{size:10});
+ para('Not checked: lateral (wind) load on the piers, local loading on the lintel flange or toe, construction-stage loading except through the LTB option, and cavity or thermal details. Library properties are indicative. This is a design aid; results should be verified by a competent engineer.',{size:10});
+ // footers
+ pages.forEach((p,i)=>{const q=p.g;q.strokeStyle=COL.line;q.lineWidth=1;q.beginPath();q.moveTo(M,PH-34);q.lineTo(PW-M,PH-34);q.stroke();q.fillStyle=COL.mut;q.font=F(500,9.5);q.textAlign='left';q.fillText(`Lintel Loader v${VER} · design aid, verify with a competent engineer · ${date}`,M,PH-20);q.textAlign='right';q.fillText(`Sheet ${i+1} of ${pages.length}`,PW-M,PH-20);q.textAlign='left';});
+ return pages.map(p=>p.c);
+}
+function b64bytes(u){const b=atob(u.split(',')[1]),a=new Uint8Array(b.length);for(let i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a;}
+function makePDF(imgs,info){// imgs: [{jpg:Uint8Array,w,h}] → one A4 page each
+ const enc=new TextEncoder(),parts=[],off=[];let len=0;const push=x=>{const b=typeof x==='string'?enc.encode(x):x;parts.push(b);len+=b.length;};
+ const n=imgs.length,PWp=595.28,PHp=841.89,infoId=3+3*n;
+ push('%PDF-1.4\n');push(new Uint8Array([37,226,227,207,211,10]));
+ const obj=(id,body,stream)=>{off[id]=len;push(`${id} 0 obj\n`);push(body);if(stream){push('\nstream\n');push(stream);push('\nendstream');}push('\nendobj\n');};
+ obj(1,'<< /Type /Catalog /Pages 2 0 R >>');
+ obj(2,`<< /Type /Pages /Count ${n} /Kids [${imgs.map((_,i)=>`${3+3*i} 0 R`).join(' ')}] >>`);
+ imgs.forEach((im,i)=>{const p=3+3*i,c=p+1,x=p+2,cs=`q ${PWp} 0 0 ${PHp} 0 0 cm /Im${i} Do Q`;
+  obj(p,`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${PWp} ${PHp}] /Resources << /XObject << /Im${i} ${x} 0 R >> >> /Contents ${c} 0 R >>`);
+  obj(c,`<< /Length ${enc.encode(cs).length} >>`,cs);
+  obj(x,`<< /Type /XObject /Subtype /Image /Width ${im.w} /Height ${im.h} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${im.jpg.length} >>`,im.jpg);});
+ const ps=t=>'('+t.replace(/[\\()]/g,'\\$&').replace(/[^\x20-\x7e]/g,'-')+')';
+ obj(infoId,`<< /Title ${ps(info.title)} /Creator ${ps('Lintel Loader v'+VER)} /Producer ${ps('Lintel Loader')} >>`);
+ const xref=len;let xr=`xref\n0 ${infoId+1}\n0000000000 65535 f \n`;for(let i=1;i<=infoId;i++)xr+=String(off[i]).padStart(10,'0')+' 00000 n \n';
+ push(xr);push(`trailer\n<< /Size ${infoId+1} /Root 1 0 R /Info ${infoId} 0 R >>\nstartxref\n${xref}\n%%EOF\n`);
+ const out=new Uint8Array(len);let o=0;for(const p of parts){out.set(p,o);o+=p.length;}return out;}
+async function pdfReport(){
+ if(!R){flash('Nothing to report yet.',true);return;}
+ flash('Building the PDF…',false,8000);await new Promise(r=>setTimeout(r,30));
+ let bytes;try{const pages=buildSheets();bytes=makePDF(pages.map(c=>({jpg:b64bytes(c.toDataURL('image/jpeg',0.9)),w:c.width,h:c.height})),{title:'Lintel Loader - '+R.lin.name});}
+ catch(e){console.error(e);flash('Could not build the PDF: '+e.message,true);return;}
+ const d=new Date(),stamp=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+ window.__pdf=bytes;await saveFile(`lintel-${S.L0}mm-${stamp}.pdf`,new Blob([bytes],{type:'application/pdf'}));
+}
+$('#bPdf').onclick=pdfReport;
+// ---------- start ----------
+let noG='';try{noG=localStorage.getItem(KEY+'.noGuide')||'';}catch(e){}
+$('#gNo').checked=!!noG;if(!noG)openOv('guide');
+renderRes();
+
 </script></body></html>
